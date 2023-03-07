@@ -28,7 +28,7 @@ class MedicalService
         return self::create(
             MedicalServiceId::random(),
             $name,
-            new MedicalServiceIsActive()
+            MedicalServiceIsActive::createActive()
         );
     }
 
