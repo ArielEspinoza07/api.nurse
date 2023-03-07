@@ -3,6 +3,7 @@
 namespace Tests\Functional\src\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
@@ -10,6 +11,7 @@ use Tests\TestCase;
 class AuthControllerTestBase extends TestCase
 {
     use RefreshDatabase;
+    use WithFaker;
 
     protected string $endpoint;
 
