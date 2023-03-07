@@ -2,6 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Services\Rest\Json\Response;
+use App\Services\Rest\Json\ResponseBuilder;
+use App\Services\Rest\Json\ResponseExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -41,6 +44,10 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (Throwable $e, $request) {
+            return (new ResponseExceptionHandler(new ResponseBuilder(new Response())))
+                ->handle($e);
+        });
         $this->reportable(function (Throwable $e) {
             //
         });
