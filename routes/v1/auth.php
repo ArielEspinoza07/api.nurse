@@ -8,7 +8,6 @@ Route::prefix('auth')
     ->as('auth:')
     ->group(function () {
         Route::withoutMiddleware(['auth:sanctum'])
-            ->middleware(['guest'])
             ->group(function () {
                 Route::post('/login', AuthenticateUserController::class)->name('login');
                 Route::post('/register', RegisterUserController::class)->name('register');
