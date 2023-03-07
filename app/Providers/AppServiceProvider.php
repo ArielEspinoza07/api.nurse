@@ -9,6 +9,8 @@ use App\Services\Rest\Json\Response;
 use App\Services\Rest\Json\ResponseBuilder;
 use App\Services\Rest\Json\ResponseExceptionHandler;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Sanctum\Sanctum;
+use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthTokenModel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        Sanctum::ignoreMigrations();
     }
 
     /**
@@ -31,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Sanctum::usePersonalAccessTokenModel(EloquentAuthTokenModel::class);
     }
 }
