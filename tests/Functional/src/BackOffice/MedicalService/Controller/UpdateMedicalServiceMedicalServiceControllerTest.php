@@ -10,14 +10,17 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_update_medical_service(): void
     {
-        $medicalServiceId = $this->createMedicalService();
+        $token = $this->authToken();
+
+        $medicalServiceId = $this->createMedicalService($token);
 
         $payload = [
             'name' => 'Pediatrics',
             'is_active' => true,
         ];
 
-        $response = $this->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+        $response = $this->withToken($token)
+                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -35,13 +38,16 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_update_medical_service_with_wrong_value(): void
     {
-        $medicalServiceId = $this->createMedicalService();
+        $token = $this->authToken();
+
+        $medicalServiceId = $this->createMedicalService($token);
 
         $payload = [
             'name' => 'OT',
         ];
 
-        $response = $this->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+        $response = $this->withToken($token)
+                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertBadRequest();
         $response->assertJsonStructure([
@@ -59,6 +65,8 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_update_medical_service_with_non_existing_medical_service(): void
     {
+        $token = $this->authToken();
+
         $medicalServiceId = rand(1, 10);
 
         $payload = [
@@ -66,7 +74,8 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
             'is_active' => true,
         ];
 
-        $response = $this->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+        $response = $this->withToken($token)
+                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertNotFound();
         $response->assertJsonStructure([

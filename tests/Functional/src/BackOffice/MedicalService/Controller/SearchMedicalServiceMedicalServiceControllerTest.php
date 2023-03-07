@@ -11,6 +11,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_search_all_medical_services_without_criteria(): void
     {
+        $token = $this->authToken();
+
         $services = [
             [
                 'name' => 'Emergency',
@@ -30,11 +32,12 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) {
-                $this->createMedicalService($service);
+            ->each(function ($service) use(&$token) {
+                $this->createMedicalService($token ,$service);
             });
 
-        $response = $this->get(route($this->endpoint));
+        $response = $this->withToken($token)
+                         ->get(route($this->endpoint));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -53,6 +56,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_search_all_medical_services_with_criteria(): void
     {
+        $token = $this->authToken();
+
         $services = [
             [
                 'name' => 'Emergency',
@@ -72,8 +77,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) {
-                $this->createMedicalService($service);
+            ->each(function ($service) use(&$token) {
+                $this->createMedicalService($token ,$service);
             });
 
         $payload = [
@@ -88,7 +93,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $queryString = http_build_query($payload);
 
-        $response = $this->get(route($this->endpoint).sprintf('?%s',$queryString));
+        $response = $this->withToken($token)
+                         ->get(route($this->endpoint).sprintf('?%s',$queryString));
 
         $response->assertOk();
         $response->assertJsonStructure([

@@ -10,13 +10,18 @@ class CreateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 {
     protected string $endpoint = 'api:v1:medical:service:create';
 
+
+
     public function test_create_medical_service(): void
     {
+        $token = $this->authToken();
+
         $payload = [
             'name' => 'Intensive Care Unit'
         ];
 
-        $responseCreated = $this->post(route($this->endpoint), $payload);
+        $responseCreated = $this->withToken($token)
+            ->post(route($this->endpoint), $payload);
 
         $responseCreated->assertCreated();
         $responseCreated->assertJsonStructure([
@@ -35,14 +40,15 @@ class CreateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $generatedMedicalServiceId = $responseCreated->decodeResponseJson()['data']['id'];
 
-        $responseFounded = $this->get(
-            route(
-                'api:v1:medical:service:show',
-                [
-                    'id' => $generatedMedicalServiceId
-                ]
-            )
-        );
+        $responseFounded = $this->withToken($token)
+            ->get(
+                route(
+                    'api:v1:medical:service:show',
+                    [
+                        'id' => $generatedMedicalServiceId
+                    ]
+                )
+            );
 
         $responseFounded->assertOk();
         $responseFounded->assertJsonStructure([

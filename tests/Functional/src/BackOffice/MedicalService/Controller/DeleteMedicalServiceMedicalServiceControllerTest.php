@@ -10,9 +10,12 @@ class DeleteMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_delete_medical_service(): void
     {
-        $medicalServiceId = $this->createMedicalService();
+        $token = $this->authToken();
 
-        $response = $this->delete(route($this->endpoint, ['id' => $medicalServiceId]));
+        $medicalServiceId = $this->createMedicalService($token);
+
+        $response = $this->withToken($token)
+                         ->delete(route($this->endpoint, ['id' => $medicalServiceId]));
 
         $response->assertNoContent();
     }
@@ -20,9 +23,12 @@ class DeleteMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
     public function test_delete_medical_service_with_non_existing_medical_service(): void
     {
+        $token = $this->authToken();
+
         $medicalServiceId = rand(1, 10);
 
-        $response = $this->delete(route($this->endpoint, ['id' => $medicalServiceId]));
+        $response = $this->withToken($token)
+                         ->delete(route($this->endpoint, ['id' => $medicalServiceId]));
 
         $response->assertNotFound();
         $response->assertJsonStructure([
