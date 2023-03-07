@@ -78,7 +78,20 @@
 
 <br>
 
-You can run your tests with a local server with
+#### Configuration
+    
+    Modify .env.testing configuration file with your own values
+    By default sqlite is use for testing
+
+#### Generate Project key
+
+    php artisan key:generate --env=testing
+
+#### Generate tables on your DB
+
+    php artisan migrate --seed --env=testing
+
+#### Run your tests with a local server with
 
     .vendor/bin/phpunit
 
