@@ -33,8 +33,8 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
             foreach ($this->listRouteFiles('routes/v1') as $route) {
-                Route::middleware(['api',])//'auth:sanctum'
-                ->prefix('api/v1')
+                Route::middleware(['api', 'auth:sanctum'])
+                    ->prefix('api/v1')
                     ->as('api:v1:')
                     ->namespace($this->namespace)
                     ->group(base_path("routes/v1/$route"));
