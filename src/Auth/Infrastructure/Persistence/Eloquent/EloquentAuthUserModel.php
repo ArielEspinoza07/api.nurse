@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Src\Auth\Infrastructure\Persistence\Eloquent;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Src\Auth\Infrastructure\Persistence\Eloquent\Contract\HasApiTokens;
-use Src\shared\Infrastructure\Persistence\Eloquent\EloquentBaseModel;
+use Illuminate\Foundation\Auth\User as IlluminateAuthUser;
 
 /**
  * Class EloquentAuthUserModel
@@ -16,10 +17,11 @@ use Src\shared\Infrastructure\Persistence\Eloquent\EloquentBaseModel;
  *
  * @package namespace Src\Auth\Infrastructure\Persistence\Eloquent
  */
-class EloquentAuthUserModel extends EloquentBaseModel
+class EloquentAuthUserModel extends IlluminateAuthUser
 {
 
     use HasApiTokens;
+    use HasFactory;
 
     protected $fillable = [
         'name',
