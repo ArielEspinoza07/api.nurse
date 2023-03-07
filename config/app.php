@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Src\BackOffice\MedicalService\Infrastructure\Providers\MedicalServiceBindingServiceProvider::class,
+        Src\Auth\Infrastructure\Providers\AuthUserBindingServiceProvider::class,
     ],
 
     /*
