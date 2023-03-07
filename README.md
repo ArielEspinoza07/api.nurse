@@ -15,8 +15,12 @@
 #### Clone the project
 
     https:
+        https://github.com/ArielEspinoza07/api.nurse.git
 
     ssh:
+        git@github.com:ArielEspinoza07/api.nurse.git
+
+#### Add .env file
 
     Linux, MacOs
         cp .env.example .env
