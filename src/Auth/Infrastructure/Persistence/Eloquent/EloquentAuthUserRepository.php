@@ -10,6 +10,7 @@ use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserToken;
+use Src\Auth\Domain\Exception\AuthUserNotFoundException;
 use Src\Auth\Domain\Exception\InvalidAuthUserEmailException;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 
@@ -28,16 +29,31 @@ class EloquentAuthUserRepository implements AuthUserRepository
         return $this->createDomainEntityFromEloquentModel($model);
     }
 
+
     public function create(AuthUserName $name, AuthUserEmail $email, AuthUserPassword $password): AuthUser
     {
-        $model = EloquentAuthUserModel::query()->create([
-            'name' => $name->value(),
-            'email' => $email->value(),
-            'password' => $password->value(),
-        ]);
+        $model = EloquentAuthUserModel::query()
+            ->create([
+                'name' => $name->value(),
+                'email' => $email->value(),
+                'password' => $password->value(),
+            ]);
 
         return $this->createDomainEntityFromEloquentModel($model);
     }
+
+
+    public function findById(AuthUserId $id): AuthUser
+    {
+        $model = EloquentAuthUserModel::query()
+            ->find($id->value());
+        if (!$model) {
+            throw new AuthUserNotFoundException();
+        }
+
+        return $this->createDomainEntityFromEloquentModel($model);
+    }
+
 
     private function createDomainEntityFromEloquentModel(EloquentAuthUserModel $model): AuthUser
     {
