@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Mockery;
-use Src\Auth\Application\Register\UserRegistrator;
+use Src\Auth\Application\Register\RegisterUser;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
@@ -31,7 +31,7 @@ class UserRegistratorTest extends AuthUserApplicationTestBase
         $notEncryptedAuthUser = AuthUser::createFromNameEmailAndPassword($name, $email, $notEncryptedPassword);
 
         $passwordHasher = Mockery::mock(PasswordHasherInterface::class);
-        $this->app->instance(UserRegistrator::class, $passwordHasher);
+        $this->app->instance(RegisterUser::class, $passwordHasher);
 
         $passwordHasher->shouldReceive('hash')
             ->once()
@@ -43,7 +43,7 @@ class UserRegistratorTest extends AuthUserApplicationTestBase
             ->andReturn($this->tokenExample);
 
         $repository = Mockery::mock(AuthUserRepository::class);
-        $this->app->instance(UserRegistrator::class, $repository);
+        $this->app->instance(RegisterUser::class, $repository);
         $repository->shouldReceive('create')
             ->once()
             ->with(
@@ -60,7 +60,7 @@ class UserRegistratorTest extends AuthUserApplicationTestBase
             ->andReturn($notEncryptedAuthUser);
 
         $tokenCreator = Mockery::mock(TokenCreatorInterface::class);
-        $this->app->instance(UserRegistrator::class, $tokenCreator);
+        $this->app->instance(RegisterUser::class, $tokenCreator);
 
         $tokenCreator->shouldReceive('create')
             ->once()
@@ -73,7 +73,7 @@ class UserRegistratorTest extends AuthUserApplicationTestBase
             )
             ->andReturn(new AuthUserToken($this->tokenExample));
 
-        $token = (new UserRegistrator($repository, $passwordHasher, $tokenCreator))
+        $token = (new RegisterUser($repository, $passwordHasher, $tokenCreator))
             ->handle(
                 $name,
                 $email,

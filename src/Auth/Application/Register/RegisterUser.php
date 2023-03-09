@@ -12,7 +12,7 @@ use Src\Auth\Domain\Contracts\PasswordHasherInterface;
 use Src\Auth\Domain\Contracts\TokenCreatorInterface;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 
-class UserRegistrator
+class RegisterUser
 {
 
     public function __construct(

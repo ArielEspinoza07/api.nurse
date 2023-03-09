@@ -4,7 +4,7 @@ namespace Tests\Unit\src\Auth\Application;
 
 use Illuminate\Support\Str;
 use Mockery;
-use Src\Auth\Application\Authenticate\UserAuthenticator;
+use Src\Auth\Application\Authenticate\AuthenticateUser;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserPassword;
@@ -27,7 +27,7 @@ class UserAuthenticatorTest extends AuthUserApplicationTestBase
         $authUser = $this->createAutUser($payload);
 
         $repository = Mockery::mock(AuthUserRepository::class);
-        $this->app->instance(UserAuthenticator::class, $repository);
+        $this->app->instance(AuthenticateUser::class, $repository);
 
         $repository->shouldReceive('findByEmail')
             ->once()
@@ -39,7 +39,7 @@ class UserAuthenticatorTest extends AuthUserApplicationTestBase
             ->andReturn($authUser);
 
         $passwordHasher = Mockery::mock(PasswordHasherInterface::class);
-        $this->app->instance(UserAuthenticator::class, $passwordHasher);
+        $this->app->instance(AuthenticateUser::class, $passwordHasher);
 
         $passwordHasher->shouldReceive('check')
             ->once()
@@ -55,7 +55,7 @@ class UserAuthenticatorTest extends AuthUserApplicationTestBase
             ->andReturn(true);
 
         $tokenCreator = Mockery::mock(TokenCreatorInterface::class);
-        $this->app->instance(UserAuthenticator::class, $tokenCreator);
+        $this->app->instance(AuthenticateUser::class, $tokenCreator);
 
         $tokenCreator->shouldReceive('create')
             ->once()
@@ -67,7 +67,7 @@ class UserAuthenticatorTest extends AuthUserApplicationTestBase
             )
             ->andReturn(new AuthUserToken($this->tokenExample));
 
-        $token = (new UserAuthenticator($repository, $passwordHasher, $tokenCreator))
+        $token = (new AuthenticateUser($repository, $passwordHasher, $tokenCreator))
             ->handle(
                 new AuthUserEmail($payload['email']),
                 new AuthUserPassword($payload['password']),

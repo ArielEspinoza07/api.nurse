@@ -12,7 +12,7 @@ use Src\Auth\Domain\Contracts\TokenCreatorInterface;
 use Src\Auth\Domain\Exception\InvalidAuthUserPasswordException;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 
-class UserAuthenticator
+class AuthenticateUser
 {
     public function __construct(
         private readonly AuthUserRepository $repository,

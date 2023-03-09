@@ -7,7 +7,7 @@ namespace Src\Auth\Infrastructure\Http\Controllers\Rest;
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use Src\Auth\Application\Authenticate\UserAuthenticator;
+use Src\Auth\Application\Authenticate\AuthenticateUser;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Infrastructure\Http\Request\AuthenticateUserRequest;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthenticateUserController extends BaseController
 {
     public function __construct(
-        private readonly UserAuthenticator $service,
+        private readonly AuthenticateUser $service,
         private readonly ResponseBuilderContract $response
     ) {
     }

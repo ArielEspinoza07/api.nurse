@@ -7,7 +7,7 @@ namespace Src\Auth\Infrastructure\Http\Controllers\Rest;
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use Src\Auth\Application\Register\UserRegistrator;
+use Src\Auth\Application\Register\RegisterUser;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
@@ -18,7 +18,7 @@ class RegisterUserController
 {
 
     public function __construct(
-        private readonly UserRegistrator $service,
+        private readonly RegisterUser $service,
         private readonly ResponseBuilderContract $response
     ) {
     }
