@@ -18,6 +18,7 @@ class AuthUserApplicationTestBase extends TestCase
     use RefreshDatabase;
 
     protected string $tokenExample = '1|h0F5Nkx4vAjjPrmJw3RMDX9AH81kgl3xZVZoEzgi';
+
     protected function createAutUser(array $payload): AuthUser
     {
         $model = EloquentAuthUserModel::query()->create(

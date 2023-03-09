@@ -19,14 +19,14 @@ class MedicalServiceControllerTestBase extends TestCase
 
     protected function createMedicalService(string $token, array|null $payload = null): int
     {
-        if ( ! $payload) {
+        if (!$payload) {
             $payload = [
                 'name' => 'Intensive Care Unit',
             ];
         }
 
         $response = $this->withToken($token)
-                         ->post(route('api:v1:medical:service:create', $payload));
+            ->post(route('api:v1:medical:service:create', $payload));
 
         if (Response::HTTP_CREATED !== $response->getStatusCode()) {
             throw new RuntimeException('Error creating medical service');
@@ -39,8 +39,8 @@ class MedicalServiceControllerTestBase extends TestCase
     protected function authToken(): string
     {
         $response = $this->post(route('api:v1:auth:register'), [
-            'name'     => 'John D',
-            'email'    => $this->faker->email(),
+            'name' => 'John D',
+            'email' => $this->faker->email(),
             'password' => 'Password!1',
             'password_confirmation' => 'Password!1',
         ]);

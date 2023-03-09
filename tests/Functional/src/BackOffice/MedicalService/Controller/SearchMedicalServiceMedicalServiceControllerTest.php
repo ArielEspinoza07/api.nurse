@@ -32,12 +32,12 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) use(&$token) {
-                $this->createMedicalService($token ,$service);
+            ->each(function ($service) use (&$token) {
+                $this->createMedicalService($token, $service);
             });
 
         $response = $this->withToken($token)
-                         ->get(route($this->endpoint));
+            ->get(route($this->endpoint));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -77,8 +77,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) use(&$token) {
-                $this->createMedicalService($token ,$service);
+            ->each(function ($service) use (&$token) {
+                $this->createMedicalService($token, $service);
             });
 
         $payload = [
@@ -94,7 +94,7 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         $queryString = http_build_query($payload);
 
         $response = $this->withToken($token)
-                         ->get(route($this->endpoint).sprintf('?%s',$queryString));
+            ->get(route($this->endpoint) . sprintf('?%s', $queryString));
 
         $response->assertOk();
         $response->assertJsonStructure([

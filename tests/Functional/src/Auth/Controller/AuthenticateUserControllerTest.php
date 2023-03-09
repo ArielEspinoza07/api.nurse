@@ -54,7 +54,10 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
 
         $this->assertEquals(false, $loggedIn->decodeResponseJson()['success']);
 
-        $this->assertEquals('Authentication failed: User was not found matching the entered credentials', $loggedIn->decodeResponseJson()['message']);
+        $this->assertEquals(
+            'Authentication failed: User was not found matching the entered credentials',
+            $loggedIn->decodeResponseJson()['message']
+        );
 
         $this->assertNull($loggedIn->decodeResponseJson()['data']);
     }

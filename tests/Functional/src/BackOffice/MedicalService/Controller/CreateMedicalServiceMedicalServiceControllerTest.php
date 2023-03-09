@@ -11,7 +11,6 @@ class CreateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
     protected string $endpoint = 'api:v1:medical:service:create';
 
 
-
     public function test_create_medical_service(): void
     {
         $token = $this->authToken();

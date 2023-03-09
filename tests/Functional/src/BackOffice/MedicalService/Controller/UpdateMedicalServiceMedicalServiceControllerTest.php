@@ -20,7 +20,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         $response = $this->withToken($token)
-                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -47,7 +47,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         $response = $this->withToken($token)
-                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertBadRequest();
         $response->assertJsonStructure([
@@ -75,7 +75,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         $response = $this->withToken($token)
-                         ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->put(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertNotFound();
         $response->assertJsonStructure([

@@ -10,8 +10,11 @@ trait AssertValueLength
 {
     public function assertValueLength(string $arg, int $length = 3): void
     {
-        if(strlen($arg) < $length) {
-            throw  new InvalidArgumentException(sprintf('Invalid argument [%s], value must be min %s', $arg, $length), 400);
+        if (strlen($arg) < $length) {
+            throw  new InvalidArgumentException(
+                sprintf('Invalid argument [%s], value must be min %s', $arg, $length),
+                400
+            );
         }
     }
 }
