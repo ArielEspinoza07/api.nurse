@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\Count\MedicalServiceCounter;
+use Src\BackOffice\MedicalService\Application\Count\CountMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Src\shared\Domain\Criteria\Criteria;
 use Src\shared\Domain\Criteria\Filters;
@@ -40,7 +40,7 @@ class MedicalServiceCounterTest extends MedicalServiceApplicationTestBase
         });
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceCounter::class, $repository);
+        $this->app->instance(CountMedicalService::class, $repository);
 
         $criteria = new Criteria(
             new Filters([]),
@@ -54,7 +54,7 @@ class MedicalServiceCounterTest extends MedicalServiceApplicationTestBase
             ->with($criteria)
             ->andReturn(count($services));
 
-        $counter = (new MedicalServiceCounter($repository))
+        $counter = (new CountMedicalService($repository))
             ->handle($criteria);
 
         $this->assertIsInt($counter);

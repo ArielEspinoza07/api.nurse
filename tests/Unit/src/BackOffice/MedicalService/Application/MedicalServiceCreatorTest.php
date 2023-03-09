@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\Create\MedicalServiceCreator;
+use Src\BackOffice\MedicalService\Application\Create\CreateMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
@@ -21,7 +21,7 @@ class MedicalServiceCreatorTest extends TestCase
         $medicalServiceName = new MedicalServiceName('Intensive Care Unit');
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceCreator::class, $repository);
+        $this->app->instance(CreateMedicalService::class, $repository);
 
         $medicalServiceCreated = MedicalService::createFromName($medicalServiceName);
 
@@ -37,7 +37,7 @@ class MedicalServiceCreatorTest extends TestCase
             )
             ->andReturn($medicalServiceCreated);
 
-        $created = (new MedicalServiceCreator($repository))
+        $created = (new CreateMedicalService($repository))
             ->handle($medicalServiceName);
 
         $this->assertInstanceOf(MedicalService::class, $created);

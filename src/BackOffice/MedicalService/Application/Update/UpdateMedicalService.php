@@ -10,7 +10,7 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
-class MedicalServiceUpdator
+class UpdateMedicalService
 {
 
     public function __construct(private readonly MedicalServiceRepository $repository)

@@ -8,7 +8,7 @@ use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Src\BackOffice\MedicalService\Application\SearchAll\MedicalServiceSearcher;
+use Src\BackOffice\MedicalService\Application\SearchAll\SearchMedicalService;
 use Src\shared\Infrastructure\Criteria\CriteriaConverter;
 use Src\shared\Infrastructure\Criteria\DTO\SearchByCriteriaInputDTO;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SearchMedicalServiceController extends BaseController
 {
     public function __construct(
-        private readonly MedicalServiceSearcher $service,
+        private readonly SearchMedicalService $service,
         private readonly ResponseBuilderContract $response
     ) {
     }

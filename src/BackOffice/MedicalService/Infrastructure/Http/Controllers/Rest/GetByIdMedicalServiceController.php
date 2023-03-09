@@ -7,7 +7,7 @@ namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use Src\BackOffice\MedicalService\Application\Find\MedicalServiceFinder;
+use Src\BackOffice\MedicalService\Application\Find\GetMedicalServiceById;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class GetByIdMedicalServiceController extends BaseController
 {
     public function __construct(
-        private readonly MedicalServiceFinder $service,
+        private readonly GetMedicalServiceById $service,
         private readonly ResponseBuilderContract $response
     ) {
     }

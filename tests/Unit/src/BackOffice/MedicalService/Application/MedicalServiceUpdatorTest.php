@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\Update\MedicalServiceUpdator;
+use Src\BackOffice\MedicalService\Application\Update\UpdateMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
@@ -32,7 +32,7 @@ class MedicalServiceUpdatorTest extends MedicalServiceApplicationTestBase
         ];
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceUpdator::class, $repository);
+        $this->app->instance(UpdateMedicalService::class, $repository);
 
 
         $repository->shouldReceive('findById')
@@ -66,7 +66,7 @@ class MedicalServiceUpdatorTest extends MedicalServiceApplicationTestBase
             )
             ->andReturn($medicalServiceUpdated);
 
-        $updated = (new MedicalServiceUpdator($repository))
+        $updated = (new UpdateMedicalService($repository))
             ->handle(
                 $medicalServiceId,
                 new MedicalServiceName($dataToUpdate['name']),

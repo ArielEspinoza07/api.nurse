@@ -7,7 +7,7 @@ namespace Src\BackOffice\MedicalService\Application\Delete;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
-class MedicalServiceDeletor
+class DeleteMedicalService
 {
 
     public function __construct(private readonly MedicalServiceRepository $repository)

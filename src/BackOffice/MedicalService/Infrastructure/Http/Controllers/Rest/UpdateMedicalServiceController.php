@@ -7,7 +7,7 @@ namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use Src\BackOffice\MedicalService\Application\Update\MedicalServiceUpdator;
+use Src\BackOffice\MedicalService\Application\Update\UpdateMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
@@ -19,7 +19,7 @@ class UpdateMedicalServiceController extends BaseController
 {
 
     public function __construct(
-        private readonly MedicalServiceUpdator $service,
+        private readonly UpdateMedicalService $service,
         private readonly ResponseBuilderContract $response
     ) {
     }

@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\SearchAll\MedicalServiceSearcher;
+use Src\BackOffice\MedicalService\Application\SearchAll\SearchMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
@@ -37,14 +37,14 @@ class MedicalServiceSearcherTest extends MedicalServiceApplicationTestBase
         });
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceSearcher::class, $repository);
+        $this->app->instance(SearchMedicalService::class, $repository);
 
         $repository->shouldReceive('searchAll')
             ->once()
             ->withNoArgs()
             ->andReturn();
 
-        $all = (new MedicalServiceSearcher($repository))
+        $all = (new SearchMedicalService($repository))
             ->handle();
 
         $this->assertIsArray($all);

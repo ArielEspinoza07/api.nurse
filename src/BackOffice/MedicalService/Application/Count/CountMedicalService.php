@@ -7,7 +7,7 @@ namespace Src\BackOffice\MedicalService\Application\Count;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Src\shared\Domain\Criteria\Criteria;
 
-class MedicalServiceCounter
+class CountMedicalService
 {
     public function __construct(private readonly MedicalServiceRepository $repository)
     {

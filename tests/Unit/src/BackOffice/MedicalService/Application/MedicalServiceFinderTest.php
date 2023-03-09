@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\Find\MedicalServiceFinder;
+use Src\BackOffice\MedicalService\Application\Find\GetMedicalServiceById;
 use Src\BackOffice\MedicalService\Domain\Exception\MedicalServiceNotFoundException;
 use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
@@ -30,7 +30,7 @@ class MedicalServiceFinderTest extends MedicalServiceApplicationTestBase
 
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceFinder::class, $repository);
+        $this->app->instance(GetMedicalServiceById::class, $repository);
 
 
         $repository->shouldReceive('findById')
@@ -48,7 +48,7 @@ class MedicalServiceFinderTest extends MedicalServiceApplicationTestBase
                 )
             );
 
-        $found = (new MedicalServiceFinder($repository))
+        $found = (new GetMedicalServiceById($repository))
             ->handle($medicalServiceId);
 
         $this->assertInstanceOf(MedicalService::class, $found);
@@ -63,7 +63,7 @@ class MedicalServiceFinderTest extends MedicalServiceApplicationTestBase
         $medicalServiceId = MedicalServiceId::random();
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceFinder::class, $repository);
+        $this->app->instance(GetMedicalServiceById::class, $repository);
 
 
         $repository->shouldReceive('findById')
@@ -77,7 +77,7 @@ class MedicalServiceFinderTest extends MedicalServiceApplicationTestBase
 
         $this->expectException(MedicalServiceNotFoundException::class);
 
-        (new MedicalServiceFinder($repository))
+        (new GetMedicalServiceById($repository))
             ->handle($medicalServiceId);
     }
 }

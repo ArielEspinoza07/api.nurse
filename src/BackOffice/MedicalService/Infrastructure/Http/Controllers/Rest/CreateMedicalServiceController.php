@@ -7,7 +7,7 @@ namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use Src\BackOffice\MedicalService\Application\Create\MedicalServiceCreator;
+use Src\BackOffice\MedicalService\Application\Create\CreateMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Infrastructure\Http\Request\CreateMedicalServiceRequest;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
@@ -17,7 +17,7 @@ class CreateMedicalServiceController extends BaseController
 {
 
     public function __construct(
-        private readonly MedicalServiceCreator $service,
+        private readonly CreateMedicalService $service,
         private readonly ResponseBuilderContract $response
     ) {
     }

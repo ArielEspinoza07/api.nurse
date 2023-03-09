@@ -4,7 +4,7 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\Delete\MedicalServiceDeletor;
+use Src\BackOffice\MedicalService\Application\Delete\DeleteMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
@@ -25,7 +25,7 @@ class MedicalServiceDeletorTest extends MedicalServiceApplicationTestBase
         $medicalServiceId = $this->createMedicalService($medicalServiceData);
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(MedicalServiceDeletor::class, $repository);
+        $this->app->instance(DeleteMedicalService::class, $repository);
 
         $repository->shouldReceive('delete')
             ->once()
@@ -35,7 +35,7 @@ class MedicalServiceDeletorTest extends MedicalServiceApplicationTestBase
                 })
             );
 
-        (new MedicalServiceDeletor($repository))
+        (new DeleteMedicalService($repository))
             ->handle($medicalServiceId);
     }
 }

@@ -8,7 +8,7 @@ use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
-class MedicalServiceFinder
+class GetMedicalServiceById
 {
 
     public function __construct(private readonly MedicalServiceRepository $repository)

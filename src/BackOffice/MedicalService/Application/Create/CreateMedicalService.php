@@ -9,7 +9,7 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
-class MedicalServiceCreator
+class CreateMedicalService
 {
 
     public function __construct(private readonly MedicalServiceRepository $repository)

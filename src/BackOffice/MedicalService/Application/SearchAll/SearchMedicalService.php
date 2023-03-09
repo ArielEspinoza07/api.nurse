@@ -11,7 +11,7 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Src\shared\Domain\Criteria\Criteria;
 
-class MedicalServiceSearcher
+class SearchMedicalService
 {
     public function __construct(private readonly MedicalServiceRepository $repository)
     {

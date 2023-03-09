@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\src\BackOffice\MedicalService;
 
-use Src\BackOffice\MedicalService\Application\Create\MedicalServiceCreator;
+use Src\BackOffice\MedicalService\Application\Create\CreateMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMedicalServiceRepository;
@@ -14,7 +14,7 @@ class MedicalServiceApplicationTestBase extends TestCase
 
     protected function createMedicalService(array $data): MedicalServiceId
     {
-        $service = (new MedicalServiceCreator(new EloquentMedicalServiceRepository()))
+        $service = (new CreateMedicalService(new EloquentMedicalServiceRepository()))
             ->handle(new MedicalServiceName($data['name']));
 
         return $service->id();
