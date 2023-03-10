@@ -17,7 +17,7 @@ class MedicalServiceControllerTestBase extends TestCase
     protected string $endpoint;
 
 
-    protected function createMedicalService(string $token, array|null $payload = null): int
+    protected function createMedicalService(array|null $payload = null): int
     {
         if (!$payload) {
             $payload = [
@@ -25,7 +25,7 @@ class MedicalServiceControllerTestBase extends TestCase
             ];
         }
 
-        $response = $this->withToken($token)
+        $response = $this->withToken($this->authToken())
             ->postJson(route('api:v1:medical:service:create', $payload));
 
         if (Response::HTTP_CREATED !== $response->getStatusCode()) {

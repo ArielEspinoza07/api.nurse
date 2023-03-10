@@ -32,8 +32,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) use (&$token) {
-                $this->createMedicalService($token, $service);
+            ->each(function ($service) {
+                $this->createMedicalService($service);
             });
 
         $response = $this->withToken($token)
@@ -77,8 +77,8 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         collect($services)
-            ->each(function ($service) use (&$token) {
-                $this->createMedicalService($token, $service);
+            ->each(function ($service) {
+                $this->createMedicalService($service);
             });
 
         $payload = [

@@ -12,7 +12,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
     {
         $token = $this->authToken();
 
-        $medicalServiceId = $this->createMedicalService($token);
+        $medicalServiceId = $this->createMedicalService();
 
         $payload = [
             'name' => 'Pediatrics',
@@ -40,7 +40,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
     {
         $token = $this->authToken();
 
-        $medicalServiceId = $this->createMedicalService($token);
+        $medicalServiceId = $this->createMedicalService();
 
         $payload = [
             'name' => 'OT',

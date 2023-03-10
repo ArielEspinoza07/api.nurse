@@ -12,7 +12,7 @@ class DeleteMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
     {
         $token = $this->authToken();
 
-        $medicalServiceId = $this->createMedicalService($token);
+        $medicalServiceId = $this->createMedicalService();
 
         $response = $this->withToken($token)
             ->deleteJson(route($this->endpoint, ['id' => $medicalServiceId]));
