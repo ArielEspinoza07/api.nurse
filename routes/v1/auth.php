@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Src\Auth\Infrastructure\Http\Controllers\Rest\AuthenticateUserController;
+use Src\Auth\Infrastructure\Http\Controllers\Rest\DeauthenticateUserController;
 use Src\Auth\Infrastructure\Http\Controllers\Rest\RegisterUserController;
 
 Route::prefix('auth')
@@ -12,4 +13,5 @@ Route::prefix('auth')
                 Route::post('/login', AuthenticateUserController::class)->name('login');
                 Route::post('/register', RegisterUserController::class)->name('register');
             });
+        Route::post('/logout', DeauthenticateUserController::class)->name('logout');
     });
