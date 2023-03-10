@@ -20,7 +20,7 @@ class AuthControllerTestBase extends TestCase
         $payload['name'] = $this->faker->name();
         $payload['password_confirmation'] = $payload['password'];
 
-        $response = $this->post(route('api:v1:auth:register'), $payload);
+        $response = $this->postJson(route('api:v1:auth:register'), $payload);
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {
             throw new RuntimeException('Error registering user');
