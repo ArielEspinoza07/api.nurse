@@ -8,7 +8,6 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 
 class DeauthenticateUser
 {
-
     public function __construct(
         private readonly AuthUserRepository $repository,
         private readonly TokenDeletorInterface $tokenDeletor
