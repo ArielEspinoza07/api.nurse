@@ -18,7 +18,7 @@ class RegisterUserControllerTest extends AuthControllerTestBase
             'password_confirmation' => 'Password!1',
         ];
 
-        $registered = $this->post(route($this->endpoint), $payload);
+        $registered = $this->postJson(route($this->endpoint), $payload);
 
         $registered->assertOk();
         $registered->assertJsonStructure([
@@ -45,7 +45,7 @@ class RegisterUserControllerTest extends AuthControllerTestBase
             'password_confirmation' => 'Password!1',
         ];
 
-        $registered = $this->post(route($this->endpoint), $payload);
+        $registered = $this->postJson(route($this->endpoint), $payload);
 
         $registered->assertUnprocessable();
         $registered->assertJsonStructure([

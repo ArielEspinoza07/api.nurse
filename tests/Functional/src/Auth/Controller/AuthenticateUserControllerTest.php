@@ -18,7 +18,7 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
 
         $this->registerUser($payload);
 
-        $loggedIn = $this->post(route($this->endpoint), $payload);
+        $loggedIn = $this->postJson(route($this->endpoint), $payload);
 
         $loggedIn->assertOk();
         $loggedIn->assertJsonStructure([
@@ -43,7 +43,7 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
             'password' => 'Password!1',
         ];
 
-        $loggedIn = $this->post(route($this->endpoint), $payload);
+        $loggedIn = $this->postJson(route($this->endpoint), $payload);
 
         $loggedIn->assertNotFound();
         $loggedIn->assertJsonStructure([
@@ -71,7 +71,7 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
 
         $this->registerUser($payload);
 
-        $loggedIn = $this->post(route($this->endpoint), [
+        $loggedIn = $this->postJson(route($this->endpoint), [
             'email' => $payload['email'],
             'password' => 'Password!2',
         ]);
