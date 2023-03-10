@@ -13,7 +13,7 @@ use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 use Tests\TestCase;
 
-class AuthUserApplicationTestBase extends TestCase
+class AuthApplicationTestBase extends TestCase
 {
     use RefreshDatabase;
 

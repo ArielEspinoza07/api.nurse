@@ -12,10 +12,10 @@ use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Contracts\PasswordHasherInterface;
 use Src\Auth\Domain\Contracts\TokenCreatorInterface;
 use Src\Auth\Domain\Repository\AuthUserRepository;
-use Tests\Unit\src\Auth\AuthUserApplicationTestBase;
+use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
 
-class UserAuthenticatorTest extends AuthUserApplicationTestBase
+class AuthenticateTest extends AuthApplicationTestBase
 {
     public function test_user_authenticator_return_auth_user_token(): void
     {

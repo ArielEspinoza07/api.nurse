@@ -15,9 +15,9 @@ use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Contracts\PasswordHasherInterface;
 use Src\Auth\Domain\Contracts\TokenCreatorInterface;
 use Src\Auth\Domain\Repository\AuthUserRepository;
-use Tests\Unit\src\Auth\AuthUserApplicationTestBase;
+use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
-class UserRegistratorTest extends AuthUserApplicationTestBase
+class RegisterTest extends AuthApplicationTestBase
 {
     use RefreshDatabase;
     use WithFaker;

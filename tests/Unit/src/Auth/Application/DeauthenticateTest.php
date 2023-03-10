@@ -15,9 +15,9 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
 use Src\Auth\Infrastructure\Token\LaravelSanctumToken;
-use Tests\Unit\src\Auth\AuthUserApplicationTestBase;
+use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
-class UserDeauthenticatorTest extends AuthUserApplicationTestBase
+class DeauthenticateTest extends AuthApplicationTestBase
 {
 
     public function test_user_deauthenticator(): void
