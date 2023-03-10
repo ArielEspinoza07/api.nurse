@@ -32,7 +32,7 @@
 
     Create your database (Mysql, MariaDB, PostgreSQL, MSQL Server)
 
-    Modify the .env file values with the your db credentials
+    Modify the .env values with the your DB credentials
 
         DB_CONNECTION=mysql
         DB_HOST=127.0.0.1
@@ -84,8 +84,8 @@
 
 #### Configuration
     
-    Modify .env.testing configuration file with your own values
-    By default sqlite is use for testing
+    Modify .env.testing file with your own values
+    sqlite is use for testing by default
 
 #### Generate Project key
 
