@@ -9,6 +9,5 @@ use Src\Auth\Domain\AuthUserToken;
 
 interface TokenCreatorInterface
 {
-
     public function create(AuthUser $user): AuthUserToken;
 }

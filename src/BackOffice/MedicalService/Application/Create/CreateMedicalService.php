@@ -11,7 +11,6 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
 class CreateMedicalService
 {
-
     public function __construct(private readonly MedicalServiceRepository $repository)
     {
     }

@@ -6,7 +6,6 @@ namespace Src\Auth\Domain;
 
 class AuthUser
 {
-
     public function __construct(
         private readonly AuthUserId $id,
         private readonly AuthUserName $name,

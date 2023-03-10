@@ -12,7 +12,6 @@ use Src\shared\Domain\Criteria\Criteria;
 
 interface MedicalServiceRepository
 {
-
     public function count(Criteria $criteria): int;
 
     public function create(MedicalServiceName $name, MedicalServiceIsActive $active): MedicalService;

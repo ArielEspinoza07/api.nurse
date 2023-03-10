@@ -6,7 +6,6 @@ namespace Src\shared\Domain\Criteria;
 
 class Criteria
 {
-
     public function __construct(
         private readonly Filters $filters,
         private readonly Order $order,

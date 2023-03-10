@@ -8,5 +8,4 @@ use Src\shared\Domain\ValueObject\StringValueObject;
 
 class AuthUserPassword extends StringValueObject
 {
-
 }

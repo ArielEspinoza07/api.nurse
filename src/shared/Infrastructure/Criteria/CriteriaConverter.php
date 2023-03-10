@@ -17,7 +17,6 @@ use Src\shared\Infrastructure\Criteria\DTO\SearchByCriteriaInputDTO;
 
 class CriteriaConverter
 {
-
     public function __construct(private readonly SearchByCriteriaInputDTO $inputDTO)
     {
     }

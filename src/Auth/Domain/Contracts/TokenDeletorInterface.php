@@ -9,6 +9,5 @@ use Src\Auth\Domain\AuthUserToken;
 
 interface TokenDeletorInterface
 {
-
     public function delete(AuthUser $user): void;
 }

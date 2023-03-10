@@ -13,7 +13,7 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
 
-class MedicalServiceUpdatorTest extends MedicalServiceApplicationTestBase
+class UpdateMedicalServiceTest extends MedicalServiceApplicationTestBase
 {
 
     use RefreshDatabase;

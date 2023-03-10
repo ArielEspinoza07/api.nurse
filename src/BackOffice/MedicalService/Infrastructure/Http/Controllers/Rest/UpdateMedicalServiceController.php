@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UpdateMedicalServiceController extends BaseController
 {
-
     public function __construct(
         private readonly UpdateMedicalService $service,
         private readonly ResponseBuilderContract $response

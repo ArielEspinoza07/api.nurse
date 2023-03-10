@@ -14,7 +14,7 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
 
-class MedicalServiceFinderTest extends MedicalServiceApplicationTestBase
+class GetMedicalServiceByIdTest extends MedicalServiceApplicationTestBase
 {
 
     use RefreshDatabase;

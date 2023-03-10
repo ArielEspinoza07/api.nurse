@@ -6,7 +6,6 @@ namespace Src\shared\Domain\Criteria;
 
 class Order
 {
-
     public function __construct(
         private readonly OrderBy $orderBy,
         private readonly OrderType $orderType,

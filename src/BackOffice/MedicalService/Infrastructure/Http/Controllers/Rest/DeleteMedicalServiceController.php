@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DeleteMedicalServiceController extends BaseController
 {
-
     public function __construct(
         private readonly DeleteMedicalService $service,
         private readonly ResponseBuilderContract $response

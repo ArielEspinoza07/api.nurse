@@ -10,7 +10,6 @@ use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMe
 
 class MedicalServiceBindingServiceProvider extends ServiceProvider
 {
-
     public array $bindings = [
         MedicalServiceRepository::class => EloquentMedicalServiceRepository::class
     ];

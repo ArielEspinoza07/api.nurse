@@ -12,7 +12,6 @@ use Src\Auth\Domain\AuthUserPassword;
 
 interface AuthUserRepository
 {
-
     public function create(
         AuthUserName $name,
         AuthUserEmail $email,

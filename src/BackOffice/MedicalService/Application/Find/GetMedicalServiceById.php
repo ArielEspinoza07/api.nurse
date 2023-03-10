@@ -10,7 +10,6 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
 class GetMedicalServiceById
 {
-
     public function __construct(private readonly MedicalServiceRepository $repository)
     {
     }

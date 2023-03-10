@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RegisterUserController
 {
-
     public function __construct(
         private readonly RegisterUser $service,
         private readonly ResponseBuilderContract $response

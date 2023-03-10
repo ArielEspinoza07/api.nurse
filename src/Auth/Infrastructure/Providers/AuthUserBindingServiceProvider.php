@@ -15,7 +15,6 @@ use Src\Auth\Infrastructure\Token\LaravelSanctumToken;
 
 class AuthUserBindingServiceProvider extends ServiceProvider
 {
-
     public array $bindings = [
         AuthUserRepository::class => EloquentAuthUserRepository::class,
         PasswordHasherInterface::class => LaravelPasswordHasher::class,

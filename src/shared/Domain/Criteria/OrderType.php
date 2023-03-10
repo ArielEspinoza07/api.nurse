@@ -8,7 +8,6 @@ use Src\shared\Domain\Validation\Contract\AssertIsBetweenAcceptedValues;
 
 class OrderType
 {
-
     use AssertIsBetweenAcceptedValues;
 
     public const ASC = 'asc';

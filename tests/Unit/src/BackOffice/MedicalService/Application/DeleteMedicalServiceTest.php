@@ -10,7 +10,7 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
 
-class MedicalServiceDeletorTest extends MedicalServiceApplicationTestBase
+class DeleteMedicalServiceTest extends MedicalServiceApplicationTestBase
 {
 
     use RefreshDatabase;

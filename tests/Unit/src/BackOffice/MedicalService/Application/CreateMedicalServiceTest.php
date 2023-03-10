@@ -11,7 +11,7 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Tests\TestCase;
 
-class MedicalServiceCreatorTest extends TestCase
+class CreateMedicalServiceTest extends TestCase
 {
 
     use RefreshDatabase;

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Domain;
 
-
 class MedicalService
 {
-
     private function __construct(
         private readonly MedicalServiceId $id,
         private MedicalServiceName $name,
@@ -66,5 +64,4 @@ class MedicalService
             'is_active' => $this->isActive->value(),
         ];
     }
-
 }

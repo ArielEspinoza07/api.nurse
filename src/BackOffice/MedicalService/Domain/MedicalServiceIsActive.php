@@ -6,7 +6,6 @@ namespace Src\BackOffice\MedicalService\Domain;
 
 class MedicalServiceIsActive
 {
-
     public function __construct(protected bool $value)
     {
     }

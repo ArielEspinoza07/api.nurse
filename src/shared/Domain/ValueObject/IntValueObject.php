@@ -6,7 +6,6 @@ namespace Src\shared\Domain\ValueObject;
 
 abstract class IntValueObject
 {
-
     public function __construct(protected int $value)
     {
     }

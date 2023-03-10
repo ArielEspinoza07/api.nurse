@@ -9,7 +9,6 @@ use Src\Auth\Domain\AuthUserPassword;
 
 interface PasswordHasherInterface
 {
-
     public function hash(AuthUserPassword $password): string;
 
     public function check(AuthUser $user, AuthUserPassword $password): bool;

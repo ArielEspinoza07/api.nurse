@@ -8,5 +8,4 @@ use Src\shared\Domain\ValueObject\StringValueObject;
 
 class FilterValue extends StringValueObject
 {
-
 }

@@ -12,7 +12,6 @@ use Src\shared\Domain\Criteria\FilterOperator;
 
 class EloquentCriteriaConverter
 {
-
     public function __construct(private readonly Criteria $criteria)
     {
     }

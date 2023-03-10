@@ -15,7 +15,6 @@ use Src\shared\Infrastructure\Persistence\Eloquent\EloquentCriteriaConverter;
 
 class EloquentMedicalServiceRepository implements MedicalServiceRepository
 {
-
     public function count(Criteria $criteria): int
     {
         return EloquentCriteriaConverter::convert(

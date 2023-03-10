@@ -8,7 +8,6 @@ use Src\shared\Domain\ValueObject\StringValueObject;
 
 class AuthUserName extends StringValueObject
 {
-
     public static function random(): self
     {
         $names = ['John', 'Peter', 'Maria'];

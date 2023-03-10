@@ -8,7 +8,6 @@ use Exception;
 
 class MedicalServiceNotFoundException extends Exception
 {
-
     public function __construct()
     {
         parent::__construct(

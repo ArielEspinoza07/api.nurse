@@ -4,15 +4,18 @@ namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Src\BackOffice\MedicalService\Application\SearchAll\SearchMedicalService;
+use Src\BackOffice\MedicalService\Application\Count\CountMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
+use Src\shared\Domain\Criteria\Criteria;
+use Src\shared\Domain\Criteria\Filters;
+use Src\shared\Domain\Criteria\Order;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
-class MedicalServiceSearcherTest extends MedicalServiceApplicationTestBase
+class CountMedicalServiceTest extends MedicalServiceApplicationTestBase
 {
     use RefreshDatabase;
 
-    public function test_get_all_medical_services(): void
+    public function test_count_medical_services(): void
     {
         $services = [
             [
@@ -37,16 +40,24 @@ class MedicalServiceSearcherTest extends MedicalServiceApplicationTestBase
         });
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
-        $this->app->instance(SearchMedicalService::class, $repository);
+        $this->app->instance(CountMedicalService::class, $repository);
 
-        $repository->shouldReceive('searchAll')
+        $criteria = new Criteria(
+            new Filters([]),
+            Order::none(),
+            1,
+            2
+        );
+
+        $repository->shouldReceive('count')
             ->once()
-            ->withNoArgs()
-            ->andReturn();
+            ->with($criteria)
+            ->andReturn(count($services));
 
-        $all = (new SearchMedicalService($repository))
-            ->handle();
+        $counter = (new CountMedicalService($repository))
+            ->handle($criteria);
 
-        $this->assertIsArray($all);
+        $this->assertIsInt($counter);
+        $this->assertEquals(count($services), $counter);
     }
 }

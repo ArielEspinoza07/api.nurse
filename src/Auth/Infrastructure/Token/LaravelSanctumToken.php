@@ -12,7 +12,6 @@ use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 
 class LaravelSanctumToken implements TokenCreatorInterface, TokenDeletorInterface
 {
-
     public function create(AuthUser $user): AuthUserToken
     {
         $model = EloquentAuthUserModel::query()

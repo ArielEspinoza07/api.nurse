@@ -19,7 +19,6 @@ use Illuminate\Foundation\Auth\User as IlluminateAuthUser;
  */
 class EloquentAuthUserModel extends IlluminateAuthUser
 {
-
     use HasApiTokens;
     use HasFactory;
 

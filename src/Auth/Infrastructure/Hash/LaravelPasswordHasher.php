@@ -11,7 +11,6 @@ use Src\Auth\Domain\Contracts\PasswordHasherInterface;
 
 class LaravelPasswordHasher implements PasswordHasherInterface
 {
-
     public function hash(AuthUserPassword $password): string
     {
         return Hash::make($password->value());

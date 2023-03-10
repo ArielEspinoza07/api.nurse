@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent;
 
-
 use Src\shared\Infrastructure\Persistence\Eloquent\EloquentBaseModel;
 
 /**

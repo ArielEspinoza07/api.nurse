@@ -14,7 +14,6 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 
 class RegisterUser
 {
-
     public function __construct(
         private readonly AuthUserRepository $repository,
         private readonly PasswordHasherInterface $passwordHasher,

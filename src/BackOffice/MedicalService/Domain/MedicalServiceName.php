@@ -10,7 +10,6 @@ use Src\shared\Domain\ValueObject\StringValueObject;
 
 class MedicalServiceName extends StringValueObject
 {
-
     use AssertNotNullable;
     use AssertValueLength;
 
@@ -21,6 +20,4 @@ class MedicalServiceName extends StringValueObject
         $this->assertNotNull($this->value);
         $this->assertValueLength($this->value);
     }
-
-
 }

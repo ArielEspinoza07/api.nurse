@@ -8,5 +8,4 @@ use Src\shared\Domain\ValueObject\IntValueObject;
 
 class AuthUserId extends IntValueObject
 {
-
 }

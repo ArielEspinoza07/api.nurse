@@ -16,7 +16,6 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 
 class EloquentAuthUserRepository implements AuthUserRepository
 {
-
     public function findByEmail(AuthUserEmail $email): AuthUser
     {
         $model = EloquentAuthUserModel::query()

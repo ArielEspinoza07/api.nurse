@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CreateMedicalServiceController extends BaseController
 {
-
     public function __construct(
         private readonly CreateMedicalService $service,
         private readonly ResponseBuilderContract $response
