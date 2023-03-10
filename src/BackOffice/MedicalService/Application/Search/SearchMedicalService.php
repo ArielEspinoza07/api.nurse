@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\BackOffice\MedicalService\Application\SearchAll;
+namespace Src\BackOffice\MedicalService\Application\Search;
 
 use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
