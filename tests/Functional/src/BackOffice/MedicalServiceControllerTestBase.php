@@ -26,7 +26,7 @@ class MedicalServiceControllerTestBase extends TestCase
         }
 
         $response = $this->withToken($token)
-            ->post(route('api:v1:medical:service:create', $payload));
+            ->postJson(route('api:v1:medical:service:create', $payload));
 
         if (Response::HTTP_CREATED !== $response->getStatusCode()) {
             throw new RuntimeException('Error creating medical service');
@@ -38,7 +38,7 @@ class MedicalServiceControllerTestBase extends TestCase
 
     protected function authToken(): string
     {
-        $response = $this->post(route('api:v1:auth:register'), [
+        $response = $this->postJson(route('api:v1:auth:register'), [
             'name' => 'John D',
             'email' => $this->faker->email(),
             'password' => 'Password!1',

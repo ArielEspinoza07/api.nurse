@@ -20,7 +20,7 @@ class CreateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         $responseCreated = $this->withToken($token)
-            ->post(route($this->endpoint), $payload);
+            ->postJson(route($this->endpoint), $payload);
 
         $responseCreated->assertCreated();
         $responseCreated->assertJsonStructure([
@@ -40,7 +40,7 @@ class CreateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         $generatedMedicalServiceId = $responseCreated->decodeResponseJson()['data']['id'];
 
         $responseFounded = $this->withToken($token)
-            ->get(
+            ->getJson(
                 route(
                     'api:v1:medical:service:show',
                     [

@@ -37,7 +37,7 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
             });
 
         $response = $this->withToken($token)
-            ->get(route($this->endpoint));
+            ->getJson(route($this->endpoint));
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -94,7 +94,7 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         $queryString = http_build_query($payload);
 
         $response = $this->withToken($token)
-            ->get(route($this->endpoint) . sprintf('?%s', $queryString));
+            ->getJson(route($this->endpoint) . sprintf('?%s', $queryString));
 
         $response->assertOk();
         $response->assertJsonStructure([

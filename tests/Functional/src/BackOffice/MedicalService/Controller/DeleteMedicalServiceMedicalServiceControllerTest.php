@@ -15,7 +15,7 @@ class DeleteMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         $medicalServiceId = $this->createMedicalService($token);
 
         $response = $this->withToken($token)
-            ->delete(route($this->endpoint, ['id' => $medicalServiceId]));
+            ->deleteJson(route($this->endpoint, ['id' => $medicalServiceId]));
 
         $response->assertNoContent();
     }
@@ -28,7 +28,7 @@ class DeleteMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         $medicalServiceId = rand(1, 10);
 
         $response = $this->withToken($token)
-            ->delete(route($this->endpoint, ['id' => $medicalServiceId]));
+            ->deleteJson(route($this->endpoint, ['id' => $medicalServiceId]));
 
         $response->assertNotFound();
         $response->assertJsonStructure([
