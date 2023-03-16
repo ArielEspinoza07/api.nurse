@@ -22,9 +22,9 @@ class ResponseExceptionHandler implements ResponseExceptionHandlerContract
     {
         return $this->responseBuilder->build(
             new ResponseBuilderInputDTO(
-                $this->code($throwable),
                 $this->message($throwable),
                 $this->data($throwable),
+                $this->code($throwable),
                 false,
             )
         );

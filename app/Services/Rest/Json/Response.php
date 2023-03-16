@@ -11,7 +11,6 @@ use Illuminate\Http\JsonResponse;
 class Response implements ResponseContract
 {
 
-
     public function handle(ResponseInputDTO $inputDTO): JsonResponse
     {
         return new JsonResponse($inputDTO->data, $inputDTO->code);

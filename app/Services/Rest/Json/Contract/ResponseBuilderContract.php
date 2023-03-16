@@ -9,6 +9,5 @@ use Illuminate\Http\JsonResponse;
 
 interface ResponseBuilderContract
 {
-
     public function build(ResponseBuilderInputDTO $inputDTO): JsonResponse;
 }

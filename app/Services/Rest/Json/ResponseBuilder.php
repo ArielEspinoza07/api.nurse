@@ -27,7 +27,7 @@ class ResponseBuilder implements ResponseBuilderContract
                 [
                     'success' => $inputDTO->success,
                     'message' => $inputDTO->message,
-                    'data' => $inputDTO->data
+                    'data' => $inputDTO->data,
                 ]
             )
         );
