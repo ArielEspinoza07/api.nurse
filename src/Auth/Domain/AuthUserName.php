@@ -12,6 +12,6 @@ class AuthUserName extends StringValueObject
     {
         $names = ['John', 'Peter', 'Maria'];
 
-        return new static($names[rand(0, 3)]);
+        return new static($names[rand(0, count($names))]);
     }
 }
