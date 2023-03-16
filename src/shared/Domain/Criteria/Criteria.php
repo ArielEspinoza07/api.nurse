@@ -9,8 +9,8 @@ class Criteria
     public function __construct(
         private readonly Filters $filters,
         private readonly Order $order,
-        private readonly int $page,
-        private readonly int $limit
+        private readonly int $page = 1,
+        private readonly int $limit = 15
     ) {
     }
 

@@ -21,8 +21,8 @@ class SearchByCriteriaInputDTO
         return new static(
             $request->get('filters'),
             $request->get('order'),
-            intval($request->get('page', 1)),
-            intval($request->get('limit', 15)),
+            intval($request->get('page')),
+            intval($request->get('limit')),
         );
     }
 }
