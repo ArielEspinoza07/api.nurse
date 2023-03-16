@@ -34,9 +34,7 @@ class AuthenticateUserController extends BaseController
                 new ResponseBuilderInputDTO(
                     Response::HTTP_OK,
                     'Logged in.',
-                    [
-                        'token' => $token->value()
-                    ]
+                    $token->toArray()
                 )
             );
     }

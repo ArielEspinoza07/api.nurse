@@ -15,8 +15,15 @@ class AuthUserToken extends StringValueObject
     {
         parent::__construct($this->value);
 
-        if (! empty($this->value)) {
+        if (!empty($this->value)) {
             $this->assertValueLength($this->value, 42);
         }
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'token' => $this->value,
+        ];
     }
 }

@@ -35,9 +35,7 @@ class RegisterUserController
                 new ResponseBuilderInputDTO(
                     Response::HTTP_OK,
                     'Registered.',
-                    [
-                        'token' => $token->value()
-                    ]
+                    $token->toArray()
                 )
             );
     }
