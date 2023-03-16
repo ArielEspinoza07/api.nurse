@@ -17,9 +17,9 @@ class SearchMedicalService
     {
     }
 
-    public function handle(Criteria|null $criteria = null): array
+    public function handle(Criteria $criteria): array
     {
-        if (!$criteria) {
+        if (!$criteria->hasFilters()) {
             return $this->repository->searchAll();
         }
         $paginated = $this->repository->searchByCriteria($criteria);

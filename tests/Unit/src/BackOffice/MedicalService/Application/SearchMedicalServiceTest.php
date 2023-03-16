@@ -6,6 +6,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Src\BackOffice\MedicalService\Application\Search\SearchMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
+use Src\shared\Domain\Criteria\Criteria;
+use Src\shared\Domain\Criteria\Filters;
+use Src\shared\Domain\Criteria\Order;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
 class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
@@ -44,8 +47,13 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
             ->withNoArgs()
             ->andReturn();
 
+        $criteria = new Criteria(
+            new Filters(),
+            Order::none()
+        );
+
         $all = (new SearchMedicalService($repository))
-            ->handle();
+            ->handle($criteria);
 
         $this->assertIsArray($all);
     }
