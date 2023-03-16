@@ -28,18 +28,6 @@ class SearchMedicalServiceController extends BaseController
                 SearchByCriteriaInputDTO::createFromRequest($request)
             ))->convert()
         );
-        if (!empty($medicalServices['data'])) {
-            $medicalServices = [
-                'items' => $medicalServices['data'],
-                'meta' => [
-                    'page' => $medicalServices['current_page'],
-                    'per_page' => $medicalServices['per_page'],
-                    'page_count' => count($medicalServices['data']),
-                    'total_count' => $medicalServices['total'],
-                    'links' => $medicalServices['links'],
-                ],
-            ];
-        }
 
         return $this->response
             ->build(

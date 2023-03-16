@@ -20,24 +20,19 @@ class SearchMedicalService
     public function handle(Criteria|null $criteria = null): array
     {
         if (!$criteria) {
-            return $this->output($this->repository->searchAll());
+            return $this->repository->searchAll();
         }
         $paginated = $this->repository->searchByCriteria($criteria);
-        $paginated['data'] = $this->output($paginated['data']);
 
-        return $paginated;
-    }
-
-
-    private function output(array $medicalServices): array
-    {
-        return array_map(function ($service) {
-            return MedicalService::create(
-                new MedicalServiceId($service['id']),
-                new MedicalServiceName($service['name']),
-                new MedicalServiceIsActive($service['is_active']),
-            )
-                ->toArray();
-        }, $medicalServices);
+        return [
+            'items' => $paginated['data'],
+            'meta' => [
+                'page' => $paginated['current_page'],
+                'per_page' => $paginated['per_page'],
+                'page_count' => count($paginated['data']),
+                'total_count' => $paginated['total'],
+                'links' => $paginated['links'],
+            ],
+        ];
     }
 }

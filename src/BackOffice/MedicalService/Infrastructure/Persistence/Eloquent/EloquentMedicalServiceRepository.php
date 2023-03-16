@@ -51,17 +51,33 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
     public function searchAll(): array
     {
         return EloquentMedicalServiceModel::all()
+            ->map(function (EloquentMedicalServiceModel $model) {
+                return MedicalService::create(
+                    new MedicalServiceId($model->id),
+                    new MedicalServiceName($model->name),
+                    new MedicalServiceIsActive($model->is_active),
+                )->toArray();
+            })
             ->toArray();
     }
 
     public function searchByCriteria(Criteria $criteria): array
     {
-        return EloquentCriteriaConverter::convert(
+        $paginatedResults = EloquentCriteriaConverter::convert(
             $criteria,
             app()->make(EloquentMedicalServiceModel::class)
         )
             ->paginate($criteria->limit())
             ->toArray();
+        $paginatedResults['data'] = array_map(function ($service) {
+            return MedicalService::create(
+                new MedicalServiceId($service['id']),
+                new MedicalServiceName($service['name']),
+                new MedicalServiceIsActive($service['is_active']),
+            )->toArray();
+        }, $paginatedResults['data']);
+
+        return $paginatedResults;
     }
 
     public function update(MedicalService $medicalService): MedicalService
