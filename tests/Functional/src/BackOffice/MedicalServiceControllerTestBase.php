@@ -41,8 +41,8 @@ class MedicalServiceControllerTestBase extends TestCase
         $response = $this->postJson(route('api:v1:auth:register'), [
             'name' => 'John D',
             'email' => $this->faker->email(),
-            'password' => 'Password!1',
-            'password_confirmation' => 'Password!1',
+            'password' => 'Api.nurse!1',
+            'password_confirmation' => 'Api.nurse!1',
         ]);
 
         if (Response::HTTP_OK !== $response->getStatusCode()) {

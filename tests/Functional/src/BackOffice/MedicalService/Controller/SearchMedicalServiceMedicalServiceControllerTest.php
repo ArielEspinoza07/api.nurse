@@ -51,7 +51,13 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $this->assertNotNull($response->decodeResponseJson()['data']);
         $this->assertIsArray($response->decodeResponseJson()['data']);
-        $this->assertCount(count($services), $response->decodeResponseJson()['data']);
+
+        $this->assertNotNull($response->decodeResponseJson()['data']['items']);
+        $this->assertIsArray($response->decodeResponseJson()['data']['items']);
+        $this->assertCount(count($services), $response->decodeResponseJson()['data']['items']);
+
+        $this->assertNotNull($response->decodeResponseJson()['data']['meta']);
+        $this->assertIsArray($response->decodeResponseJson()['data']['meta']);
     }
 
     public function test_search_all_medical_services_with_criteria(): void
@@ -111,5 +117,12 @@ class SearchMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $this->assertNotNull($response->decodeResponseJson()['data']);
         $this->assertIsArray($response->decodeResponseJson()['data']);
+
+        $this->assertNotNull($response->decodeResponseJson()['data']['items']);
+        $this->assertIsArray($response->decodeResponseJson()['data']['items']);
+        $this->assertCount(2, $response->decodeResponseJson()['data']['items']);
+
+        $this->assertNotNull($response->decodeResponseJson()['data']['meta']);
+        $this->assertIsArray($response->decodeResponseJson()['data']['meta']);
     }
 }

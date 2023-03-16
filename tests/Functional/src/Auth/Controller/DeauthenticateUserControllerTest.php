@@ -12,7 +12,7 @@ class DeauthenticateUserControllerTest extends AuthControllerTestBase
     {
         $payload = [
             'email' => $this->faker->email(),
-            'password' => 'Password!1',
+            'password' => 'Api.nurse!1',
         ];
 
         $this->registerUser($payload);

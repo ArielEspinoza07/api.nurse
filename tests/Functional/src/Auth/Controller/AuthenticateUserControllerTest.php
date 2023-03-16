@@ -13,7 +13,7 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
     {
         $payload = [
             'email' => $this->faker->email(),
-            'password' => 'Password!1',
+            'password' => 'Api.nurse!1',
         ];
 
         $this->registerUser($payload);
@@ -66,14 +66,14 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
     {
         $payload = [
             'email' => $this->faker->email(),
-            'password' => 'Password!1',
+            'password' => 'Api.nurse!1',
         ];
 
         $this->registerUser($payload);
 
         $loggedIn = $this->postJson(route($this->endpoint), [
             'email' => $payload['email'],
-            'password' => 'Password!2',
+            'password' => 'Api.nurse!12',
         ]);
 
         $loggedIn->assertUnauthorized();

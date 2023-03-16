@@ -14,8 +14,8 @@ class RegisterUserControllerTest extends AuthControllerTestBase
         $payload = [
             'name' => $this->faker->name(),
             'email' => $this->faker->email(),
-            'password' => 'Password!1',
-            'password_confirmation' => 'Password!1',
+            'password' => 'Api.nurse!1',
+            'password_confirmation' => 'Api.nurse!1',
         ];
 
         $registered = $this->postJson(route($this->endpoint), $payload);
