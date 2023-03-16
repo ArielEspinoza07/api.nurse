@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Rest\Json;
+namespace App\Services\Rest\Json\Exception;
 
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\Contract\ResponseExceptionHandlerContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
-use \Symfony\Component\HttpFoundation\Response as HttpResponse;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Throwable;
 
 class ResponseExceptionHandler implements ResponseExceptionHandlerContract

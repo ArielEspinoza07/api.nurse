@@ -4,11 +4,10 @@ namespace Tests\Unit\app\Services\Rest;
 
 use App\Services\Rest\Json\Contract\ResponseBuilderContract;
 use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
-use App\Services\Rest\Json\ResponseExceptionHandler;
+use App\Services\Rest\Json\Exception\ResponseExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
 use Mockery;
-use Mockery\MockInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 

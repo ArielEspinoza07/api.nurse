@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Services\Rest\Json\Exception\ResponseExceptionHandler;
 use App\Services\Rest\Json\Response;
 use App\Services\Rest\Json\ResponseBuilder;
-use App\Services\Rest\Json\ResponseExceptionHandler;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
