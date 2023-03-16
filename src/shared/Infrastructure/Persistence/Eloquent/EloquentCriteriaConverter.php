@@ -40,10 +40,10 @@ class EloquentCriteriaConverter
                     }
                 });
         }
-        if (!$this->criteria->order()->getOrderType()->isNone()) {
+        if (!$this->criteria->order()->orderType()->isNone()) {
             $model = $model->orderBy(
-                $this->criteria->order()->getOrderBy()->value(),
-                $this->criteria->order()->getOrderType()->value()
+                $this->criteria->order()->orderBy()->value(),
+                $this->criteria->order()->orderType()->value()
             );
         }
 

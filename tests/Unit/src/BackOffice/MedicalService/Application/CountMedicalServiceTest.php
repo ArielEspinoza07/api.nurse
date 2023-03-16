@@ -43,10 +43,8 @@ class CountMedicalServiceTest extends MedicalServiceApplicationTestBase
         $this->app->instance(CountMedicalService::class, $repository);
 
         $criteria = new Criteria(
-            new Filters([]),
-            Order::none(),
-            1,
-            2
+            new Filters(),
+            Order::none()
         );
 
         $repository->shouldReceive('count')

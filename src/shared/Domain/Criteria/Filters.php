@@ -6,7 +6,7 @@ namespace Src\shared\Domain\Criteria;
 
 class Filters
 {
-    public function __construct(private array $values)
+    public function __construct(private array $values = [])
     {
     }
 

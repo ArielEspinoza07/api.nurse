@@ -27,12 +27,12 @@ class Order
         return new static(new OrderBy(''), new OrderType(OrderType::NONE));
     }
 
-    public function getOrderBy(): OrderBy
+    public function orderBy(): OrderBy
     {
         return $this->orderBy;
     }
 
-    public function getOrderType(): OrderType
+    public function orderType(): OrderType
     {
         return $this->orderType;
     }
