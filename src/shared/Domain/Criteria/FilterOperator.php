@@ -15,7 +15,7 @@ class FilterOperator
     public const GREATER_THAN = '>';
     public const LIKE = 'like';
     public const NOT_CONTAINS = 'NOT_CONTAINS';
-    public const NOT_EQUAL = '!=';
+    public const NOT_EQUAL = '<>';
     public const SMALLER_THAN = '<';
 
     public function __construct(private readonly string $value)

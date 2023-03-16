@@ -26,7 +26,7 @@ class SearchMedicalServiceController extends BaseController
         $medicalServices = $this->service->handle(
             (new CriteriaConverter(
                 SearchByCriteriaInputDTO::createFromRequest($request)
-            ))->converter()
+            ))->convert()
         );
         if (!empty($medicalServices['data'])) {
             $medicalServices = [

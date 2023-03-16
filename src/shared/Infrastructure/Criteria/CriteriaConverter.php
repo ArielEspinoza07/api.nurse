@@ -21,51 +21,17 @@ class CriteriaConverter
     {
     }
 
-    public function converter(): Criteria|null
+    public function convert(): Criteria|null
     {
         if (!empty($this->inputDTO->filters) || !empty($this->inputDTO->order) || !empty($this->inputDTO->limit)) {
             return new Criteria(
-                $this->filters($this->inputDTO->filters),
-                $this->order($this->inputDTO->order),
-                $this->inputDTO->page ?? 1,
-                $this->inputDTO->limit ?? 15
+                (new GetFilters())->handle($this->inputDTO->filters),
+                (new GetOrder())->handle($this->inputDTO->order),
+                $this->inputDTO->page,
+                $this->inputDTO->limit
             );
         }
 
         return null;
-    }
-
-    private function filters(string $filters): Filters
-    {
-        $criteriaFilters = new Filters([]);
-        if (!empty($filters)) {
-            foreach (explode(',', $filters) as $filter) {
-                list($field, $operator, $value) = explode(':', $filter);
-                $criteriaFilters->add(
-                    new Filter(
-                        new FilterField($field),
-                        new FilterOperator($operator),
-                        new FilterValue($value),
-                    )
-                );
-            }
-        }
-
-        return $criteriaFilters;
-    }
-
-    private function order(array|string $order): Order
-    {
-        if (is_array($order)) {
-            return Order::create(
-                new OrderBy($order['by']),
-                new OrderType($order['type'])
-            );
-        }
-        if (is_string($order)) {
-            return Order::createDesc(new OrderBy($order));
-        }
-
-        return Order::none();
     }
 }
