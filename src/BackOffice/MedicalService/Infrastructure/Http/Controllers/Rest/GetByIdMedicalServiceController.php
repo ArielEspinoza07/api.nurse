@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use Src\BackOffice\MedicalService\Application\Find\GetMedicalServiceById;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 
 class GetByIdMedicalServiceController extends BaseController
 {
@@ -27,7 +26,6 @@ class GetByIdMedicalServiceController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Found.',
                     $medicalService->toArray()
                 )

@@ -12,7 +12,6 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Infrastructure\Http\Request\RegisterUserRequest;
-use Symfony\Component\HttpFoundation\Response;
 
 class RegisterUserController
 {
@@ -33,7 +32,6 @@ class RegisterUserController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Registered.',
                     $token->toArray()
                 )

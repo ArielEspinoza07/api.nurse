@@ -27,8 +27,9 @@ class DeleteMedicalServiceController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
+                    'Deleted.',
+                    null,
                     Response::HTTP_NO_CONTENT,
-                    'Deleted.'
                 )
             );
     }

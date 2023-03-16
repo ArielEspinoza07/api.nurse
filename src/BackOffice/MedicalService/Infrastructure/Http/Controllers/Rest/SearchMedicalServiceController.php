@@ -12,7 +12,6 @@ use Src\BackOffice\MedicalService\Application\Search\SearchMedicalService;
 use Src\shared\Infrastructure\Criteria\CriteriaConverter;
 use Src\shared\Infrastructure\Criteria\DTO\SearchByCriteriaInputDTO;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 
 class SearchMedicalServiceController extends BaseController
 {
@@ -45,7 +44,6 @@ class SearchMedicalServiceController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Retrieved all.',
                     $medicalServices
                 )

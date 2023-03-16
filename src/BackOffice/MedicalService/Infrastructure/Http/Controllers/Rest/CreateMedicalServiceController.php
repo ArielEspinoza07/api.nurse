@@ -30,9 +30,9 @@ class CreateMedicalServiceController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_CREATED,
                     'Created.',
-                    $medicalService->toArray()
+                    $medicalService->toArray(),
+                    Response::HTTP_CREATED
                 )
             );
     }

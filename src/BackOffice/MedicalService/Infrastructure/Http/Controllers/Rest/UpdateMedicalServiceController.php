@@ -13,7 +13,6 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Infrastructure\Http\Request\UpdateMedicalServiceRequest;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 
 class UpdateMedicalServiceController extends BaseController
 {
@@ -34,7 +33,6 @@ class UpdateMedicalServiceController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Updated.',
                     $medicalService->toArray()
                 )

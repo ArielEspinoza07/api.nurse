@@ -10,7 +10,6 @@ use Illuminate\Http\JsonResponse;
 use Src\Auth\Application\Deauthenticate\DeauthenticateUser;
 use Src\Auth\Domain\AuthUserId;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 
 class DeauthenticateUserController extends BaseController
 {
@@ -29,7 +28,6 @@ class DeauthenticateUserController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Logged out.'
                 )
             );

@@ -12,7 +12,6 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Infrastructure\Http\Request\AuthenticateUserRequest;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticateUserController extends BaseController
 {
@@ -32,9 +31,8 @@ class AuthenticateUserController extends BaseController
         return $this->response
             ->build(
                 new ResponseBuilderInputDTO(
-                    Response::HTTP_OK,
                     'Logged in.',
-                    $token->toArray()
+                    $token->toArray(),
                 )
             );
     }
