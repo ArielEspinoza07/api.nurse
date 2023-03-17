@@ -12,6 +12,7 @@ use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Exception\AuthUserNotFoundException;
 use Src\Auth\Domain\Exception\InvalidAuthUserEmailException;
+use Src\Auth\Domain\Exception\UniqueAuthUserEmailException;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 
 class EloquentAuthUserRepository implements AuthUserRepository
@@ -31,6 +32,9 @@ class EloquentAuthUserRepository implements AuthUserRepository
 
     public function create(AuthUserName $name, AuthUserEmail $email, AuthUserPassword $password): AuthUser
     {
+        if (EloquentAuthUserModel::query()->where('email', $email->value())->exists()) {
+            throw new UniqueAuthUserEmailException();
+        }
         $model = EloquentAuthUserModel::query()
             ->create([
                 'name' => $name->value(),

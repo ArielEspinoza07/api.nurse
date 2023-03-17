@@ -64,4 +64,33 @@ class RegisterUserControllerTest extends AuthControllerTestBase
         $this->assertNotNull($registered->decodeResponseJson()['data']['password']);
         $this->assertIsArray($registered->decodeResponseJson()['data']['password']);
     }
+
+    public function test_register_user_with_existing_email(): void
+    {
+        $payload = [
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(),
+            'password' => 'Api.nurse!1',
+            'password_confirmation' => 'Api.nurse!1',
+        ];
+
+        $this->registerUser($payload);
+
+        $registered = $this->postJson(route($this->endpoint), $payload);
+
+        $registered->assertBadRequest();
+        $registered->assertJsonStructure([
+            "success",
+            "message",
+            "data",
+        ]);
+
+
+        $this->assertEquals(false, $registered->decodeResponseJson()['success']);
+        $this->assertEquals(
+            'Registration failed: The email is already associated with an account.',
+            $registered->decodeResponseJson()['message']
+        );
+        $this->assertNull($registered->decodeResponseJson()['data']);
+    }
 }
