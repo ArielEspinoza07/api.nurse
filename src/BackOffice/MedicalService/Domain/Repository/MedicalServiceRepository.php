@@ -20,9 +20,7 @@ interface MedicalServiceRepository
 
     public function findById(MedicalServiceId $id): MedicalService;
 
-    public function searchAll(): array;
-
-    public function searchByCriteria(Criteria $criteria): array;
+    public function search(Criteria $criteria): array;
 
     public function update(MedicalService $medicalService): MedicalService;
 }
