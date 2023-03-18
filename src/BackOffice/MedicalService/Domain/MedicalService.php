@@ -24,7 +24,7 @@ class MedicalService
     public static function createFromName(MedicalServiceName $name): self
     {
         return self::create(
-            MedicalServiceId::random(),
+            MedicalServiceId::none(),
             $name,
             MedicalServiceIsActive::createActive()
         );
