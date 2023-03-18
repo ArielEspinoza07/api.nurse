@@ -85,7 +85,7 @@
 #### Configuration
     
     Modify .env.testing file with your own values
-    sqlite is use for testing by default
+    sqlite is set by default
 
 #### Generate Project key
 
