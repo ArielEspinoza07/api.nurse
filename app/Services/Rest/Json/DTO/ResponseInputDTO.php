@@ -11,4 +11,20 @@ class ResponseInputDTO
         public readonly array $data
     ) {
     }
+
+    public static function createFromValues(
+        string $message,
+        int $code,
+        array|null $data = null,
+        bool $success = true
+    ): self {
+        return new static(
+            $code,
+            [
+                'success' => $success,
+                'message' => $message,
+                'data' => $data,
+            ]
+        );
+    }
 }

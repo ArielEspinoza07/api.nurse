@@ -22,13 +22,11 @@ class ResponseBuilder implements ResponseBuilderContract
     public function build(ResponseBuilderInputDTO $inputDTO): JsonResponse
     {
         return $this->response->handle(
-            new ResponseInputDTO(
+            ResponseInputDTO::createFromValues(
+                $inputDTO->message,
                 $inputDTO->code,
-                [
-                    'success' => $inputDTO->success,
-                    'message' => $inputDTO->message,
-                    'data' => $inputDTO->data,
-                ]
+                $inputDTO->data,
+                $inputDTO->success
             )
         );
     }

@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\app\Services\Rest;
 
-use App\Services\Rest\Json\Contract\ResponseBuilderContract;
-use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
-use App\Services\Rest\Json\Exception\ResponseExceptionHandler;
+use App\Services\Rest\Json\Contract\ResponseContract;
+use App\Services\Rest\Json\DTO\ResponseInputDTO;
+use App\Services\Rest\Json\ResponseExceptionBuilder;
 use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
 use Mockery;
@@ -17,38 +17,34 @@ class ResponseExceptionHandlerTest extends TestCase
     {
         $exception = new InvalidArgumentException('Invalid argument name', Response::HTTP_BAD_REQUEST);
 
-        $dto = new ResponseBuilderInputDTO(
+        $dto = ResponseInputDTO::createFromValues(
             $exception->getMessage(),
-            null,
             $exception->getCode(),
+            null,
             false,
         );
 
-        $responseBuilderContract = Mockery::mock(ResponseBuilderContract::class);
-        $this->app->instance(ResponseExceptionHandler::class, $responseBuilderContract);
+        $responseBuilderContract = Mockery::mock(ResponseContract::class);
+        $this->app->instance(ResponseExceptionBuilder::class, $responseBuilderContract);
 
-        $responseBuilderContract->shouldReceive('build')
+        $responseBuilderContract->shouldReceive('handle')
             ->once()
             ->with(
-                Mockery::on(function (ResponseBuilderInputDTO $inputDTO) use ($dto) {
+                Mockery::on(function (ResponseInputDTO $inputDTO) use ($dto) {
                     return $dto->code === $inputDTO->code
-                        && $dto->message === $inputDTO->message
-                        && $dto->success === $inputDTO->success
-                        && $dto->data === $inputDTO->data;
+                        && $dto->data['success'] === $inputDTO->data['success']
+                        && $dto->data['message'] === $inputDTO->data['message']
+                        && $dto->data['data'] === $inputDTO->data['data'];
                 })
             )
             ->andReturn(
                 new JsonResponse(
-                    [
-                        "success" => $dto->success,
-                        "message" => $dto->message,
-                        "data" => $dto->data,
-                    ],
+                    $dto->data,
                     $dto->code
                 )
             );
 
-        $responseExceptionHandler = (new ResponseExceptionHandler($responseBuilderContract))->handle($exception);
+        $responseExceptionHandler = (new ResponseExceptionBuilder($responseBuilderContract))->handle($exception);
 
         $this->assertInstanceOf(JsonResponse::class, $responseExceptionHandler);
 
