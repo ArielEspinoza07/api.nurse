@@ -35,7 +35,6 @@ class AuthApplicationTestBase extends TestCase
             new AuthUserName($model->name),
             new AuthUserEmail($model->email),
             new AuthUserPassword($model->password),
-            new AuthUserToken(''),
         );
     }
 }

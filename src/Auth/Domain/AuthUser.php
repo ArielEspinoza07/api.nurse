@@ -10,8 +10,7 @@ class AuthUser
         private readonly AuthUserId $id,
         private readonly AuthUserName $name,
         private readonly AuthUserEmail $email,
-        private readonly AuthUserPassword $password,
-        private readonly AuthUserToken $token
+        private readonly AuthUserPassword $password
     ) {
     }
 
@@ -19,15 +18,14 @@ class AuthUser
         AuthUserId $id,
         AuthUserName $name,
         AuthUserEmail $email,
-        AuthUserPassword $password,
-        AuthUserToken $token
+        AuthUserPassword $password
     ): self {
-        return new static($id, $name, $email, $password, $token);
+        return new static($id, $name, $email, $password);
     }
 
     public static function createFromEmailAndPassword(AuthUserEmail $email, AuthUserPassword $password): self
     {
-        return self::create(AuthUserId::none(), AuthUserName::random(), $email, $password, new AuthUserToken(''));
+        return self::create(AuthUserId::none(), AuthUserName::random(), $email, $password);
     }
 
     public static function createFromNameEmailAndPassword(
@@ -35,7 +33,7 @@ class AuthUser
         AuthUserEmail $email,
         AuthUserPassword $password
     ): self {
-        return self::create(AuthUserId::none(), $name, $email, $password, new AuthUserToken(''));
+        return self::create(AuthUserId::none(), $name, $email, $password);
     }
 
     public function id(): AuthUserId

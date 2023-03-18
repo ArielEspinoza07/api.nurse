@@ -81,6 +81,6 @@ class RegisterTest extends AuthApplicationTestBase
             );
 
         $this->assertInstanceOf(AuthUserToken::class, $token);
-        $this->assertEquals(strlen($this->tokenExample), strlen($token->value()));
+        $this->assertEquals(AuthUserToken::TOKEN_LENGTH, strlen($token->value()));
     }
 }
