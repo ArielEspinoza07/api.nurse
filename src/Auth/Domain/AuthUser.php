@@ -27,7 +27,7 @@ class AuthUser
 
     public static function createFromEmailAndPassword(AuthUserEmail $email, AuthUserPassword $password): self
     {
-        return self::create(AuthUserId::random(), AuthUserName::random(), $email, $password, new AuthUserToken(''));
+        return self::create(AuthUserId::none(), AuthUserName::random(), $email, $password, new AuthUserToken(''));
     }
 
     public static function createFromNameEmailAndPassword(
@@ -35,7 +35,7 @@ class AuthUser
         AuthUserEmail $email,
         AuthUserPassword $password
     ): self {
-        return self::create(AuthUserId::random(), $name, $email, $password, new AuthUserToken(''));
+        return self::create(AuthUserId::none(), $name, $email, $password, new AuthUserToken(''));
     }
 
     public function id(): AuthUserId
