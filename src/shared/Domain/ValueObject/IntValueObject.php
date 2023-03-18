@@ -10,6 +10,11 @@ abstract class IntValueObject
     {
     }
 
+    public static function none(): self
+    {
+        return new static(0);
+    }
+
     public static function random(): self
     {
         return new static(random_int(1, 256));

@@ -17,9 +17,4 @@ class MedicalServiceId extends IntValueObject
 
         $this->assertNotNull($this->value);
     }
-
-    public static function none(): self
-    {
-        return new static(0);
-    }
 }
