@@ -2,10 +2,12 @@
 
 namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
+use Database\Seeders\MedicalServiceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Src\BackOffice\MedicalService\Application\Count\CountMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
+use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMedicalServiceModel;
 use Src\shared\Domain\Criteria\Criteria;
 use Src\shared\Domain\Criteria\Filters;
 use Src\shared\Domain\Criteria\Order;
@@ -17,45 +19,34 @@ class CountMedicalServiceTest extends MedicalServiceApplicationTestBase
 
     public function test_count_medical_services(): void
     {
-        $services = [
-            [
-                'name' => 'Emergency',
-            ],
-            [
-                'name' => 'Geriatric',
-            ],
-            [
-                'name' => 'Intensive Care Unit',
-            ],
-            [
-                'name' => 'Orthopaedic ',
-            ],
-            [
-                'name' => 'Pediatrics',
-            ],
-        ];
+        $this->seed(MedicalServiceSeeder::class);
 
-        collect($services)->each(function ($service) {
-            $this->createMedicalService($service);
-        });
+        $totalServices = EloquentMedicalServiceModel::query()
+            ->count();
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
         $this->app->instance(CountMedicalService::class, $repository);
 
-        $criteria = new Criteria(
+        $emptyCriteria = new Criteria(
             new Filters(),
             Order::none()
         );
 
         $repository->shouldReceive('count')
             ->once()
-            ->with($criteria)
-            ->andReturn(count($services));
+            ->with(
+                Mockery::on(function (Criteria $criteria) use ($emptyCriteria) {
+                    return $criteria->hasFilters() === $criteria->hasFilters()
+                        && $criteria->order()->orderBy()->value() === $emptyCriteria->order()->orderBy()->value()
+                        && $criteria->order()->orderType()->value() === $emptyCriteria->order()->orderType()->value();
+                })
+            )
+            ->andReturn($totalServices);
 
         $counter = (new CountMedicalService($repository))
-            ->handle($criteria);
+            ->handle($emptyCriteria);
 
         $this->assertIsInt($counter);
-        $this->assertEquals(count($services), $counter);
+        $this->assertEquals($totalServices, $counter);
     }
 }

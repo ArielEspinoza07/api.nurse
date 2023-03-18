@@ -2,12 +2,18 @@
 
 namespace Tests\Unit\src\BackOffice\MedicalService\Application;
 
+use Database\Seeders\MedicalServiceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Src\BackOffice\MedicalService\Application\Search\SearchMedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
+use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMedicalServiceModel;
 use Src\shared\Domain\Criteria\Criteria;
+use Src\shared\Domain\Criteria\Filter;
+use Src\shared\Domain\Criteria\FilterField;
+use Src\shared\Domain\Criteria\FilterOperator;
 use Src\shared\Domain\Criteria\Filters;
+use Src\shared\Domain\Criteria\FilterValue;
 use Src\shared\Domain\Criteria\Order;
 use Tests\Unit\src\BackOffice\MedicalService\MedicalServiceApplicationTestBase;
 
@@ -17,44 +23,50 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
 
     public function test_get_all_medical_services(): void
     {
-        $services = [
-            [
-                'name' => 'Emergency',
-            ],
-            [
-                'name' => 'Geriatric',
-            ],
-            [
-                'name' => 'Intensive Care Unit',
-            ],
-            [
-                'name' => 'Orthopaedic ',
-            ],
-            [
-                'name' => 'Pediatrics',
-            ],
-        ];
+        $this->seed(MedicalServiceSeeder::class);
 
-        collect($services)->each(function ($service) {
-            $this->createMedicalService($service);
-        });
+        $services = EloquentMedicalServiceModel::query()
+            ->where('name', 'like', '%ic%')
+            ->get()->map(function (EloquentMedicalServiceModel $medicalServiceModel) {
+                return [
+                    'id' => $medicalServiceModel->id,
+                    'name' => $medicalServiceModel->name,
+                    'is_active' => $medicalServiceModel->is_active,
+                ];
+            })
+            ->toArray();
+
+        $filters = new Filters();
+        $filters->add(
+            new Filter(
+                new FilterField('name'),
+                new FilterOperator(FilterOperator::LIKE),
+                new FilterValue('ic'),
+            )
+        );
+        $nameLikeICCriteria = new Criteria(
+            $filters,
+            Order::none()
+        );
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
         $this->app->instance(SearchMedicalService::class, $repository);
 
-        $repository->shouldReceive('searchAll')
+        $repository->shouldReceive('search')
             ->once()
-            ->withNoArgs()
-            ->andReturn();
+            ->with(
+                Mockery::on(function (Criteria $criteria) use ($nameLikeICCriteria) {
+                    return $criteria->hasFilters() === $criteria->hasFilters()
+                        && $criteria->order()->orderBy()->value() === $nameLikeICCriteria->order()->orderBy()->value()
+                        && $criteria->order()->orderType()->value() === $nameLikeICCriteria->order()->orderType()->value();
+                })
+            )
+            ->andReturn($services);
 
-        $criteria = new Criteria(
-            new Filters(),
-            Order::none()
-        );
+        $search = (new SearchMedicalService($repository))
+            ->handle($nameLikeICCriteria);
 
-        $all = (new SearchMedicalService($repository))
-            ->handle($criteria);
-
-        $this->assertIsArray($all);
+        $this->assertIsArray($search);
+        $this->assertEquals(count($services), count($search));
     }
 }
