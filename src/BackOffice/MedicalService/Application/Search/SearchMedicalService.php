@@ -19,20 +19,6 @@ class SearchMedicalService
 
     public function handle(Criteria $criteria): array
     {
-        if (!$criteria->hasFilters()) {
-            return $this->repository->searchAll();
-        }
-        $paginated = $this->repository->searchByCriteria($criteria);
-
-        return [
-            'items' => $paginated['data'],
-            'meta' => [
-                'page' => $paginated['current_page'],
-                'per_page' => $paginated['per_page'],
-                'page_count' => count($paginated['data']),
-                'total_count' => $paginated['total'],
-                'links' => $paginated['links'],
-            ],
-        ];
+        return $this->repository->search($criteria);
     }
 }
