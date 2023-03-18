@@ -23,11 +23,6 @@ class AuthUser
         return new static($id, $name, $email, $password);
     }
 
-    public static function createFromEmailAndPassword(AuthUserEmail $email, AuthUserPassword $password): self
-    {
-        return self::create(AuthUserId::none(), AuthUserName::random(), $email, $password);
-    }
-
     public static function createFromNameEmailAndPassword(
         AuthUserName $name,
         AuthUserEmail $email,
