@@ -21,6 +21,15 @@ class MedicalService
         return new static($id, $name, $isActive);
     }
 
+    public static function createFromArray(array $data): self
+    {
+        return new static(
+            $data['id'],
+            $data['name'],
+            $data['is_active']
+        );
+    }
+
     public static function createFromName(MedicalServiceName $name): self
     {
         return self::create(

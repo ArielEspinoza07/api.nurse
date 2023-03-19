@@ -22,5 +22,5 @@ interface MedicalServiceRepository
 
     public function search(Criteria $criteria): array;
 
-    public function update(MedicalService $medicalService): MedicalService;
+    public function update(MedicalService $medicalService): void;
 }

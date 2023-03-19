@@ -32,20 +32,26 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
                 'is_active' => $active->value(),
             ]);
 
-        return $this->createDomainEntityFromEloquentModel($model);
+        return MedicalService::createFromArray($model->toArray());
     }
 
     public function delete(MedicalServiceId $id): void
     {
-        $model = $this->findByIdOrFail($id);
-        $model->delete();
+        EloquentMedicalServiceModel::query()
+            ->where('id', $id->value())
+            ->delete();
     }
 
     public function findById(MedicalServiceId $id): MedicalService
     {
-        $model = $this->findByIdOrFail($id);
+        $model = EloquentMedicalServiceModel::query()
+            ->find($id->value());
 
-        return $this->createDomainEntityFromEloquentModel($model);
+        if (!$model) {
+            throw new MedicalServiceNotFoundException();
+        }
+
+        return MedicalService::createFromArray($model->toArray());
     }
 
     public function search(Criteria $criteria): array
@@ -89,37 +95,15 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
         ];
     }
 
-    public function update(MedicalService $medicalService): MedicalService
+    public function update(MedicalService $medicalService): void
     {
-        $model = $this->findByIdOrFail($medicalService->id());
-        $model->update(
-            [
-                'name' => $medicalService->name()->value(),
-                'is_active' => $medicalService->active()->value(),
-            ]
-        );
-
-        return $this->createDomainEntityFromEloquentModel($model);
-    }
-
-    private function createDomainEntityFromEloquentModel(EloquentMedicalServiceModel $model): MedicalService
-    {
-        return MedicalService::create(
-            new MedicalServiceId($model->id),
-            new MedicalServiceName($model->name),
-            new MedicalServiceIsActive($model->is_active)
-        );
-    }
-
-    private function findByIdOrFail(MedicalServiceId $id): EloquentMedicalServiceModel|null
-    {
-        $model = EloquentMedicalServiceModel::query()
-            ->find($id->value());
-
-        if (!$model) {
-            throw new MedicalServiceNotFoundException();
-        }
-
-        return $model;
+        EloquentMedicalServiceModel::query()
+            ->where('id', $medicalService->id()->value())
+            ->update(
+                [
+                    'name' => $medicalService->name()->value(),
+                    'is_active' => $medicalService->active()->value(),
+                ]
+            );
     }
 }
