@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Application\Update;
 
+use Src\BackOffice\MedicalService\Application\Find\GetMedicalServiceById;
 use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
@@ -12,8 +13,11 @@ use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 
 class UpdateMedicalService
 {
+    private GetMedicalServiceById $getMedicalServiceById;
+
     public function __construct(private readonly MedicalServiceRepository $repository)
     {
+        $this->getMedicalServiceById = new GetMedicalServiceById($this->repository);
     }
 
     public function handle(
@@ -21,8 +25,8 @@ class UpdateMedicalService
         MedicalServiceName $name,
         MedicalServiceIsActive $active
     ): MedicalService {
-        $medicalService = $this->repository
-            ->findById($id);
+
+        $medicalService = $this->getMedicalServiceById->handle($id);
 
         $medicalService->rename($name);
 
@@ -30,7 +34,8 @@ class UpdateMedicalService
             $medicalService->toggleStatus();
         }
 
-        return $this->repository
-            ->update($medicalService);
+        $this->repository->update($medicalService);
+
+        return $medicalService;
     }
 }

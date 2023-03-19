@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Domain;
 
+use Faker\Provider\Medical;
+
 class MedicalService
 {
     private function __construct(
@@ -24,9 +26,9 @@ class MedicalService
     public static function createFromArray(array $data): self
     {
         return new static(
-            $data['id'],
-            $data['name'],
-            $data['is_active']
+            new MedicalServiceId($data['id']),
+            new MedicalServiceName($data['name']),
+            new MedicalServiceIsActive($data['is_active'])
         );
     }
 
