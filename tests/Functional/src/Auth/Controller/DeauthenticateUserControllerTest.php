@@ -51,7 +51,7 @@ class DeauthenticateUserControllerTest extends AuthControllerTestBase
         $loggedOut = $this->withToken($token)
             ->postJson(route($this->endpoint));
 
-        $loggedOut->assertServerError();
+        $loggedOut->assertUnauthorized();
         $loggedOut->assertJsonStructure([
             "success",
             "message",
