@@ -64,11 +64,7 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
         if (!$criteria->hasFilters() && $criteria->order()->orderType()->isNone()) {
             return $results->get()
                 ->map(function (EloquentMedicalServiceModel $model) {
-                    return MedicalService::create(
-                        new MedicalServiceId($model->id),
-                        new MedicalServiceName($model->name),
-                        new MedicalServiceIsActive($model->is_active),
-                    )->toArray();
+                    return MedicalService::createFromArray($model->toArray())->toArray();
                 })
                 ->toArray();
         }
@@ -79,11 +75,7 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
 
         return [
             'items' => array_map(function ($service) {
-                return MedicalService::create(
-                    new MedicalServiceId($service['id']),
-                    new MedicalServiceName($service['name']),
-                    new MedicalServiceIsActive($service['is_active']),
-                )->toArray();
+                return MedicalService::createFromArray($service)->toArray();
             }, $paginatedResults['data']),
             'meta' => [
                 'page' => $paginatedResults['current_page'],
