@@ -9,7 +9,6 @@ use Src\Auth\Domain\AuthUserId;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUser;
-use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Exception\AuthUserNotFoundException;
 use Src\Auth\Domain\Exception\InvalidAuthUserEmailException;
 use Src\Auth\Domain\Exception\UniqueAuthUserEmailException;
