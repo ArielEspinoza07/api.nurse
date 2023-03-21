@@ -13,8 +13,10 @@ class CountMedicalService
     {
     }
 
-    public function handle(Criteria $criteria): int
+    public function handle(Criteria $criteria): array
     {
-        return $this->repository->count($criteria);
+        return [
+            'total' => $this->repository->count($criteria),
+        ];
     }
 }

@@ -46,7 +46,8 @@ class CountMedicalServiceTest extends MedicalServiceApplicationTestBase
         $counter = (new CountMedicalService($repository))
             ->handle($emptyCriteria);
 
-        $this->assertIsInt($counter);
-        $this->assertEquals($totalServices, $counter);
+        $this->assertIsArray($counter);
+        $this->assertArrayHasKey('total', $counter);
+        $this->assertEquals($totalServices, $counter['total']);
     }
 }
