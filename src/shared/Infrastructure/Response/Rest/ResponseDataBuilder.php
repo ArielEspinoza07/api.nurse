@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\shared\Infrastructure\Response;
+namespace Src\shared\Infrastructure\Response\Rest;
 
 use Src\shared\Domain\Response\ResponseData;
 use Src\shared\Domain\Response\ResponseMessage;
