@@ -24,7 +24,7 @@ class StringToFilters
     {
         $criteriaFilters = Filters::create();
         if (!empty($this->filters)) {
-            foreach (explode(',', $this->filters) as $filter) {
+            foreach (explode(';', $this->filters) as $filter) {
                 list($field, $operator, $value) = explode(':', $filter);
                 $criteriaFilters->add(
                     Filter::create(
