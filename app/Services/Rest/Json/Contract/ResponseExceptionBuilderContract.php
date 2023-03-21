@@ -7,7 +7,7 @@ namespace App\Services\Rest\Json\Contract;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-interface ResponseExceptionHandlerContract
+interface ResponseExceptionBuilderContract
 {
-    public function handle(Throwable $throwable): JsonResponse;
+    public function build(Throwable $throwable): JsonResponse;
 }
