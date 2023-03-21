@@ -28,7 +28,7 @@ class AuthUser
         AuthUserEmail $email,
         AuthUserPassword $password
     ): self {
-        return new static(AuthUserId::none(), $name, $email, $password);
+        return new static(AuthUserId::createEmpty(), $name, $email, $password);
     }
 
     public function id(): AuthUserId

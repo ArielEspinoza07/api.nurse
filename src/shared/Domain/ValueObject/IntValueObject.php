@@ -10,7 +10,7 @@ abstract class IntValueObject
     {
     }
 
-    public static function none(): self
+    public static function createEmpty(): self
     {
         return new static(0);
     }
