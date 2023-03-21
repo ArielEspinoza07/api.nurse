@@ -7,9 +7,9 @@ namespace Src\Auth\Infrastructure\Hash;
 use Illuminate\Support\Facades\Hash;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserPassword;
-use Src\Auth\Domain\Hash\PasswordHasherInterface;
+use Src\Auth\Domain\Hash\PasswordHasherContract;
 
-class LaravelPasswordHasher implements PasswordHasherInterface
+class LaravelPasswordHasher implements PasswordHasherContract
 {
     public function hash(AuthUserPassword $password): string
     {

@@ -9,7 +9,7 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Token\TokenCreatorContract;
-use Src\Auth\Domain\Hash\PasswordHasherInterface;
+use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
@@ -37,7 +37,7 @@ class AuthenticateTest extends AuthApplicationTestBase
             )
             ->andReturn($authUser);
 
-        $passwordHasher = Mockery::mock(PasswordHasherInterface::class);
+        $passwordHasher = Mockery::mock(PasswordHasherContract::class);
         $this->app->instance(AuthenticateUser::class, $passwordHasher);
 
         $passwordHasher->shouldReceive('check')

@@ -12,7 +12,7 @@ use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Token\TokenCreatorContract;
-use Src\Auth\Domain\Hash\PasswordHasherInterface;
+use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
@@ -29,7 +29,7 @@ class RegisterTest extends AuthApplicationTestBase
 
         $notEncryptedAuthUser = AuthUser::createFromNameEmailAndPassword($name, $email, $notEncryptedPassword);
 
-        $passwordHasher = Mockery::mock(PasswordHasherInterface::class);
+        $passwordHasher = Mockery::mock(PasswordHasherContract::class);
         $this->app->instance(RegisterUser::class, $passwordHasher);
 
         $passwordHasher->shouldReceive('hash')

@@ -7,7 +7,7 @@ namespace Src\Auth\Domain\Hash;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserPassword;
 
-interface PasswordHasherInterface
+interface PasswordHasherContract
 {
     public function hash(AuthUserPassword $password): string;
 
