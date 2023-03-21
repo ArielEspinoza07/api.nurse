@@ -23,7 +23,7 @@ class RegisterUserController
     public function __invoke(RegisterUserRequest $request): JsonResponse
     {
         $token = $this->service->handle(
-            new AuthUserName($request->validated('name')),
+            AuthUserName::create($request->validated('name')),
             AuthUserEmail::create($request->validated('email')),
             new AuthUserPassword($request->validated('password'))
         );

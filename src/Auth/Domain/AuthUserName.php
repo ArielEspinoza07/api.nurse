@@ -8,10 +8,20 @@ use Src\shared\Domain\ValueObject\StringValueObject;
 
 class AuthUserName extends StringValueObject
 {
+    public function __construct(protected string $value)
+    {
+        parent::__construct($this->value);
+    }
+
+    public static function create(string $value): self
+    {
+        return new static($value);
+    }
+
     public static function random(): self
     {
         $names = ['John', 'Peter', 'Maria'];
 
-        return new static($names[rand(0, count($names))]);
+        return new static($names[rand(0, count($names) - 1)]);
     }
 }
