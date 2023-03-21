@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResponseBuilder implements ResponseBuilderContract
 {
-
     public function __construct(
         private readonly ResponseContract $response
     ) {
@@ -30,5 +29,4 @@ class ResponseBuilder implements ResponseBuilderContract
             )
         );
     }
-
 }

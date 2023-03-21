@@ -15,7 +15,6 @@ use Throwable;
 
 class ResponseExceptionBuilder implements ResponseExceptionBuilderContract
 {
-
     public function __construct(private readonly ResponseContract $response)
     {
     }
