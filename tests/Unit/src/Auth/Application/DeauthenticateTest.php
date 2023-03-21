@@ -10,7 +10,7 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserId;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUserToken;
-use Src\Auth\Domain\Contracts\TokenDeletorInterface;
+use Src\Auth\Domain\Token\TokenDeletorContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
@@ -55,7 +55,7 @@ class DeauthenticateTest extends AuthApplicationTestBase
             )
             ->andReturn($authUser);
 
-        $tokenCreator = Mockery::mock(TokenDeletorInterface::class);
+        $tokenCreator = Mockery::mock(TokenDeletorContract::class);
         $this->app->instance(AuthenticateUser::class, $tokenCreator);
 
         $tokenCreator->shouldReceive('delete')

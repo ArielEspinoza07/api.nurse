@@ -6,11 +6,11 @@ namespace Src\Auth\Infrastructure\Token;
 
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserToken;
-use Src\Auth\Domain\Contracts\TokenCreatorInterface;
-use Src\Auth\Domain\Contracts\TokenDeletorInterface;
+use Src\Auth\Domain\Token\TokenCreatorContract;
+use Src\Auth\Domain\Token\TokenDeletorContract;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 
-class LaravelSanctumToken implements TokenCreatorInterface, TokenDeletorInterface
+class LaravelSanctumToken implements TokenCreatorContract, TokenDeletorContract
 {
     public function create(AuthUser $user): AuthUserToken
     {

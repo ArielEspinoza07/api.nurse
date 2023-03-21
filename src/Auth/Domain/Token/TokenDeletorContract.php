@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Src\Auth\Domain\Contracts;
+namespace Src\Auth\Domain\Token;
 
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserToken;
 
-interface TokenDeletorInterface
+interface TokenDeletorContract
 {
     public function delete(AuthUser $user): void;
 }

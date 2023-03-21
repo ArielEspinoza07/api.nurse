@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Src\Auth\Infrastructure\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Src\Auth\Domain\Contracts\TokenCreatorInterface;
-use Src\Auth\Domain\Contracts\TokenDeletorInterface;
+use Src\Auth\Domain\Token\TokenCreatorContract;
+use Src\Auth\Domain\Token\TokenDeletorContract;
 use Src\Auth\Domain\Hash\PasswordHasherInterface;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
@@ -18,8 +18,8 @@ class AuthUserBindingServiceProvider extends ServiceProvider
     public array $bindings = [
         AuthUserRepository::class => EloquentAuthUserRepository::class,
         PasswordHasherInterface::class => LaravelPasswordHasher::class,
-        TokenCreatorInterface::class => LaravelSanctumToken::class,
-        TokenDeletorInterface::class => LaravelSanctumToken::class,
+        TokenCreatorContract::class => LaravelSanctumToken::class,
+        TokenDeletorContract::class => LaravelSanctumToken::class,
     ];
 
 

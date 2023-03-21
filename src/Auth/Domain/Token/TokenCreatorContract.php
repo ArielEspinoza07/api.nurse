@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Src\Auth\Domain\Contracts;
+namespace Src\Auth\Domain\Token;
 
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserToken;
 
-interface TokenCreatorInterface
+interface TokenCreatorContract
 {
     public function create(AuthUser $user): AuthUserToken;
 }
