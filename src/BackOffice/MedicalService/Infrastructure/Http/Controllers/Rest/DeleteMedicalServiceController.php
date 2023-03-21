@@ -21,7 +21,7 @@ class DeleteMedicalServiceController extends BaseController
 
     public function __invoke(int $id): JsonResponse
     {
-        $this->service->handle(new MedicalServiceId($id));
+        $this->service->handle(MedicalServiceId::create($id));
 
         return $this->response->send('Deleted.', null, Response::HTTP_NO_CONTENT);
     }

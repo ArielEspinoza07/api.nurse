@@ -20,7 +20,7 @@ class GetByIdMedicalServiceController extends BaseController
 
     public function __invoke(int $id): JsonResponse
     {
-        $medicalService = $this->service->handle(new MedicalServiceId($id));
+        $medicalService = $this->service->handle(MedicalServiceId::create($id));
 
         return $this->response->send('Found.', $medicalService->toArray());
     }

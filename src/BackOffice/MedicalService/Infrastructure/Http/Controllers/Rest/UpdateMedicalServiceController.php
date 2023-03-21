@@ -24,7 +24,7 @@ class UpdateMedicalServiceController extends BaseController
     public function __invoke(int $id, UpdateMedicalServiceRequest $request): JsonResponse
     {
         $medicalService = $this->service->handle(
-            new MedicalServiceId($id),
+            MedicalServiceId::create($id),
             new MedicalServiceName($request->validated('name')),
             new MedicalServiceIsActive($request->validated('is_active'))
         );
