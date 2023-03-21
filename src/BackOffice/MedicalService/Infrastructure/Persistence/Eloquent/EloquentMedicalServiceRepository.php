@@ -11,16 +11,14 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Src\shared\Domain\Criteria\Criteria;
-use Src\shared\Infrastructure\Persistence\Eloquent\EloquentCriteriaConverter;
+use Src\shared\Infrastructure\Persistence\Eloquent\Criteria\CriteriaToEloquent;
 
 class EloquentMedicalServiceRepository implements MedicalServiceRepository
 {
     public function count(Criteria $criteria): int
     {
-        return EloquentCriteriaConverter::convert(
-            $criteria,
-            app()->make(EloquentMedicalServiceModel::class)
-        )
+        return CriteriaToEloquent::create($criteria, app()->make(EloquentMedicalServiceModel::class))
+            ->convert()
             ->count();
     }
 
@@ -56,20 +54,18 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
 
     public function search(Criteria $criteria): array
     {
-        $results = EloquentCriteriaConverter::convert(
-            $criteria,
-            app()->make(EloquentMedicalServiceModel::class)
-        );
-
         if (!$criteria->hasFilters() && $criteria->order()->orderType()->isNone()) {
-            return $results->get()
+            return CriteriaToEloquent::create($criteria, app()->make(EloquentMedicalServiceModel::class))
+                ->convert()
+                ->get()
                 ->map(function (EloquentMedicalServiceModel $model) {
                     return MedicalService::createFromArray($model->toArray())->toArray();
                 })
                 ->toArray();
         }
 
-        $paginatedResults = $results
+        $paginatedResults = CriteriaToEloquent::create($criteria, app()->make(EloquentMedicalServiceModel::class))
+            ->convert()
             ->paginate($criteria->limit())
             ->toArray();
 
