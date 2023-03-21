@@ -25,7 +25,7 @@ class UpdateMedicalServiceController extends BaseController
     {
         $medicalService = $this->service->handle(
             MedicalServiceId::create($id),
-            new MedicalServiceName($request->validated('name')),
+            MedicalServiceName::create($request->validated('name')),
             MedicalServiceIsActive::create($request->validated('is_active'))
         );
 

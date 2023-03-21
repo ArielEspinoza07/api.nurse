@@ -45,14 +45,14 @@ class UpdateMedicalServiceTest extends MedicalServiceApplicationTestBase
             ->andReturn(
                 MedicalService::create(
                     $medicalServiceId,
-                    new MedicalServiceName($medicalServiceData['name']),
+                    MedicalServiceName::create($medicalServiceData['name']),
                     MedicalServiceIsActive::create($medicalServiceData['is_active'])
                 )
             );
 
         $medicalServiceUpdated = MedicalService::create(
             $medicalServiceId,
-            new MedicalServiceName($dataToUpdate['name']),
+            MedicalServiceName::create($dataToUpdate['name']),
             MedicalServiceIsActive::create($medicalServiceData['is_active'])
         );
 
@@ -69,7 +69,7 @@ class UpdateMedicalServiceTest extends MedicalServiceApplicationTestBase
         $updated = (new UpdateMedicalService($repository))
             ->handle(
                 $medicalServiceId,
-                new MedicalServiceName($dataToUpdate['name']),
+                MedicalServiceName::create($dataToUpdate['name']),
                 MedicalServiceIsActive::create($medicalServiceData['is_active'])
             );
 

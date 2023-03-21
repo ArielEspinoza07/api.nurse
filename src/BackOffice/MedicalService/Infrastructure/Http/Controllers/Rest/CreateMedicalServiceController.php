@@ -23,7 +23,7 @@ class CreateMedicalServiceController extends BaseController
     public function __invoke(CreateMedicalServiceRequest $request): JsonResponse
     {
         $medicalService = $this->service->handle(
-            new MedicalServiceName($request->validated('name'))
+            MedicalServiceName::create($request->validated('name'))
         );
 
         return $this->response->send('Created.', $medicalService->toArray(), Response::HTTP_CREATED);

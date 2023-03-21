@@ -15,7 +15,7 @@ class MedicalServiceApplicationTestBase extends TestCase
     protected function createMedicalService(array $data): MedicalServiceId
     {
         $service = (new CreateMedicalService(new EloquentMedicalServiceRepository()))
-            ->handle(new MedicalServiceName($data['name']));
+            ->handle(MedicalServiceName::create($data['name']));
 
         return $service->id();
     }

@@ -25,10 +25,11 @@ class UpdateMedicalService
         MedicalServiceName $name,
         MedicalServiceIsActive $active
     ): MedicalService {
-
         $medicalService = $this->getMedicalServiceById->handle($id);
 
-        $medicalService->rename($name);
+        if ($medicalService->name()->value() !== $name->value()) {
+            $medicalService->name()->change($name->value());
+        }
 
         if ($medicalService->active()->value() !== $active->value()) {
             $medicalService->active()->change();

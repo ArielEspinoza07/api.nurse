@@ -18,7 +18,7 @@ class CreateMedicalServiceTest extends TestCase
 
     public function test_create_medical_service(): void
     {
-        $medicalServiceName = new MedicalServiceName('Intensive Care Unit');
+        $medicalServiceName = MedicalServiceName::create('Intensive Care Unit');
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
         $this->app->instance(CreateMedicalService::class, $repository);
