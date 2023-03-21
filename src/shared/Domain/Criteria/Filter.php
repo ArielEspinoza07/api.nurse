@@ -6,25 +6,16 @@ namespace Src\shared\Domain\Criteria;
 
 class Filter
 {
-    public function __construct(
+    private function __construct(
         private readonly FilterField $field,
         private readonly FilterOperator $operator,
         private readonly FilterValue $value
     ) {
     }
 
-    public static function createFromValues(FilterField $field, FilterOperator $operator, FilterValue $value): self
+    public static function create(FilterField $field, FilterOperator $operator, FilterValue $value): self
     {
         return new static($field, $operator, $value);
-    }
-
-    public static function createFromFieldAndValue(FilterField $field, FilterValue $value): self
-    {
-        return new static(
-            $field,
-            new FilterOperator(FilterOperator::EQUAL),
-            $value
-        );
     }
 
     public function field(): FilterField

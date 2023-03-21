@@ -19,10 +19,10 @@ class GetFilters
             foreach (explode(',', $filters) as $filter) {
                 list($field, $operator, $value) = explode(':', $filter);
                 $criteriaFilters->add(
-                    new Filter(
-                        new FilterField($field),
-                        new FilterOperator($operator),
-                        new FilterValue($value),
+                    Filter::create(
+                        FilterField::create($field),
+                        FilterOperator::create($operator),
+                        FilterValue::create($value),
                     )
                 );
             }
