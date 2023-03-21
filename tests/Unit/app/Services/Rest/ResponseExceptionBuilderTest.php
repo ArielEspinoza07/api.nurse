@@ -11,7 +11,7 @@ use Mockery;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class ResponseExceptionHandlerTest extends TestCase
+class ResponseExceptionBuilderTest extends TestCase
 {
     public function test_response_exception_handler_return_json_response(): void
     {
@@ -44,7 +44,7 @@ class ResponseExceptionHandlerTest extends TestCase
                 )
             );
 
-        $responseExceptionHandler = (new ResponseExceptionBuilder($responseBuilderContract))->handle($exception);
+        $responseExceptionHandler = (new ResponseExceptionBuilder($responseBuilderContract))->build($exception);
 
         $this->assertInstanceOf(JsonResponse::class, $responseExceptionHandler);
 
