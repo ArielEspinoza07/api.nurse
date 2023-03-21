@@ -2,11 +2,10 @@
 
 namespace App\Exceptions;
 
-use App\Services\Rest\Json\Response;
-use App\Services\Rest\Json\ResponseExceptionBuilder;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Src\shared\Infrastructure\Notification\Slack\Alert\SlackExceptionAlert;
+use Src\shared\Infrastructure\Response\Exception\Rest\JsonException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -47,8 +46,8 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (Throwable $e, Request $request) {
             if ($request->header('Content-Type') === 'application/json') {
-                return (new ResponseExceptionBuilder(new Response()))
-                    ->build($e);
+                return (new JsonException())
+                    ->send($e);
             }
         });
         $this->reportable(function (Throwable $e) {
