@@ -8,7 +8,7 @@ use Spatie\SlackAlerts\Facades\SlackAlert;
 use Src\shared\Domain\Notification\AlertContract;
 use Throwable;
 
-class ExceptionAlert implements AlertContract
+class SlackExceptionAlert implements AlertContract
 {
     public function __construct(private readonly Throwable $throwable)
     {
