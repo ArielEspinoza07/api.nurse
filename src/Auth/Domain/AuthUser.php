@@ -6,7 +6,7 @@ namespace Src\Auth\Domain;
 
 class AuthUser
 {
-    public function __construct(
+    private function __construct(
         private readonly AuthUserId $id,
         private readonly AuthUserName $name,
         private readonly AuthUserEmail $email,
@@ -28,7 +28,7 @@ class AuthUser
         AuthUserEmail $email,
         AuthUserPassword $password
     ): self {
-        return self::create(AuthUserId::none(), $name, $email, $password);
+        return new static(AuthUserId::none(), $name, $email, $password);
     }
 
     public function id(): AuthUserId
