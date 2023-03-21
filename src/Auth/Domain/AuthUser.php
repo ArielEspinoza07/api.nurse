@@ -23,6 +23,16 @@ class AuthUser
         return new static($id, $name, $email, $password);
     }
 
+    public static function createFromArray(array $data): self
+    {
+        return new static(
+            AuthUserId::create($data['id']),
+            AuthUserName::create($data['name']),
+            AuthUserEmail::create($data['email']),
+            AuthUserPassword::create($data['password']),
+        );
+    }
+
     public static function createFromNameEmailAndPassword(
         AuthUserName $name,
         AuthUserEmail $email,

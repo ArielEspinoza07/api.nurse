@@ -26,7 +26,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
             throw new InvalidAuthUserEmailException();
         }
 
-        return $this->createDomainEntityFromEloquentModel($model);
+        return AuthUser::createFromArray($model->toArray());
     }
 
 
@@ -42,7 +42,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
                 'password' => $password->value(),
             ]);
 
-        return $this->createDomainEntityFromEloquentModel($model);
+        return AuthUser::createFromArray($model->toArray());
     }
 
 
@@ -54,17 +54,6 @@ class EloquentAuthUserRepository implements AuthUserRepository
             throw new AuthUserNotFoundException();
         }
 
-        return $this->createDomainEntityFromEloquentModel($model);
-    }
-
-
-    private function createDomainEntityFromEloquentModel(EloquentAuthUserModel $model): AuthUser
-    {
-        return AuthUser::create(
-            AuthUserId::create($model->id),
-            AuthUserName::create($model->name),
-            AuthUserEmail::create($model->email),
-            AuthUserPassword::create($model->password)
-        );
+        return AuthUser::createFromArray($model->toArray());
     }
 }
