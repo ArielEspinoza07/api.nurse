@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Src\Auth\Domain;
 
+use Src\shared\Domain\Validation\Contract\AssertNotNullable;
 use Src\shared\Domain\Validation\Contract\AssertValueLength;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
 class AuthUserToken extends StringValueObject
 {
+    use AssertNotNullable;
     use AssertValueLength;
 
     public const TOKEN_LENGTH = 42;
@@ -17,6 +19,7 @@ class AuthUserToken extends StringValueObject
     {
         parent::__construct($this->value);
 
+        $this->assertNotNull($this->value);
         $this->assertValueLength($this->value, self::TOKEN_LENGTH);
     }
 
