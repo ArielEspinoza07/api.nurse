@@ -60,9 +60,4 @@ class AuthUser
     {
         return $this->password;
     }
-
-    public function token(): AuthUserToken
-    {
-        return $this->token;
-    }
 }
