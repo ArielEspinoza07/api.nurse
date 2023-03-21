@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Src\Auth\Infrastructure\Http\Controllers\Rest;
 
-use App\Services\Rest\Json\Contract\ResponseBuilderContract;
-use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
 use Src\Auth\Application\Deauthenticate\DeauthenticateUser;
 use Src\Auth\Domain\AuthUserId;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
+use Src\shared\Infrastructure\Response\Rest\Json;
 
 class DeauthenticateUserController extends BaseController
 {
     public function __construct(
         private readonly DeauthenticateUser $service,
-        private readonly ResponseBuilderContract $response
+        private readonly Json $response
     ) {
     }
 
@@ -25,11 +24,6 @@ class DeauthenticateUserController extends BaseController
             new AuthUserId(auth()->id())
         );
 
-        return $this->response
-            ->build(
-                new ResponseBuilderInputDTO(
-                    'Logged out.'
-                )
-            );
+        return $this->response->send('Logged out.');
     }
 }
