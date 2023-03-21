@@ -5,15 +5,6 @@ declare(strict_types=1);
 namespace Src\shared\Infrastructure\Criteria;
 
 use Src\shared\Domain\Criteria\Criteria;
-use Src\shared\Domain\Criteria\Filter;
-use Src\shared\Domain\Criteria\FilterField;
-use Src\shared\Domain\Criteria\FilterOperator;
-use Src\shared\Domain\Criteria\Filters;
-use Src\shared\Domain\Criteria\FilterValue;
-use Src\shared\Domain\Criteria\Order;
-use Src\shared\Domain\Criteria\OrderBy;
-use Src\shared\Domain\Criteria\OrderType;
-use Src\shared\Infrastructure\Criteria\DTO\SearchByCriteriaInputDTO;
 
 class RequestToCriteria
 {
@@ -39,13 +30,13 @@ class RequestToCriteria
         if (is_null($this->page) && is_null($this->limit)) {
             return Criteria::createWithoutPagination(
                 StringToFilters::create($this->filters)->convert(),
-                (new GetOrder())->handle($this->order)
+                (new OrderBuilder())->build($this->order)
             );
         }
 
         return Criteria::create(
             StringToFilters::create($this->filters)->convert(),
-            (new GetOrder())->handle($this->order),
+            (new OrderBuilder())->build($this->order),
             intval($this->page) ?? Criteria::PAGE,
             intval($this->limit) ?? Criteria::LIMIT,
         );
