@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Src\shared\Infrastructure\Response\Rest;
 
 use Src\shared\Domain\Response\ResponseData;

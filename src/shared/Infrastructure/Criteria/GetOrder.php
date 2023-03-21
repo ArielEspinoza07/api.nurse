@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Src\shared\Infrastructure\Criteria;
 
 use Src\shared\Domain\Criteria\Order;
