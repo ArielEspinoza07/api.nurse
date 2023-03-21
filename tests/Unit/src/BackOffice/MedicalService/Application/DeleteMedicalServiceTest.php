@@ -18,14 +18,11 @@ class DeleteMedicalServiceTest extends MedicalServiceApplicationTestBase
 
     use RefreshDatabase;
 
-    public function test_update_medical_service(): void
+    public function test_delete_medical_service(): void
     {
-        $medicalServiceData = [
-            'name' => 'Intensive Care Units',
-            'is_active' => true,
-        ];
+        $medicalServiceId = $this->createMedicalService('Intensive Care Units');
 
-        $medicalServiceId = $this->createMedicalService($medicalServiceData);
+        $medicalService = $this->getMedicalServiceById($medicalServiceId);
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
         $this->app->instance(DeleteMedicalService::class, $repository);
@@ -37,13 +34,7 @@ class DeleteMedicalServiceTest extends MedicalServiceApplicationTestBase
                     return $id->value() === $medicalServiceId->value();
                 })
             )
-            ->andReturn(
-                MedicalService::create(
-                    $medicalServiceId,
-                    MedicalServiceName::create($medicalServiceData['name']),
-                    MedicalServiceIsActive::create($medicalServiceData['is_active'])
-                )
-            );
+            ->andReturn($medicalService);
 
         $repository->shouldReceive('delete')
             ->once()

@@ -38,10 +38,10 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
 
         $filters = Filters::create();
         $filters->add(
-            new Filter(
-                new FilterField('name'),
-                new FilterOperator(FilterOperator::LIKE),
-                new FilterValue('ic'),
+            Filter::create(
+                FilterField::create('name'),
+                FilterOperator::create(FilterOperator::LIKE),
+                FilterValue::create('ic'),
             )
         );
         $nameLikeICCriteria = Criteria::create(

@@ -21,12 +21,9 @@ class GetMedicalServiceByIdTest extends MedicalServiceApplicationTestBase
 
     public function test_get_medical_service_by_id(): void
     {
-        $medicalServiceData = [
-            'name' => 'Intensive Care Units',
-            'is_active' => true,
-        ];
+        $medicalServiceId = $this->createMedicalService('Intensive Care Units');
 
-        $medicalServiceId = $this->createMedicalService($medicalServiceData);
+        $medicalService = $this->getMedicalServiceById($medicalServiceId);
 
 
         $repository = Mockery::mock(MedicalServiceRepository::class);
@@ -40,13 +37,7 @@ class GetMedicalServiceByIdTest extends MedicalServiceApplicationTestBase
                     return $id->value() === $medicalServiceId->value();
                 })
             )
-            ->andReturn(
-                MedicalService::create(
-                    $medicalServiceId,
-                    MedicalServiceName::create($medicalServiceData['name']),
-                    MedicalServiceIsActive::create($medicalServiceData['is_active'])
-                )
-            );
+            ->andReturn($medicalService);
 
         $found = (new GetMedicalServiceById($repository))
             ->handle($medicalServiceId);
@@ -54,8 +45,8 @@ class GetMedicalServiceByIdTest extends MedicalServiceApplicationTestBase
         $this->assertInstanceOf(MedicalService::class, $found);
 
         $this->assertEquals($medicalServiceId->value(), $found->id()->value());
-        $this->assertEquals($medicalServiceData['name'], $found->name()->value());
-        $this->assertEquals($medicalServiceData['is_active'], $found->active()->value());
+        $this->assertEquals($medicalService->name()->value(), $found->name()->value());
+        $this->assertEquals($medicalService->active()->value(), $found->active()->value());
     }
 
     public function test_get_medical_service_by_id_throw_exception(): void
