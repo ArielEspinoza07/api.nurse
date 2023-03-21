@@ -71,7 +71,7 @@ class RegisterTest extends AuthApplicationTestBase
                         && $notEncryptedAuthUser->name()->value() === $user->name()->value();
                 })
             )
-            ->andReturn(new AuthUserToken($this->tokenExample));
+            ->andReturn(AuthUserToken::create($this->tokenExample));
 
         $token = (new RegisterUser($repository, $passwordHasher, $tokenCreator))
             ->handle(

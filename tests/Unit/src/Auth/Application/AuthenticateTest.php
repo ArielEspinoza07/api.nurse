@@ -65,7 +65,7 @@ class AuthenticateTest extends AuthApplicationTestBase
                         && $authUser->email()->value() === $user->email()->value();
                 })
             )
-            ->andReturn(new AuthUserToken($this->tokenExample));
+            ->andReturn(AuthUserToken::create($this->tokenExample));
 
         $token = (new AuthenticateUser($repository, $passwordHasher, $tokenCreator))
             ->handle(

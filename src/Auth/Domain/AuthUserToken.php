@@ -13,11 +13,16 @@ class AuthUserToken extends StringValueObject
 
     public const TOKEN_LENGTH = 42;
 
-    public function __construct(protected string $value)
+    private function __construct(protected string $value)
     {
         parent::__construct($this->value);
 
         $this->assertValueLength($this->value, self::TOKEN_LENGTH);
+    }
+
+    public static function create(string $value): self
+    {
+        return new static($value);
     }
 
     public function toArray(): array

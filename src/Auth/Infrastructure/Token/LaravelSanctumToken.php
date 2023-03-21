@@ -25,7 +25,7 @@ class LaravelSanctumToken implements TokenCreatorInterface, TokenDeletorInterfac
                 ->delete();
         }
 
-        return new AuthUserToken($model->createPlainTextToken());
+        return AuthUserToken::create($model->createPlainTextToken());
     }
 
 
