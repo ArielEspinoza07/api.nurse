@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 
-use App\Services\Rest\Json\Contract\ResponseBuilderContract;
-use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Src\BackOffice\MedicalService\Application\Search\SearchMedicalService;
 use Src\shared\Infrastructure\Criteria\CriteriaConverter;
 use Src\shared\Infrastructure\Criteria\DTO\SearchByCriteriaInputDTO;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
+use Src\shared\Infrastructure\Response\Rest\Json;
 
 class SearchMedicalServiceController extends BaseController
 {
     public function __construct(
         private readonly SearchMedicalService $service,
-        private readonly ResponseBuilderContract $response
+        private readonly Json $response
     ) {
     }
 
@@ -29,12 +28,6 @@ class SearchMedicalServiceController extends BaseController
             ))->convert()
         );
 
-        return $this->response
-            ->build(
-                new ResponseBuilderInputDTO(
-                    'Retrieved all.',
-                    $medicalServices
-                )
-            );
+        return $this->response->send('Retrieved all.', $medicalServices);
     }
 }

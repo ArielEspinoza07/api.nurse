@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 
-use App\Services\Rest\Json\Contract\ResponseBuilderContract;
-use App\Services\Rest\Json\DTO\ResponseBuilderInputDTO;
 use Illuminate\Http\JsonResponse;
 use Src\BackOffice\MedicalService\Application\Find\GetMedicalServiceById;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
+use Src\shared\Infrastructure\Response\Rest\Json;
 
 class GetByIdMedicalServiceController extends BaseController
 {
     public function __construct(
         private readonly GetMedicalServiceById $service,
-        private readonly ResponseBuilderContract $response
+        private readonly Json $response
     ) {
     }
 
@@ -23,12 +22,6 @@ class GetByIdMedicalServiceController extends BaseController
     {
         $medicalService = $this->service->handle(new MedicalServiceId($id));
 
-        return $this->response
-            ->build(
-                new ResponseBuilderInputDTO(
-                    'Found.',
-                    $medicalService->toArray()
-                )
-            );
+        return $this->response->send('Found.', $medicalService->toArray());
     }
 }
