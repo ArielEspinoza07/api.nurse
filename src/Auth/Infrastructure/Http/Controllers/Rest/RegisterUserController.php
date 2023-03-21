@@ -24,7 +24,7 @@ class RegisterUserController
     {
         $token = $this->service->handle(
             new AuthUserName($request->validated('name')),
-            new AuthUserEmail($request->validated('email')),
+            AuthUserEmail::create($request->validated('email')),
             new AuthUserPassword($request->validated('password'))
         );
 

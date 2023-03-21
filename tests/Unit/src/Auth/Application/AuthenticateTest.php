@@ -69,7 +69,7 @@ class AuthenticateTest extends AuthApplicationTestBase
 
         $token = (new AuthenticateUser($repository, $passwordHasher, $tokenCreator))
             ->handle(
-                new AuthUserEmail($payload['email']),
+                AuthUserEmail::create($payload['email']),
                 new AuthUserPassword($payload['password']),
             );
 

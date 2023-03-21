@@ -33,7 +33,7 @@ class DeauthenticateTest extends AuthApplicationTestBase
         $token = (new AuthenticateUser(
             new EloquentAuthUserRepository(), new LaravelPasswordHasher(), new LaravelSanctumToken()
         ))->handle(
-            new AuthUserEmail($payload['email']),
+            AuthUserEmail::create($payload['email']),
             new AuthUserPassword($payload['password']),
         );
 

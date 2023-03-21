@@ -19,6 +19,11 @@ class AuthUserEmail extends StringValueObject
         $this->assertIsEmail($this->value);
     }
 
+    public static function create(string $value): self
+    {
+        return new static($value);
+    }
+
     private function assertIsEmail(string $email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

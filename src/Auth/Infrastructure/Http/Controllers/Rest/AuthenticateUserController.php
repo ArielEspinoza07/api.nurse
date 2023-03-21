@@ -23,7 +23,7 @@ class AuthenticateUserController extends BaseController
     public function __invoke(AuthenticateUserRequest $request): JsonResponse
     {
         $token = $this->service->handle(
-            new AuthUserEmail($request->validated('email')),
+            AuthUserEmail::create($request->validated('email')),
             new AuthUserPassword($request->validated('password'))
         );
 
