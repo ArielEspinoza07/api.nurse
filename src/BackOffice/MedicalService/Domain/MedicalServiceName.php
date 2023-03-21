@@ -15,7 +15,7 @@ class MedicalServiceName extends StringValueObject
 
     public const MINIMUM_LENGTH = 3;
 
-    private function __construct(protected string $value)
+    protected function __construct(protected string $value)
     {
         parent::__construct($this->value);
 

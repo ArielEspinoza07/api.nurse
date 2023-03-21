@@ -11,7 +11,7 @@ class AuthUserPassword extends StringValueObject
 {
     use AssertNotNullable;
 
-    private function __construct(protected string $value)
+    protected function __construct(protected string $value)
     {
         parent::__construct($this->value);
 
