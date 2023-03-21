@@ -10,14 +10,14 @@ use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceIsActive;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Src\BackOffice\MedicalService\Infrastructure\Http\Request\UpdateMedicalServiceRequest;
+use Src\shared\Domain\Response\Contract\RestResponseContract;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Src\shared\Infrastructure\Response\Rest\Json;
 
 class UpdateMedicalServiceController extends BaseController
 {
     public function __construct(
         private readonly UpdateMedicalService $service,
-        private readonly Json $response
+        private readonly RestResponseContract $response
     ) {
     }
 

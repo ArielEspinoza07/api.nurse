@@ -10,13 +10,13 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Infrastructure\Http\Request\RegisterUserRequest;
-use Src\shared\Infrastructure\Response\Rest\Json;
+use Src\shared\Domain\Response\Contract\RestResponseContract;
 
 class RegisterUserController
 {
     public function __construct(
         private readonly RegisterUser $service,
-        private readonly Json $response
+        private readonly RestResponseContract $response
     ) {
     }
 

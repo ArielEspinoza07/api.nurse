@@ -7,14 +7,14 @@ namespace Src\Auth\Infrastructure\Http\Controllers\Rest;
 use Illuminate\Http\JsonResponse;
 use Src\Auth\Application\Deauthenticate\DeauthenticateUser;
 use Src\Auth\Domain\AuthUserId;
+use Src\shared\Domain\Response\Contract\RestResponseContract;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Src\shared\Infrastructure\Response\Rest\Json;
 
 class DeauthenticateUserController extends BaseController
 {
     public function __construct(
         private readonly DeauthenticateUser $service,
-        private readonly Json $response
+        private readonly RestResponseContract $response
     ) {
     }
 

@@ -7,15 +7,15 @@ namespace Src\BackOffice\MedicalService\Infrastructure\Http\Controllers\Rest;
 use Illuminate\Http\JsonResponse;
 use Src\BackOffice\MedicalService\Application\Delete\DeleteMedicalService;
 use Src\BackOffice\MedicalService\Domain\MedicalServiceId;
+use Src\shared\Domain\Response\Contract\RestResponseContract;
 use Src\shared\Infrastructure\Http\Controllers\BaseController;
-use Src\shared\Infrastructure\Response\Rest\Json;
 use Symfony\Component\HttpFoundation\Response;
 
 class DeleteMedicalServiceController extends BaseController
 {
     public function __construct(
         private readonly DeleteMedicalService $service,
-        private readonly Json $response
+        private readonly RestResponseContract $response
     ) {
     }
 
