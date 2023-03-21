@@ -11,7 +11,7 @@ class AuthUserId extends IntValueObject
 {
     use AssertNotNullable;
 
-    private function __construct(protected int $value)
+    protected function __construct(protected int $value)
     {
         parent::__construct($this->value);
 

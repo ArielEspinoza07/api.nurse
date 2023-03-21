@@ -6,16 +6,16 @@ namespace Src\shared\Domain\ValueObject;
 
 abstract class IntValueObject
 {
-    public function __construct(protected int $value)
+    protected function __construct(protected int $value)
     {
     }
 
-    public static function createEmpty(): self
+    public static function createEmpty(): static
     {
         return new static(0);
     }
 
-    public static function random(): self
+    public static function random(): static
     {
         return new static(random_int(1, 256));
     }
