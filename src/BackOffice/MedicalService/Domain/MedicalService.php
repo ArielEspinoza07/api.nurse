@@ -28,7 +28,7 @@ class MedicalService
         return new static(
             MedicalServiceId::create($data['id']),
             new MedicalServiceName($data['name']),
-            new MedicalServiceIsActive($data['is_active'])
+            MedicalServiceIsActive::create($data['is_active'])
         );
     }
 
@@ -60,11 +60,6 @@ class MedicalService
     public function rename(MedicalServiceName $name): void
     {
         $this->name = $name;
-    }
-
-    public function toggleStatus(): void
-    {
-        $this->isActive = new MedicalServiceIsActive(!$this->isActive);
     }
 
     public function toArray(): array

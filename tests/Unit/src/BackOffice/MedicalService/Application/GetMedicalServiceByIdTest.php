@@ -44,7 +44,7 @@ class GetMedicalServiceByIdTest extends MedicalServiceApplicationTestBase
                 MedicalService::create(
                     $medicalServiceId,
                     new MedicalServiceName($medicalServiceData['name']),
-                    new MedicalServiceIsActive($medicalServiceData['is_active'])
+                    MedicalServiceIsActive::create($medicalServiceData['is_active'])
                 )
             );
 

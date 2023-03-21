@@ -46,14 +46,14 @@ class UpdateMedicalServiceTest extends MedicalServiceApplicationTestBase
                 MedicalService::create(
                     $medicalServiceId,
                     new MedicalServiceName($medicalServiceData['name']),
-                    new MedicalServiceIsActive($medicalServiceData['is_active'])
+                    MedicalServiceIsActive::create($medicalServiceData['is_active'])
                 )
             );
 
         $medicalServiceUpdated = MedicalService::create(
             $medicalServiceId,
             new MedicalServiceName($dataToUpdate['name']),
-            new MedicalServiceIsActive($medicalServiceData['is_active'])
+            MedicalServiceIsActive::create($medicalServiceData['is_active'])
         );
 
         $repository->shouldReceive('update')
@@ -70,7 +70,7 @@ class UpdateMedicalServiceTest extends MedicalServiceApplicationTestBase
             ->handle(
                 $medicalServiceId,
                 new MedicalServiceName($dataToUpdate['name']),
-                new MedicalServiceIsActive($medicalServiceData['is_active'])
+                MedicalServiceIsActive::create($medicalServiceData['is_active'])
             );
 
         $this->assertInstanceOf(MedicalService::class, $updated);

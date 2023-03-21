@@ -31,7 +31,7 @@ class UpdateMedicalService
         $medicalService->rename($name);
 
         if ($medicalService->active()->value() !== $active->value()) {
-            $medicalService->toggleStatus();
+            $medicalService->active()->change();
         }
 
         $this->repository->update($medicalService);
