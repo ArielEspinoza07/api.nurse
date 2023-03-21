@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Src\shared\Infrastructure\Response\Rest;
 
 use Illuminate\Http\JsonResponse;
+use Src\shared\Domain\Response\Contract\RestResponseContract;
 use Src\shared\Domain\Response\Response;
 use Src\shared\Domain\Response\ResponseCode;
 use Src\shared\Infrastructure\Response\ResponseDataBuilder;
 use Symfony\Component\HttpFoundation\Response as HttpCode;
 
-class Json
+class Json implements RestResponseContract
 {
     public function send(
         string $message,
