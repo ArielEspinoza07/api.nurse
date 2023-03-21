@@ -26,7 +26,7 @@ class AuthApplicationTestBase extends TestCase
                 'name' => $payload['name'],
                 'email' => $payload['email'],
                 'password' => (new LaravelPasswordHasher())
-                    ->hash(new AuthUserPassword($payload['password'])),
+                    ->hash(AuthUserPassword::create($payload['password'])),
             ]
         );
 
@@ -34,7 +34,7 @@ class AuthApplicationTestBase extends TestCase
             AuthUserId::create($model->id),
             AuthUserName::create($model->name),
             AuthUserEmail::create($model->email),
-            new AuthUserPassword($model->password),
+            AuthUserPassword::create($model->password),
         );
     }
 }

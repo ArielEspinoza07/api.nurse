@@ -31,14 +31,16 @@ class DeauthenticateTest extends AuthApplicationTestBase
         $authUser = $this->createAutUser($payload);
 
         $token = (new AuthenticateUser(
-            new EloquentAuthUserRepository(), new LaravelPasswordHasher(), new LaravelSanctumToken()
+            new EloquentAuthUserRepository(),
+            new LaravelPasswordHasher(),
+            new LaravelSanctumToken()
         ))->handle(
             AuthUserEmail::create($payload['email']),
-            new AuthUserPassword($payload['password']),
+            AuthUserPassword::create($payload['password']),
         );
 
         $this->assertInstanceOf(AuthUserToken::class, $token);
-        $this->assertEquals(strlen($this->tokenExample), strlen($token->value()));
+        $this->assertEquals(AuthUserToken::TOKEN_LENGTH, strlen($token->value()));
 
         $repository = Mockery::mock(AuthUserRepository::class);
         $this->app->instance(AuthenticateUser::class, $repository);

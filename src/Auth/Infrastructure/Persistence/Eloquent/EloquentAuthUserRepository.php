@@ -64,7 +64,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
             AuthUserId::create($model->id),
             AuthUserName::create($model->name),
             AuthUserEmail::create($model->email),
-            new AuthUserPassword($model->password)
+            AuthUserPassword::create($model->password)
         );
     }
 }

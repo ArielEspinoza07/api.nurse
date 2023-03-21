@@ -24,7 +24,7 @@ class AuthenticateUserController extends BaseController
     {
         $token = $this->service->handle(
             AuthUserEmail::create($request->validated('email')),
-            new AuthUserPassword($request->validated('password'))
+            AuthUserPassword::create($request->validated('password'))
         );
 
         return $this->response->send('Logged in.', $token->toArray());

@@ -25,7 +25,7 @@ class RegisterUserController
         $token = $this->service->handle(
             AuthUserName::create($request->validated('name')),
             AuthUserEmail::create($request->validated('email')),
-            new AuthUserPassword($request->validated('password'))
+            AuthUserPassword::create($request->validated('password'))
         );
 
         return $this->response->send('Registered.', $token->toArray());

@@ -29,7 +29,7 @@ class RegisterUser
                     ->create(
                         $name,
                         $email,
-                        new AuthUserPassword($this->passwordHasher->hash($password))
+                        AuthUserPassword::create($this->passwordHasher->hash($password))
                     )
             );
     }

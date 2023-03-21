@@ -70,7 +70,7 @@ class AuthenticateTest extends AuthApplicationTestBase
         $token = (new AuthenticateUser($repository, $passwordHasher, $tokenCreator))
             ->handle(
                 AuthUserEmail::create($payload['email']),
-                new AuthUserPassword($payload['password']),
+                AuthUserPassword::create($payload['password']),
             );
 
         $this->assertInstanceOf(AuthUserToken::class, $token);

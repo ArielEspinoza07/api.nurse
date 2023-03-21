@@ -26,7 +26,7 @@ class RegisterTest extends AuthApplicationTestBase
     {
         $name = AuthUserName::create($this->faker->name());
         $email = AuthUserEmail::create($this->faker->email());
-        $notEncryptedPassword = new AuthUserPassword('Password!1');
+        $notEncryptedPassword = AuthUserPassword::create('Password!1');
 
         $notEncryptedAuthUser = AuthUser::createFromNameEmailAndPassword($name, $email, $notEncryptedPassword);
 
