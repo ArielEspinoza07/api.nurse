@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Src\Auth\Domain;
 
+use InvalidArgumentException;
 use Src\shared\Domain\Validation\Contract\AssertNotNullable;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
@@ -27,7 +28,7 @@ class AuthUserEmail extends StringValueObject
     private function assertIsEmail(string $email)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException(sprintf('Invalid argument, has to be an email [%s]', $email));
+            throw new InvalidArgumentException(sprintf('Invalid argument, has to be an email [%s]', $email));
         }
     }
 }
