@@ -28,6 +28,11 @@ class Filter
         return $this->operator;
     }
 
+    public function toStringWithoutKeys(): string
+    {
+        return "{$this->field->value()}:{$this->operator->value()}:{$this->value->value()}";
+    }
+
     public function value(): FilterValue
     {
         return $this->value;

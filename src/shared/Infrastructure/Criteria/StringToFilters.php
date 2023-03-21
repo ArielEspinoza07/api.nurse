@@ -10,13 +10,21 @@ use Src\shared\Domain\Criteria\FilterOperator;
 use Src\shared\Domain\Criteria\Filters;
 use Src\shared\Domain\Criteria\FilterValue;
 
-class GetFilters
+class StringToFilters
 {
-    public function handle(string|null $filters): Filters
+    private function __construct(private readonly string $filters)
+    {
+    }
+
+    public static function create(string $filters = ''): self
+    {
+        return new static($filters);
+    }
+    public function convert(): Filters
     {
         $criteriaFilters = Filters::create();
-        if (!empty($filters)) {
-            foreach (explode(',', $filters) as $filter) {
+        if (!empty($this->filters)) {
+            foreach (explode(',', $this->filters) as $filter) {
                 list($field, $operator, $value) = explode(':', $filter);
                 $criteriaFilters->add(
                     Filter::create(

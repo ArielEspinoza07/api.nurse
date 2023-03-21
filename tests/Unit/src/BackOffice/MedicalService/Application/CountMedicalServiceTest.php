@@ -27,7 +27,7 @@ class CountMedicalServiceTest extends MedicalServiceApplicationTestBase
         $repository = Mockery::mock(MedicalServiceRepository::class);
         $this->app->instance(CountMedicalService::class, $repository);
 
-        $emptyCriteria = Criteria::create(
+        $emptyCriteria = Criteria::createWithoutPagination(
             Filters::create(),
             Order::createEmpty()
         );

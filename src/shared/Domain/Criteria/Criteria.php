@@ -6,6 +6,9 @@ namespace Src\shared\Domain\Criteria;
 
 class Criteria
 {
+    public const LIMIT = 15;
+    public const PAGE = 1;
+
     private function __construct(
         private readonly Filters $filters,
         private readonly Order $order,
@@ -14,9 +17,19 @@ class Criteria
     ) {
     }
 
-    public static function create(Filters $filters, Order $order, int $page = 1, int $limit = 15): self
+    public static function create(Filters $filters, Order $order, int $page, int $limit): self
     {
         return new static($filters, $order, $page, $limit);
+    }
+
+    public static function createWithoutPagination(Filters $filters, Order $order): self
+    {
+        return new static($filters, $order, 0, 0);
+    }
+
+    public function filters(): Filters
+    {
+        return $this->filters;
     }
 
     public function hasFilters(): bool
@@ -24,9 +37,9 @@ class Criteria
         return $this->filters->count() > 0;
     }
 
-    public function filters(): Filters
+    public function isWithoutPagination(): bool
     {
-        return $this->filters;
+        return $this->page === 0 && $this->limit === 0;
     }
 
     public function limit(): int
@@ -42,5 +55,17 @@ class Criteria
     public function page(): int
     {
         return $this->page;
+    }
+
+    public function toArray(): array
+    {
+        return array_merge(
+            $this->filters->toArray(),
+            $this->order->toArray(),
+            [
+                'page' => $this->page,
+                'limit' => $this->limit,
+            ]
+        );
     }
 }

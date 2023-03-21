@@ -54,7 +54,7 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
 
     public function search(Criteria $criteria): array
     {
-        if (!$criteria->hasFilters() && $criteria->order()->orderType()->isNone()) {
+        if ($criteria->isWithoutPagination()) {
             return CriteriaToEloquent::create($criteria, app()->make(EloquentMedicalServiceModel::class))
                 ->convert()
                 ->get()
@@ -67,6 +67,7 @@ class EloquentMedicalServiceRepository implements MedicalServiceRepository
         $paginatedResults = CriteriaToEloquent::create($criteria, app()->make(EloquentMedicalServiceModel::class))
             ->convert()
             ->paginate($criteria->limit())
+            ->appends($criteria->toArray())
             ->toArray();
 
         return [

@@ -2,6 +2,8 @@
 
 namespace Tests\Functional\src\BackOffice\MedicalService\Controller;
 
+use Database\Seeders\MedicalServiceSeeder;
+use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMedicalServiceModel;
 use Tests\Functional\src\BackOffice\MedicalServiceControllerTestBase;
 
 use function PHPUnit\Framework\assertEquals;
@@ -13,98 +15,60 @@ class CountMedicalServiceMedicalServiceControllerTest extends MedicalServiceCont
 
     public function test_count_medical_service_with_criteria(): void
     {
+        $this->seed(MedicalServiceSeeder::class);
+
         $token = $this->authToken();
 
-        $services = [
-            [
-                'name' => 'Emergency',
-            ],
-            [
-                'name' => 'Geriatric',
-            ],
-            [
-                'name' => 'Intensive Care Unit',
-            ],
-            [
-                'name' => 'Orthopaedic ',
-            ],
-            [
-                'name' => 'Pediatrics',
-            ],
-        ];
-
-        collect($services)
-            ->each(function ($service) {
-                $this->createMedicalService($service);
-            });
+        $foundServices = EloquentMedicalServiceModel::query()->where('name', 'like', '%u%')->count();
 
         $payload = [
             'filters' => 'name:like:u',
         ];
         $queryString = http_build_query($payload);
 
-        $responseCriteria = $this->withToken($token)
+        $response = $this->withToken($token)
             ->getJson(route($this->endpoint) . sprintf('?%s', $queryString));
 
-        $responseCriteria->assertOk();
-        $responseCriteria->assertJsonStructure([
+        $response->assertOk();
+        $response->assertJsonStructure([
             "success",
             "message",
             "data",
         ]);
 
-        $this->assertEquals(true, $responseCriteria->decodeResponseJson()['success']);
-        $this->assertEquals('Ok.', $responseCriteria->decodeResponseJson()['message']);
+        $this->assertEquals(true, $response->decodeResponseJson()['success']);
+        $this->assertEquals('Ok.', $response->decodeResponseJson()['message']);
 
-        $this->assertArrayHasKey('total', $responseCriteria->decodeResponseJson()['data']);
-        $this->assertNotNull($responseCriteria->decodeResponseJson()['data']['total']);
-        $this->assertIsInt($responseCriteria->decodeResponseJson()['data']['total']);
-        $this->assertEquals(1, $responseCriteria->decodeResponseJson()['data']['total']);
+        $this->assertArrayHasKey('total', $response->decodeResponseJson()['data']);
+        $this->assertNotNull($response->decodeResponseJson()['data']['total']);
+        $this->assertIsInt($response->decodeResponseJson()['data']['total']);
+        $this->assertEquals($foundServices, $response->decodeResponseJson()['data']['total']);
     }
 
     public function test_count_medical_service_without_criteria(): void
     {
+        $this->seed(MedicalServiceSeeder::class);
+
         $token = $this->authToken();
 
-        $services = [
-            [
-                'name' => 'Emergency',
-            ],
-            [
-                'name' => 'Geriatric',
-            ],
-            [
-                'name' => 'Intensive Care Unit',
-            ],
-            [
-                'name' => 'Orthopaedic ',
-            ],
-            [
-                'name' => 'Pediatrics',
-            ],
-        ];
+        $foundServices = EloquentMedicalServiceModel::query()->count();
 
-        collect($services)
-            ->each(function ($service) {
-                $this->createMedicalService($service);
-            });
-
-        $responseToTal = $this->withToken($token)
+        $response = $this->withToken($token)
             ->getJson(route($this->endpoint));
 
-        $responseToTal->assertOk();
-        $responseToTal->assertJsonStructure([
+        $response->assertOk();
+        $response->assertJsonStructure([
             "success",
             "message",
             "data",
         ]);
 
-        $this->assertEquals(true, $responseToTal->decodeResponseJson()['success']);
-        $this->assertEquals('Ok.', $responseToTal->decodeResponseJson()['message']);
+        $this->assertEquals(true, $response->decodeResponseJson()['success']);
+        $this->assertEquals('Ok.', $response->decodeResponseJson()['message']);
 
-        $this->assertArrayHasKey('total', $responseToTal->decodeResponseJson()['data']);
-        $this->assertNotNull($responseToTal->decodeResponseJson()['data']['total']);
-        $this->assertIsInt($responseToTal->decodeResponseJson()['data']['total']);
-        $this->assertEquals(count($services), $responseToTal->decodeResponseJson()['data']['total']);
+        $this->assertArrayHasKey('total', $response->decodeResponseJson()['data']);
+        $this->assertNotNull($response->decodeResponseJson()['data']['total']);
+        $this->assertIsInt($response->decodeResponseJson()['data']['total']);
+        $this->assertEquals($foundServices, $response->decodeResponseJson()['data']['total']);
     }
 }

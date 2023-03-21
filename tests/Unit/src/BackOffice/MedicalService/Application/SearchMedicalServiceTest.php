@@ -6,6 +6,7 @@ use Database\Seeders\MedicalServiceSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 use Src\BackOffice\MedicalService\Application\Search\SearchMedicalService;
+use Src\BackOffice\MedicalService\Domain\MedicalService;
 use Src\BackOffice\MedicalService\Domain\Repository\MedicalServiceRepository;
 use Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent\EloquentMedicalServiceModel;
 use Src\shared\Domain\Criteria\Criteria;
@@ -28,11 +29,7 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
         $services = EloquentMedicalServiceModel::query()
             ->where('name', 'like', '%ic%')
             ->get()->map(function (EloquentMedicalServiceModel $medicalServiceModel) {
-                return [
-                    'id' => $medicalServiceModel->id,
-                    'name' => $medicalServiceModel->name,
-                    'is_active' => $medicalServiceModel->is_active,
-                ];
+                return MedicalService::createFromArray($medicalServiceModel->toArray());
             })
             ->toArray();
 
@@ -44,7 +41,7 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
                 FilterValue::create('ic'),
             )
         );
-        $nameLikeICCriteria = Criteria::create(
+        $nameLikeICCriteria = Criteria::createWithoutPagination(
             $filters,
             Order::createEmpty()
         );
@@ -58,7 +55,8 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
                 Mockery::on(function (Criteria $criteria) use ($nameLikeICCriteria) {
                     return $criteria->hasFilters() === $criteria->hasFilters()
                         && $criteria->order()->orderBy()->value() === $nameLikeICCriteria->order()->orderBy()->value()
-                        && $criteria->order()->orderType()->value() === $nameLikeICCriteria->order()->orderType()->value();
+                        && $criteria->order()->orderType()->value() === $nameLikeICCriteria->order()->orderType(
+                        )->value();
                 })
             )
             ->andReturn($services);

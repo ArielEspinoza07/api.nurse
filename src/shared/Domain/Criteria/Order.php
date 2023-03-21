@@ -36,4 +36,14 @@ class Order
     {
         return $this->orderType;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'order' => [
+                'by' => $this->orderBy->value(),
+                'type' => $this->orderType->value(),
+            ]
+        ];
+    }
 }
