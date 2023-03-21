@@ -18,7 +18,7 @@ Route::prefix('medical')
                 Route::post('/', CreateMedicalServiceController::class)->name('create');
                 Route::get('/count', CountMedicalServiceController::class)->name('count');
                 Route::get('/{id}', GetByIdMedicalServiceController::class)->name('show');
-                Route::put('/{id}', UpdateMedicalServiceController::class)->name('update');
+                Route::patch('/{id}', UpdateMedicalServiceController::class)->name('update');
                 Route::delete('/{id}', DeleteMedicalServiceController::class)->name('delete');
             });
     });

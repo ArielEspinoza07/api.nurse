@@ -13,12 +13,14 @@ class MedicalServiceName extends StringValueObject
     use AssertNotNullable;
     use AssertValueLength;
 
+    public const MINIMUM_LENGTH = 3;
+
     private function __construct(protected string $value)
     {
         parent::__construct($this->value);
 
         $this->assertNotNull($this->value);
-        $this->assertValueLength($this->value);
+        $this->assertValueLength($this->value, self::MINIMUM_LENGTH);
     }
 
     public static function create(string $value): self

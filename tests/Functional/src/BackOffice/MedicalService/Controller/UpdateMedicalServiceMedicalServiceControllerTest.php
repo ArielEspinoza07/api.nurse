@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\src\BackOffice\MedicalService\Controller;
 
+use Src\BackOffice\MedicalService\Domain\MedicalServiceName;
 use Tests\Functional\src\BackOffice\MedicalServiceControllerTestBase;
 
 class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceControllerTestBase
@@ -16,11 +17,10 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $payload = [
             'name' => 'Pediatrics',
-            'is_active' => true,
         ];
 
         $response = $this->withToken($token)
-            ->putJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->patchJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertOk();
         $response->assertJsonStructure([
@@ -47,7 +47,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
         ];
 
         $response = $this->withToken($token)
-            ->putJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->patchJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertBadRequest();
         $response->assertJsonStructure([
@@ -58,7 +58,7 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $this->assertEquals(false, $response->decodeResponseJson()['success']);
         $this->assertEquals(
-            sprintf('Invalid argument [%s], value must be min 3', $payload['name']),
+            sprintf('Invalid argument [%s], value must be min %s', $payload['name'], MedicalServiceName::MINIMUM_LENGTH),
             $response->decodeResponseJson()['message']
         );
     }
@@ -71,11 +71,10 @@ class UpdateMedicalServiceMedicalServiceControllerTest extends MedicalServiceCon
 
         $payload = [
             'name' => 'Pediatrics',
-            'is_active' => true,
         ];
 
         $response = $this->withToken($token)
-            ->putJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
+            ->patchJson(route($this->endpoint, ['id' => $medicalServiceId]), $payload);
 
         $response->assertNotFound();
         $response->assertJsonStructure([
