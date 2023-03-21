@@ -23,6 +23,9 @@ class GetExceptionCode
         if (intval($throwable->getCode()) === 0) {
             return Response::HTTP_INTERNAL_SERVER_ERROR;
         }
+        if ($throwable->getCode() >= 600) {
+            return Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
 
         return $throwable->getCode();
     }
