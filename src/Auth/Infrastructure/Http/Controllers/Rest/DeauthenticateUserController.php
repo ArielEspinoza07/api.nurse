@@ -21,7 +21,7 @@ class DeauthenticateUserController extends BaseController
     public function __invoke(): JsonResponse
     {
         $this->service->handle(
-            new AuthUserId(auth()->id())
+            AuthUserId::create(auth()->id())
         );
 
         return $this->response->send('Logged out.');

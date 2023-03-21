@@ -31,7 +31,7 @@ class AuthApplicationTestBase extends TestCase
         );
 
         return AuthUser::create(
-            new AuthUserId($model->id),
+            AuthUserId::create($model->id),
             new AuthUserName($model->name),
             AuthUserEmail::create($model->email),
             new AuthUserPassword($model->password),
