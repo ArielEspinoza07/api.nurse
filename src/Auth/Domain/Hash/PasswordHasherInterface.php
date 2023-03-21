@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Auth\Domain\Contracts;
+namespace Src\Auth\Domain\Hash;
 
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserPassword;

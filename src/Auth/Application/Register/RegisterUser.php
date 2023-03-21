@@ -8,8 +8,8 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Domain\AuthUserToken;
-use Src\Auth\Domain\Contracts\PasswordHasherInterface;
 use Src\Auth\Domain\Contracts\TokenCreatorInterface;
+use Src\Auth\Domain\Hash\PasswordHasherInterface;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 
 class RegisterUser
