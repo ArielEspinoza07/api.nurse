@@ -36,7 +36,7 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
             })
             ->toArray();
 
-        $filters = new Filters();
+        $filters = Filters::create();
         $filters->add(
             new Filter(
                 new FilterField('name'),
@@ -44,9 +44,9 @@ class SearchMedicalServiceTest extends MedicalServiceApplicationTestBase
                 new FilterValue('ic'),
             )
         );
-        $nameLikeICCriteria = new Criteria(
+        $nameLikeICCriteria = Criteria::create(
             $filters,
-            Order::none()
+            Order::createEmpty()
         );
 
         $repository = Mockery::mock(MedicalServiceRepository::class);

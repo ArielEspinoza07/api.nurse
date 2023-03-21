@@ -14,14 +14,14 @@ class GetOrder
     {
         if (is_array($order)) {
             return Order::create(
-                new OrderBy($order['by']),
-                new OrderType($order['type'])
+                OrderBy::create($order['by']),
+                OrderType::create($order['type'])
             );
         }
         if (is_string($order)) {
-            return Order::createDesc(new OrderBy($order));
+            return Order::createDesc(OrderBy::create($order));
         }
 
-        return Order::none();
+        return Order::createEmpty();
     }
 }

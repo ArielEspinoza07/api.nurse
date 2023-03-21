@@ -6,8 +6,13 @@ namespace Src\shared\Domain\Criteria;
 
 class Filters
 {
-    public function __construct(private array $values = [])
+    private function __construct(private array $values)
     {
+    }
+
+    public static function create(): self
+    {
+        return new static([]);
     }
 
     public function add(Filter $filter): void

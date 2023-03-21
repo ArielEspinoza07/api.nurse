@@ -14,9 +14,24 @@ class OrderType
     public const DESC = 'desc';
     public const NONE = '';
 
-    public function __construct(private readonly string $value)
+    private function __construct(private readonly string $value)
     {
         $this->assertIsBetweenAcceptedValues($this->value, [self::ASC, self::DESC, self::NONE]);
+    }
+
+    public static function create(string $value): self
+    {
+        return new static($value);
+    }
+
+    public static function createDesc(): self
+    {
+        return new static(OrderType::DESC);
+    }
+
+    public static function createNone(): self
+    {
+        return new static(OrderType::NONE);
     }
 
     public function isNone(): bool

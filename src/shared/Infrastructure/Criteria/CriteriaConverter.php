@@ -24,7 +24,7 @@ class CriteriaConverter
     public function convert(): Criteria
     {
         if (!empty($this->inputDTO->filters) || !empty($this->inputDTO->order) || !empty($this->inputDTO->limit)) {
-            return new Criteria(
+            return Criteria::create(
                 (new GetFilters())->handle($this->inputDTO->filters),
                 (new GetOrder())->handle($this->inputDTO->order),
                 $this->inputDTO->page,
@@ -32,9 +32,9 @@ class CriteriaConverter
             );
         }
 
-        return new Criteria(
-            new Filters(),
-            Order::none()
+        return Criteria::create(
+            Filters::create(),
+            Order::createEmpty()
         );
     }
 }

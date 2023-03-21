@@ -14,7 +14,7 @@ class GetFilters
 {
     public function handle(string|null $filters): Filters
     {
-        $criteriaFilters = new Filters();
+        $criteriaFilters = Filters::create();
         if (!empty($filters)) {
             foreach (explode(',', $filters) as $filter) {
                 list($field, $operator, $value) = explode(':', $filter);

@@ -6,7 +6,7 @@ namespace Src\shared\Domain\Criteria;
 
 class Order
 {
-    public function __construct(
+    private function __construct(
         private readonly OrderBy $orderBy,
         private readonly OrderType $orderType,
     ) {
@@ -19,12 +19,12 @@ class Order
 
     public static function createDesc(OrderBy $orderBy): self
     {
-        return new static($orderBy, new OrderType(OrderType::DESC));
+        return new static($orderBy, OrderType::createDesc());
     }
 
-    public static function none(): self
+    public static function createEmpty(): self
     {
-        return new static(new OrderBy(''), new OrderType(OrderType::NONE));
+        return new static(OrderBy::createEmpty(), OrderType::createNone());
     }
 
     public function orderBy(): OrderBy
