@@ -8,7 +8,6 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserId;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
-use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 use Tests\TestCase;
