@@ -12,7 +12,7 @@ class AuthUserEmail extends StringValueObject
 {
     use AssertNotNullable;
 
-    protected function __construct(protected string $value)
+    protected function __construct(protected string $value, private AuthUserEmailVerify $emailVerify)
     {
         parent::__construct($this->value);
 
@@ -20,9 +20,14 @@ class AuthUserEmail extends StringValueObject
         $this->assertIsEmail($this->value);
     }
 
-    public static function create(string $value): self
+    public static function create(string $value, AuthUserEmailVerify $emailVerify): self
     {
-        return new static($value);
+        return new static($value, $emailVerify);
+    }
+
+    public static function createNotVerified(string $value): self
+    {
+        return new static($value, AuthUserEmailVerify::createNotVerified());
     }
 
     private function assertIsEmail(string $email)
@@ -30,5 +35,15 @@ class AuthUserEmail extends StringValueObject
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException(sprintf('Invalid argument, has to be an email [%s]', $email));
         }
+    }
+
+    public function emailVerify(): AuthUserEmailVerify
+    {
+        return $this->emailVerify;
+    }
+
+    public function setEmailVerify(AuthUserEmailVerify $emailVerify): void
+    {
+        $this->emailVerify = $emailVerify;
     }
 }

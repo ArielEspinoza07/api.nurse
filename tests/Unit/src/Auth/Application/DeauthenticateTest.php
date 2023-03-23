@@ -35,7 +35,7 @@ class DeauthenticateTest extends AuthApplicationTestBase
             new LaravelPasswordHasher(),
             new LaravelSanctumToken()
         ))->handle(
-            AuthUserEmail::create($payload['email']),
+            AuthUserEmail::createNotVerified($payload['email']),
             AuthUserPassword::create($payload['password']),
         );
 

@@ -16,7 +16,7 @@ class AuthApplicationTestBase extends TestCase
 {
     use RefreshDatabase;
 
-    protected string $tokenExample = '1|h0F5Nkx4vAjjPrmJw3RMDX9AH81kgl3xZVZoEzgi';
+    protected string $fakeToken = '1|h0F5Nkx4vAjjPrmJw3RMDX9AH81kgl3xZVZoEzgi';
 
     protected function createAutUser(array $payload): AuthUser
     {
@@ -32,7 +32,7 @@ class AuthApplicationTestBase extends TestCase
         return AuthUser::create(
             AuthUserId::create($model->id),
             AuthUserName::create($model->name),
-            AuthUserEmail::create($model->email),
+            AuthUserEmail::createNotVerified($model->email),
             AuthUserPassword::create($model->password),
         );
     }

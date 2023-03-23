@@ -14,6 +14,7 @@ use Src\Auth\Domain\AuthUserToken;
 use Src\Auth\Domain\Token\TokenCreatorContract;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
+use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
 class RegisterTest extends AuthApplicationTestBase
@@ -24,10 +25,9 @@ class RegisterTest extends AuthApplicationTestBase
     public function test_register_user(): void
     {
         $name = AuthUserName::create($this->faker->name());
-        $email = AuthUserEmail::create($this->faker->email());
+        $email = AuthUserEmail::createNotVerified($this->faker->email());
         $notEncryptedPassword = AuthUserPassword::create('Password!1');
-
-        $notEncryptedAuthUser = AuthUser::createFromNameEmailAndPassword($name, $email, $notEncryptedPassword);
+        $encryptedPassword = AuthUserPassword::create((new LaravelPasswordHasher())->hash($notEncryptedPassword));
 
         $passwordHasher = Mockery::mock(PasswordHasherContract::class);
         $this->app->instance(RegisterUser::class, $passwordHasher);
@@ -39,24 +39,30 @@ class RegisterTest extends AuthApplicationTestBase
                     return $notEncryptedPassword->value() === $password->value();
                 })
             )
-            ->andReturn($this->tokenExample);
+            ->andReturn($encryptedPassword->value());
+
+        $encryptedAuthUser = AuthUser::createFromNameEmailAndPassword(
+            $name,
+            $email,
+            $encryptedPassword
+        );
 
         $repository = Mockery::mock(AuthUserRepository::class);
         $this->app->instance(RegisterUser::class, $repository);
         $repository->shouldReceive('create')
             ->once()
             ->with(
-                Mockery::on(function (AuthUserName $name) use ($notEncryptedAuthUser) {
-                    return $name->value() === $notEncryptedAuthUser->name()->value();
+                Mockery::on(function (AuthUserName $name) use ($encryptedAuthUser) {
+                    return $name->value() === $encryptedAuthUser->name()->value();
                 }),
-                Mockery::on(function (AuthUserEmail $email) use ($notEncryptedAuthUser) {
-                    return $email->value() === $notEncryptedAuthUser->email()->value();
+                Mockery::on(function (AuthUserEmail $email) use ($encryptedAuthUser) {
+                    return $email->value() === $encryptedAuthUser->email()->value();
                 }),
-                Mockery::on(function (AuthUserPassword $password) {
-                    return $password->value() !== null;
+                Mockery::on(function (AuthUserPassword $password) use ($encryptedAuthUser) {
+                    return $password->value() === $encryptedAuthUser->password()->value();
                 })
             )
-            ->andReturn($notEncryptedAuthUser);
+            ->andReturn($encryptedAuthUser);
 
         $tokenCreator = Mockery::mock(TokenCreatorContract::class);
         $this->app->instance(RegisterUser::class, $tokenCreator);
@@ -64,13 +70,13 @@ class RegisterTest extends AuthApplicationTestBase
         $tokenCreator->shouldReceive('create')
             ->once()
             ->with(
-                Mockery::on(function (AuthUser $user) use ($notEncryptedAuthUser) {
-                    return $notEncryptedAuthUser->id()->value() === $user->id()->value()
-                        && $notEncryptedAuthUser->email()->value() === $user->email()->value()
-                        && $notEncryptedAuthUser->name()->value() === $user->name()->value();
+                Mockery::on(function (AuthUser $user) use ($encryptedAuthUser) {
+                    return $encryptedAuthUser->id()->value() === $user->id()->value()
+                        && $encryptedAuthUser->email()->value() === $user->email()->value()
+                        && $encryptedAuthUser->name()->value() === $user->name()->value();
                 })
             )
-            ->andReturn(AuthUserToken::create($this->tokenExample));
+            ->andReturn(AuthUserToken::create($this->fakeToken));
 
         $token = (new RegisterUser($repository, $passwordHasher, $tokenCreator))
             ->handle(

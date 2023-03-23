@@ -23,4 +23,6 @@ interface AuthUserRepository
 
 
     public function findById(AuthUserId $id): AuthUser;
+
+    public function verifyEmail(AuthUser $user): void;
 }

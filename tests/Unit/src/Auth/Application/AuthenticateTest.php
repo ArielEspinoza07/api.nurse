@@ -64,11 +64,11 @@ class AuthenticateTest extends AuthApplicationTestBase
                         && $authUser->email()->value() === $user->email()->value();
                 })
             )
-            ->andReturn(AuthUserToken::create($this->tokenExample));
+            ->andReturn(AuthUserToken::create($this->fakeToken));
 
         $token = (new AuthenticateUser($repository, $passwordHasher, $tokenCreator))
             ->handle(
-                AuthUserEmail::create($payload['email']),
+                AuthUserEmail::createNotVerified($payload['email']),
                 AuthUserPassword::create($payload['password']),
             );
 
