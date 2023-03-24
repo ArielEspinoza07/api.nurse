@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Src\Auth\Infrastructure\Http\Controllers\Rest\AuthenticateUserController;
 use Src\Auth\Infrastructure\Http\Controllers\Rest\DeauthenticateUserController;
 use Src\Auth\Infrastructure\Http\Controllers\Rest\RegisterUserController;
+use Src\Auth\Infrastructure\Http\Controllers\Rest\VerifyUserController;
 
 Route::prefix('auth')
     ->as('auth:')
@@ -14,4 +15,5 @@ Route::prefix('auth')
                 Route::post('/register', RegisterUserController::class)->name('register');
             });
         Route::post('/logout', DeauthenticateUserController::class)->name('logout');
+        Route::post('/verify/{id}', VerifyUserController::class)->name('verify');
     });
