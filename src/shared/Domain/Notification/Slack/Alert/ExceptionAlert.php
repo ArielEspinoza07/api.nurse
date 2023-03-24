@@ -2,21 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Src\shared\Infrastructure\Notification\Slack\Alert;
+namespace Src\shared\Domain\Notification\Slack\Alert;
 
-use Spatie\SlackAlerts\Facades\SlackAlert;
-use Src\shared\Domain\Notification\AlertContract;
+use Src\shared\Domain\Notification\Slack\Alert\Contract\BaseAlertContract;
 use Throwable;
 
-class SlackExceptionAlert implements AlertContract
+class ExceptionAlert implements BaseAlertContract
 {
-    public function __construct(private readonly Throwable $throwable)
+    private function __construct(private readonly Throwable $throwable)
     {
     }
 
-    public function send(): void
+    public static function create(Throwable $throwable): self
     {
-        SlackAlert::to(AlertWebhook::EXCEPTION)->blocks([
+        return new static($throwable);
+    }
+
+    public function to(): string
+    {
+        return AlertWebhook::EXCEPTION;
+    }
+
+    public function message(): string
+    {
+        return $this->throwable->getMessage();
+    }
+
+    public function block(): array
+    {
+        return [
             [
                 'type' => 'header',
                 'text' => [
@@ -59,6 +73,6 @@ class SlackExceptionAlert implements AlertContract
                     ],
                 ]
             ],
-        ]);
+        ];
     }
 }

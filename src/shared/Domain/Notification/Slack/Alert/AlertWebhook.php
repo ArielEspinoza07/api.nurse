@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\shared\Infrastructure\Notification\Slack\Alert;
+namespace Src\shared\Domain\Notification\Slack\Alert;
 
 enum AlertWebhook: string
 {
