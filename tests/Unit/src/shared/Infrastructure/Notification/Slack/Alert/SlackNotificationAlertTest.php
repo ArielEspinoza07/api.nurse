@@ -10,7 +10,7 @@ use Src\shared\Infrastructure\Notification\Slack\Alert\SlackNotificationAlert;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class SlackExceptionAlertTest extends TestCase
+class SlackNotificationAlertTest extends TestCase
 {
     public function test_send_slack_alert_block(): void
     {
@@ -37,5 +37,32 @@ class SlackExceptionAlertTest extends TestCase
             ->andReturn();
 
         (new SlackNotificationAlert())->sendBlock($exceptionAlert);
+    }
+
+    public function test_send_slack_alert_message(): void
+    {
+        $exceptionAlert = ExceptionAlert::create(
+            new InvalidArgumentException('Invalid argument name', Response::HTTP_BAD_REQUEST)
+        );
+
+        SlackAlert::shouldReceive('to')
+            ->once()
+            ->with(
+                Mockery::on(function (string $text) use ($exceptionAlert) {
+                    return $text === $exceptionAlert->to();
+                })
+            )
+            ->andReturnSelf();
+
+        SlackAlert::shouldReceive('message')
+            ->once()
+            ->with(
+                Mockery::on(function (string $text) use ($exceptionAlert) {
+                    return $exceptionAlert->message() === $text;
+                })
+            )
+            ->andReturn();
+
+        (new SlackNotificationAlert())->sendMessage($exceptionAlert);
     }
 }
