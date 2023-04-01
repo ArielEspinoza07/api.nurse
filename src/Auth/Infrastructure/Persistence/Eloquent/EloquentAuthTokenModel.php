@@ -19,4 +19,13 @@ class EloquentAuthTokenModel extends EloquentSanctumTokenBaseModel
     protected $primaryKey = 'id';
 
     protected $table = 'personal_access_tokens';
+
+    protected $fillable = [
+        'tokenable_type',
+        'tokenable_id',
+        'name',
+        'token',
+        'abilities',
+        'expires_at',
+    ];
 }

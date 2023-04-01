@@ -8,19 +8,16 @@ use Src\shared\Domain\Validation\Contract\AssertNotNullable;
 use Src\shared\Domain\Validation\Contract\AssertValueLength;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
-class AuthUserToken extends StringValueObject
+class AuthPlainTextToken extends StringValueObject
 {
     use AssertNotNullable;
-    use AssertValueLength;
 
-    public const TOKEN_LENGTH = 42;
 
-    protected function __construct(protected string $value)
+    protected function __construct(protected string $value,)
     {
         parent::__construct($this->value);
 
         $this->assertNotNull($this->value);
-        $this->assertValueLength($this->value, self::TOKEN_LENGTH);
     }
 
     public static function create(string $value): self

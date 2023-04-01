@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Src\Auth\Application\Deauthenticate;
 
 use Src\Auth\Domain\AuthUserId;
-use Src\Auth\Domain\Token\TokenDeletorContract;
-use Src\Auth\Domain\Repository\AuthUserRepository;
+use Src\Auth\Domain\Repository\AuthTokenRepository;
 
 class DeauthenticateUser
 {
     public function __construct(
-        private readonly AuthUserRepository $repository,
-        private readonly TokenDeletorContract $tokenDeletor
+        private readonly AuthTokenRepository $repository,
     ) {
     }
 
 
     public function handle(AuthUserId $id): void
     {
-        $this->tokenDeletor
-            ->delete($this->repository->findById($id));
+        $authToken = $this->repository->findByUserId($id);
+
+        $this->repository->delete($authToken);
     }
 }

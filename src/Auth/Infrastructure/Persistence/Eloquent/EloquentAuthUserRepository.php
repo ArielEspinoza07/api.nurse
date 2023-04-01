@@ -46,11 +46,12 @@ class EloquentAuthUserRepository implements AuthUserRepository
             throw new AuthUserNotFoundException();
         }
 
-        return AuthUser::create(
-            $id,
-            AuthUserName::create($model->name),
-            AuthUserEmail::create($model->email, AuthUserEmailVerify::create($model->hasVerifiedEmail())),
-            AuthUserPassword::create($model->password)
+        return AuthUser::createFromPrimitives(
+            $id->value(),
+            $model->name,
+            $model->email,
+            $model->hasVerifiedEmail(),
+            $model->password
         );
     }
 
@@ -64,11 +65,12 @@ class EloquentAuthUserRepository implements AuthUserRepository
         }
         $email->setEmailVerify(AuthUserEmailVerify::create($model->hasVerifiedEmail()));
 
-        return AuthUser::create(
-            AuthUserId::create($model->id),
-            AuthUserName::create($model->name),
-            $email,
-            AuthUserPassword::create($model->password)
+        return AuthUser::createFromPrimitives(
+            $model->id,
+            $model->name,
+            $email->value(),
+            $model->hasVerifiedEmail(),
+            $model->password
         );
     }
 

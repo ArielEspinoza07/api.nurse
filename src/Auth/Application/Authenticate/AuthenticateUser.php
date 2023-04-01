@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Src\Auth\Application\Authenticate;
 
+use Src\Auth\Application\AuthUserResponse;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserPassword;
-use Src\Auth\Domain\AuthUserToken;
-use Src\Auth\Domain\Token\TokenCreatorContract;
+use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Exception\InvalidAuthUserPasswordException;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
@@ -15,20 +15,22 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 class AuthenticateUser
 {
     public function __construct(
-        private readonly AuthUserRepository $repository,
-        private readonly PasswordHasherContract $passwordHasher,
-        private readonly TokenCreatorContract $tokenCreator
+        private readonly AuthTokenRepository $authTokenRepository,
+        private readonly AuthUserRepository $authUserRepository,
+        private readonly PasswordHasherContract $passwordHasher
     ) {
     }
 
-    public function handle(AuthUserEmail $email, AuthUserPassword $password): AuthUserToken
+    public function handle(AuthUserEmail $email, AuthUserPassword $password): AuthUserResponse
     {
-        $authUser = $this->repository->findByEmail($email);
+        $authUser = $this->authUserRepository->findByEmail($email);
 
         if (!$this->passwordHasher->check($authUser, $password)) {
             throw new InvalidAuthUserPasswordException($email);
         }
 
-        return $this->tokenCreator->create($authUser);
+        $authToken = $this->authTokenRepository->create($authUser);
+
+        return new AuthUserResponse($authToken->id()->value(), $authToken->plainTextToken()->value());
     }
 }

@@ -31,6 +31,21 @@ class AuthUser
         return new static(AuthUserId::createEmpty(), $name, $email, $password);
     }
 
+    public static function createFromPrimitives(
+        int $id,
+        string $name,
+        string $email,
+        bool $emailVerified,
+        string $password
+    ): self {
+        return new static(
+            AuthUserId::create($id),
+            AuthUserName::create($name),
+            AuthUserEmail::create($email, AuthUserEmailVerify::create($emailVerified)),
+            AuthUserPassword::create($password)
+        );
+    }
+
     public function id(): AuthUserId
     {
         return $this->id;
@@ -49,5 +64,15 @@ class AuthUser
     public function password(): AuthUserPassword
     {
         return $this->password;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id->value(),
+            'name' => $this->name->value(),
+            'email' => $this->email->value(),
+            'email_verified' => $this->email->emailVerify()->value(),
+        ];
     }
 }

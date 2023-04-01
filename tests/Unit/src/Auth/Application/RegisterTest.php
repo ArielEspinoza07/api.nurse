@@ -4,14 +4,19 @@ namespace Tests\Unit\src\Auth\Application;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Mockery;
+use Src\Auth\Application\Authenticate\AuthenticateUser;
+use Src\Auth\Application\AuthUserResponse;
 use Src\Auth\Application\Register\RegisterUser;
+use Src\Auth\Domain\AuthPlainTextToken;
+use Src\Auth\Domain\AuthTokenId;
 use Src\Auth\Domain\AuthUser;
 use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
-use Src\Auth\Domain\AuthUserToken;
-use Src\Auth\Domain\Token\TokenCreatorContract;
+use Src\Auth\Domain\AuthToken;
+use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
@@ -29,6 +34,18 @@ class RegisterTest extends AuthApplicationTestBase
         $notEncryptedPassword = AuthUserPassword::create('Password!1');
         $encryptedPassword = AuthUserPassword::create((new LaravelPasswordHasher())->hash($notEncryptedPassword));
 
+        $encryptedAuthUser = AuthUser::createFromNameEmailAndPassword(
+            $name,
+            $email,
+            $encryptedPassword
+        );
+
+        $authToken = AuthToken::create(
+            AuthTokenId::create(1),
+            AuthPlainTextToken::create(Str::random(40)),
+            $encryptedAuthUser
+        );
+
         $passwordHasher = Mockery::mock(PasswordHasherContract::class);
         $this->app->instance(RegisterUser::class, $passwordHasher);
 
@@ -41,15 +58,10 @@ class RegisterTest extends AuthApplicationTestBase
             )
             ->andReturn($encryptedPassword->value());
 
-        $encryptedAuthUser = AuthUser::createFromNameEmailAndPassword(
-            $name,
-            $email,
-            $encryptedPassword
-        );
+        $authUserRepository = Mockery::mock(AuthUserRepository::class);
+        $this->app->instance(RegisterUser::class, $authUserRepository);
 
-        $repository = Mockery::mock(AuthUserRepository::class);
-        $this->app->instance(RegisterUser::class, $repository);
-        $repository->shouldReceive('create')
+        $authUserRepository->shouldReceive('create')
             ->once()
             ->with(
                 Mockery::on(function (AuthUserName $name) use ($encryptedAuthUser) {
@@ -64,28 +76,27 @@ class RegisterTest extends AuthApplicationTestBase
             )
             ->andReturn($encryptedAuthUser);
 
-        $tokenCreator = Mockery::mock(TokenCreatorContract::class);
-        $this->app->instance(RegisterUser::class, $tokenCreator);
+        $authTokenRepository = Mockery::mock(AuthTokenRepository::class);
+        $this->app->instance(AuthenticateUser::class, $authTokenRepository);
 
-        $tokenCreator->shouldReceive('create')
+        $authTokenRepository->shouldReceive('create')
             ->once()
             ->with(
                 Mockery::on(function (AuthUser $user) use ($encryptedAuthUser) {
                     return $encryptedAuthUser->id()->value() === $user->id()->value()
-                        && $encryptedAuthUser->email()->value() === $user->email()->value()
-                        && $encryptedAuthUser->name()->value() === $user->name()->value();
-                })
+                        && $encryptedAuthUser->name()->value() === $user->name()->value()
+                        && $encryptedAuthUser->email()->value() === $user->email()->value();
+                }),
             )
-            ->andReturn(AuthUserToken::create($this->fakeToken));
+            ->andReturn($authToken);
 
-        $token = (new RegisterUser($repository, $passwordHasher, $tokenCreator))
+        $response = (new RegisterUser($authTokenRepository, $authUserRepository, $passwordHasher))
             ->handle(
                 $name,
                 $email,
                 $notEncryptedPassword
             );
 
-        $this->assertInstanceOf(AuthUserToken::class, $token);
-        $this->assertEquals(AuthUserToken::TOKEN_LENGTH, strlen($token->value()));
+        $this->assertInstanceOf(AuthUserResponse::class, $response);
     }
 }

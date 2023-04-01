@@ -6,7 +6,6 @@ use Tests\Functional\src\Auth\AuthControllerTestBase;
 
 class RegisterUserControllerTest extends AuthControllerTestBase
 {
-
     protected string $endpoint = 'api:v1:auth:register';
 
     public function test_register_user(): void
@@ -33,7 +32,6 @@ class RegisterUserControllerTest extends AuthControllerTestBase
         $this->assertArrayHasKey('token', $registered->decodeResponseJson()['data']);
         $this->assertNotNull($registered->decodeResponseJson()['data']['token']);
         $this->assertIsString($registered->decodeResponseJson()['data']['token']);
-        $this->assertEquals(42, strlen($registered->decodeResponseJson()['data']['token']));
     }
 
     public function test_register_user_with_wrong_password_expect_unprocessable_entity(): void

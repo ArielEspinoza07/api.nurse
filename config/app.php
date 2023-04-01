@@ -195,9 +195,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        Src\BackOffice\MedicalService\Infrastructure\Providers\MedicalServiceBindingServiceProvider::class,
-        Src\Auth\Infrastructure\Providers\AuthUserBindingServiceProvider::class,
-        Src\shared\Infrastructure\Providers\SharedBindingServiceProvider::class,
     ],
 
     /*

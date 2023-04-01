@@ -6,7 +6,6 @@ use Tests\Functional\src\Auth\AuthControllerTestBase;
 
 class AuthenticateUserControllerTest extends AuthControllerTestBase
 {
-
     protected string $endpoint = 'api:v1:auth:login';
 
     public function test_authenticate_user(): void
@@ -33,7 +32,6 @@ class AuthenticateUserControllerTest extends AuthControllerTestBase
         $this->assertArrayHasKey('token', $loggedIn->decodeResponseJson()['data']);
         $this->assertNotNull($loggedIn->decodeResponseJson()['data']['token']);
         $this->assertIsString($loggedIn->decodeResponseJson()['data']['token']);
-        $this->assertEquals(42, strlen($loggedIn->decodeResponseJson()['data']['token']));
     }
 
     public function test_authenticate_with_non_existing_user(): void

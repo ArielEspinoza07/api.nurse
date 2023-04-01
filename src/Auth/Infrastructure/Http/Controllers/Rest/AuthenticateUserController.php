@@ -22,11 +22,11 @@ class AuthenticateUserController extends BaseController
 
     public function __invoke(AuthenticateUserRequest $request): JsonResponse
     {
-        $token = $this->service->handle(
+        $response = $this->service->handle(
             AuthUserEmail::createNotVerified($request->validated('email')),
             AuthUserPassword::create($request->validated('password'))
         );
 
-        return $this->response->send('Logged in.', $token->toArray());
+        return $this->response->send('Logged in.', $response->toArray());
     }
 }
