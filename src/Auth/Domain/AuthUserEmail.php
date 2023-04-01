@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Src\Auth\Domain;
 
 use InvalidArgumentException;
-use Src\shared\Domain\Validation\Contract\AssertNotNullable;
+use Src\shared\Domain\Validation\AssertNotNullable;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
 class AuthUserEmail extends StringValueObject

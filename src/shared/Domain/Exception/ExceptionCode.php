@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src\shared\Domain\Exception;
 
-use Src\shared\Domain\Validation\Contract\AssertNotNullable;
+use Src\shared\Domain\Validation\AssertNotNullable;
 use Src\shared\Domain\ValueObject\IntValueObject;
 
 class ExceptionCode extends IntValueObject

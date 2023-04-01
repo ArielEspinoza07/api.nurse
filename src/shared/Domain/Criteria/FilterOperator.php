@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Src\shared\Domain\Criteria;
 
-use Src\shared\Domain\Validation\Contract\AssertIsBetweenAcceptedValues;
+use Src\shared\Domain\Validation\AssertIsBetweenAcceptedValues;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
 class FilterOperator extends StringValueObject

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\shared\Domain\Validation\Contract;
+namespace Src\shared\Domain\Validation;
 
 use InvalidArgumentException;
 

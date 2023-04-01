@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Src\BackOffice\MedicalService\Domain;
 
-use Src\shared\Domain\Validation\Contract\AssertNotNullable;
-use Src\shared\Domain\Validation\Contract\AssertValueLength;
+use Src\shared\Domain\Validation\AssertNotNullable;
+use Src\shared\Domain\Validation\AssertValueLength;
 use Src\shared\Domain\ValueObject\StringValueObject;
 
 class MedicalServiceName extends StringValueObject
