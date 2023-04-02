@@ -11,7 +11,7 @@ use Tests\TestCase;
 class SlackNotificationAlertFactoryTest extends TestCase
 {
 
-    public function test_slack_notification_alert_factory_return_notification_alert(): void
+    public function test_return_notification_alert(): void
     {
         $alert = (new SlackNotificationAlertFactory())->make(AlertType::BLOCK);
 
