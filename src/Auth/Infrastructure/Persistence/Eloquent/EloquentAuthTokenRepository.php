@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Src\Auth\Infrastructure\Persistence\Eloquent;
 
-use Illuminate\Support\Str;
 use Src\Auth\Domain\AuthPlainTextToken;
 use Src\Auth\Domain\AuthToken;
 use Src\Auth\Domain\AuthTokenId;
