@@ -6,8 +6,6 @@ namespace Src\shared\Domain\Mail;
 
 class DomainMail
 {
-    private MailFrom $mailFrom;
-
     private function __construct(
         private readonly MailFrom $from,
         private readonly MailSubject $subject,
@@ -43,6 +41,6 @@ class DomainMail
 
     public function addContent(MailContent $content): void
     {
-        $this->content[] = $content;
+        $this->content[$content->contentType()->value()] = $content;
     }
 }

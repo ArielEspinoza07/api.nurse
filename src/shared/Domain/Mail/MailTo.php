@@ -29,4 +29,12 @@ class MailTo
     {
         return $this->name;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'email' => $this->address->value(),
+            'name' => $this->name->value(),
+        ];
+    }
 }
