@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace Src\Auth\Infrastructure\Persistence\Eloquent;
 
-use DateTime;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Collection;
 use Src\Auth\Infrastructure\Persistence\Eloquent\Contract\HasApiTokens;
 use Illuminate\Foundation\Auth\User as IlluminateAuthUser;
 
 /**
  * Class EloquentAuthUserModel
  *
- * @property string $name
- * @property string $email
- * @property DateTime email_verified_at
- * @property string $password
+ * @property int id
+ * @property string name
+ * @property string email
+ * @property Carbon email_verified_at
+ * @property string password
+ *
+ * @property-read EloquentAuthTokenModel[]|Collection|null tokens
  *
  * @package namespace Src\Auth\Infrastructure\Persistence\Eloquent
  */
