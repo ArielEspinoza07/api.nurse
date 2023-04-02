@@ -20,6 +20,8 @@ use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
+use Src\shared\Domain\Token\TokenContract;
+use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
 class RegisterTest extends AuthApplicationTestBase
@@ -42,7 +44,7 @@ class RegisterTest extends AuthApplicationTestBase
 
         $authToken = AuthToken::create(
             AuthTokenId::create(1),
-            AuthPlainTextToken::create(Str::random(40)),
+            AuthPlainTextToken::create((new PlainTextToken())->generate()),
             $encryptedAuthUser
         );
 
@@ -76,12 +78,23 @@ class RegisterTest extends AuthApplicationTestBase
             )
             ->andReturn($encryptedAuthUser);
 
+        $tokenService = Mockery::mock(TokenContract::class);
+        $this->app->instance(AuthenticateUser::class, $tokenService);
+
+        $tokenService->shouldReceive('generate')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($authToken->plainTextToken()->value());
+
         $authTokenRepository = Mockery::mock(AuthTokenRepository::class);
         $this->app->instance(AuthenticateUser::class, $authTokenRepository);
 
         $authTokenRepository->shouldReceive('create')
             ->once()
             ->with(
+                Mockery::on(function (AuthPlainTextToken $plainTextToken) use ($authToken) {
+                    return $authToken->plainTextToken()->value() === $plainTextToken->value();
+                }),
                 Mockery::on(function (AuthUser $user) use ($encryptedAuthUser) {
                     return $encryptedAuthUser->id()->value() === $user->id()->value()
                         && $encryptedAuthUser->name()->value() === $user->name()->value()
@@ -90,7 +103,7 @@ class RegisterTest extends AuthApplicationTestBase
             )
             ->andReturn($authToken);
 
-        $response = (new RegisterUser($authTokenRepository, $authUserRepository, $passwordHasher))
+        $response = (new RegisterUser($authTokenRepository, $authUserRepository, $passwordHasher, $tokenService))
             ->handle(
                 $name,
                 $email,
