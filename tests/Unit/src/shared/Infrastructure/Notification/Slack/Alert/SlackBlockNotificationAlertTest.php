@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class SlackBlockNotificationAlertTest extends TestCase
 {
-    public function test_send_slack_alert_block(): void
+    public function test_slack_block_notification_alert_is_send(): void
     {
         $exceptionAlert = ExceptionBlockAlert::create(
             new InvalidArgumentException('Invalid argument name', Response::HTTP_BAD_REQUEST)
