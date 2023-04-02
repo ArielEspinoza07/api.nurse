@@ -5,24 +5,17 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthTokenModel;
+use Src\shared\Infrastructure\Providers\SharedRegisterServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    private array $providers = [
-        \Src\Auth\Infrastructure\Providers\AuthUserBindingServiceProvider::class,
-        \Src\BackOffice\MedicalService\Infrastructure\Providers\MedicalServiceBindingServiceProvider::class,
-        \Src\shared\Infrastructure\Providers\SharedBindingServiceProvider::class,
-    ];
-
     /**
      * Register any application services.
      */
     public function register(): void
     {
         Sanctum::ignoreMigrations();
-        foreach ($this->providers as $provider) {
-            $this->app->register($provider);
-        }
+        $this->app->register(SharedRegisterServiceProvider::class);
     }
 
     /**
