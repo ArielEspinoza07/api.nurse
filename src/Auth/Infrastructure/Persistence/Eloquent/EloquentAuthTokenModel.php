@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Src\Auth\Infrastructure\Persistence\Eloquent;
 
-use Src\shared\Infrastructure\Persistence\Eloquent\EloquentSanctumTokenBaseModel;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Laravel\Sanctum\PersonalAccessToken;
 
 /**
- * Class EloquentAuthUserModel
+ * Class EloquentAuthTokenModel
  *
- * @property string $name
- * @property string $password
+ * @property int id
+ * @property string token
  *
- * @package namespace Src\BackOffice\MedicalService\Infrastructure\Persistence\Eloquent
+ * @property-read MorphTo tokenable
+ *
+ * @package namespace Src\Auth\Infrastructure\Persistence\Eloquent
  */
-class EloquentAuthTokenModel extends EloquentSanctumTokenBaseModel
+class EloquentAuthTokenModel extends PersonalAccessToken
 {
     protected $primaryKey = 'id';
 
