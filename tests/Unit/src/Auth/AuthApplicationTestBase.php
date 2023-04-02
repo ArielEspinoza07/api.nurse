@@ -15,6 +15,7 @@ use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthTokenRepository;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
+use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\TestCase;
 
 class AuthApplicationTestBase extends TestCase
@@ -47,7 +48,8 @@ class AuthApplicationTestBase extends TestCase
         return (new RegisterUser(
             new EloquentAuthTokenRepository(),
             new EloquentAuthUserRepository(),
-            new LaravelPasswordHasher()
+            new LaravelPasswordHasher(),
+            new PlainTextToken()
         ))->handle(
             AuthUserName::create($name),
             AuthUserEmail::createNotVerified($email),
