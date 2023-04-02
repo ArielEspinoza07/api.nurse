@@ -15,6 +15,8 @@ use Src\Auth\Domain\AuthToken;
 use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
+use Src\shared\Domain\Token\TokenContract;
+use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
 class AuthenticateTest extends AuthApplicationTestBase
@@ -31,7 +33,7 @@ class AuthenticateTest extends AuthApplicationTestBase
 
         $authToken = AuthToken::create(
             AuthTokenId::create(1),
-            AuthPlainTextToken::create(Str::random(40)),
+            AuthPlainTextToken::create((new PlainTextToken())->generate()),
             $authUser
         );
 
@@ -63,12 +65,23 @@ class AuthenticateTest extends AuthApplicationTestBase
             )
             ->andReturn(true);
 
+        $tokenService = Mockery::mock(TokenContract::class);
+        $this->app->instance(AuthenticateUser::class, $tokenService);
+
+        $tokenService->shouldReceive('generate')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($authToken->plainTextToken()->value());
+
         $authTokenRepository = Mockery::mock(AuthTokenRepository::class);
         $this->app->instance(AuthenticateUser::class, $authTokenRepository);
 
         $authTokenRepository->shouldReceive('create')
             ->once()
             ->with(
+                Mockery::on(function (AuthPlainTextToken $plainTextToken) use ($authToken) {
+                    return $authToken->plainTextToken()->value() === $plainTextToken->value();
+                }),
                 Mockery::on(function (AuthUser $user) use ($authUser) {
                     return $authUser->id()->value() === $user->id()->value()
                         && $authUser->name()->value() === $user->name()->value()
@@ -77,7 +90,7 @@ class AuthenticateTest extends AuthApplicationTestBase
             )
             ->andReturn($authToken);
 
-        $response = (new AuthenticateUser($authTokenRepository, $userRepository, $passwordHasher))
+        $response = (new AuthenticateUser($authTokenRepository, $userRepository, $passwordHasher, $tokenService))
             ->handle(
                 AuthUserEmail::createNotVerified($payload['email']),
                 AuthUserPassword::create($payload['password']),

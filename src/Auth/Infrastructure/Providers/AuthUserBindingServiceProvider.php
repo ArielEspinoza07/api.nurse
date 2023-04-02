@@ -11,6 +11,8 @@ use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthTokenRepository;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
+use Src\shared\Domain\Token\TokenContract;
+use Src\shared\Infrastructure\Token\PlainTextToken;
 
 class AuthUserBindingServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AuthUserBindingServiceProvider extends ServiceProvider
         AuthUserRepository::class => EloquentAuthUserRepository::class,
         PasswordHasherContract::class => LaravelPasswordHasher::class,
         AuthTokenRepository::class => EloquentAuthTokenRepository::class,
+        TokenContract::class => PlainTextToken::class
     ];
 
 

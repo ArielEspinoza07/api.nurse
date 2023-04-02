@@ -14,7 +14,7 @@ use Src\Auth\Domain\Repository\AuthTokenRepository;
 
 class EloquentAuthTokenRepository implements AuthTokenRepository
 {
-    public function create(AuthUser $user): AuthToken
+    public function create(AuthPlainTextToken $plainTextToken, AuthUser $user): AuthToken
     {
         $query = EloquentAuthTokenModel::query()
             ->where([
@@ -31,13 +31,13 @@ class EloquentAuthTokenRepository implements AuthTokenRepository
                 'tokenable_type' => EloquentAuthUserModel::class,
                 'tokenable_id' => $user->id()->value(),
                 'name' => $user->id()->value(),
-                'token' => hash('sha256', $plainTextToken = Str::random(40)),
+                'token' => hash('sha256', $plainTextToken->value()),
                 'expires_at' => now()->endOfDay(),
             ]);
 
         return AuthToken::create(
             AuthTokenId::create($eloquentAuthToken->id),
-            AuthPlainTextToken::create($plainTextToken),
+            $plainTextToken,
             $user
         );
     }
