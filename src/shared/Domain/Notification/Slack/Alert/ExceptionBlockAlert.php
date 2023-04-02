@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Src\shared\Domain\Notification\Slack\Alert;
 
-use Src\shared\Domain\Notification\Slack\Alert\Contract\BaseAlertContract;
+use Src\shared\Domain\Notification\Slack\Alert\Contract\BlockAlertContract;
 use Throwable;
 
-class ExceptionAlert implements BaseAlertContract
+class ExceptionBlockAlert implements BlockAlertContract
 {
     private function __construct(private readonly Throwable $throwable)
     {
@@ -21,11 +21,6 @@ class ExceptionAlert implements BaseAlertContract
     public function to(): string
     {
         return AlertWebhook::EXCEPTION;
-    }
-
-    public function message(): string
-    {
-        return $this->throwable->getMessage();
     }
 
     public function block(): array

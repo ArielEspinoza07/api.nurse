@@ -4,8 +4,9 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
-use Src\shared\Domain\Notification\Slack\Alert\ExceptionAlert;
-use Src\shared\Infrastructure\Notification\Slack\Alert\SlackNotificationAlert;
+use Src\shared\Domain\Notification\Slack\Alert\AlertType;
+use Src\shared\Domain\Notification\Slack\Alert\ExceptionBlockAlert;
+use Src\shared\Infrastructure\Notification\Slack\Alert\SlackNotificationAlertFactory;
 use Src\shared\Infrastructure\Response\Exception\Rest\JsonException;
 use Throwable;
 
@@ -52,7 +53,9 @@ class Handler extends ExceptionHandler
             }
         });
         $this->reportable(function (Throwable $e) {
-            (new SlackNotificationAlert())->sendBlock(ExceptionAlert::create($e));
+            (new SlackNotificationAlertFactory())
+                ->make(AlertType::BLOCK)
+                ->send(ExceptionBlockAlert::create($e));
         });
     }
 }

@@ -6,7 +6,5 @@ namespace Src\shared\Domain\Notification\Slack\Alert\Contract;
 
 interface AlertContract
 {
-    public function sendBlock(BaseAlertContract $contract): void;
-
-    public function sendMessage(BaseAlertContract $contract): void;
+    public function send(BaseAlertContract $contract): void;
 }
