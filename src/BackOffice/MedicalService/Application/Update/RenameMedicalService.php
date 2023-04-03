@@ -18,7 +18,7 @@ class RenameMedicalService
         MedicalService $medicalService,
         MedicalServiceName $name
     ): MedicalService {
-        $medicalService->name()->change($name->value());
+        $medicalService->rename($name);
         $this->repository->update($medicalService);
 
         return $medicalService;

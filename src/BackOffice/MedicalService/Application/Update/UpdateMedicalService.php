@@ -27,12 +27,12 @@ class UpdateMedicalService
     ): MedicalService {
         $medicalService = $this->getMedicalServiceById->handle($id);
 
-        if (!is_null($name) && $medicalService->name()->value() !== $name->value()) {
+        if (!is_null($name) && !$medicalService->name()->isEquals($name)) {
             $medicalService = (new RenameMedicalService($this->repository))->handle($medicalService, $name);
         }
 
-        if (!is_null($active) && $medicalService->active()->value() !== $active->value()) {
-            $medicalService = (new ChangeMedicalServiceIsActive($this->repository))->handle($medicalService);
+        if (!is_null($active) && !$medicalService->active()->isEquals($active)) {
+            $medicalService = (new ChangeMedicalServiceIsActive($this->repository))->handle($medicalService, $active);
         }
 
         return $medicalService;

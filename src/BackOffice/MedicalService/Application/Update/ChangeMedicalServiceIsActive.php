@@ -19,8 +19,9 @@ class ChangeMedicalServiceIsActive
 
     public function handle(
         MedicalService $medicalService,
+        MedicalServiceIsActive $active
     ): MedicalService {
-        $medicalService->active()->change();
+        $medicalService->changeStatus($active);
         $this->repository->update($medicalService);
 
         return $medicalService;

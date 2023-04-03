@@ -57,6 +57,16 @@ class MedicalService
         return $this->name;
     }
 
+    public function rename(MedicalServiceName $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function changeStatus(MedicalServiceIsActive $active): void
+    {
+        $this->isActive = $active;
+    }
+
     public function toArray(): array
     {
         return [

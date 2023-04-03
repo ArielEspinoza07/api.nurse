@@ -15,7 +15,7 @@ class MedicalServiceName extends StringValueObject
 
     public const MINIMUM_LENGTH = 3;
 
-    protected function __construct(protected string $value)
+    protected function __construct(protected readonly string $value)
     {
         parent::__construct($this->value);
 
@@ -28,8 +28,8 @@ class MedicalServiceName extends StringValueObject
         return new static($value);
     }
 
-    public function change(string $value): void
+    public function isEquals(MedicalServiceName $name): bool
     {
-        $this->value = $value;
+        return $this->value === $name->value();
     }
 }

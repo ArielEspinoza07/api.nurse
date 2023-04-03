@@ -10,7 +10,7 @@ class MedicalServiceIsActive
 {
     use AssertNotNullable;
 
-    private function __construct(private bool $value)
+    private function __construct(private readonly bool $value)
     {
         $this->assertNotNull($this->value);
     }
@@ -25,9 +25,9 @@ class MedicalServiceIsActive
         return new static(true);
     }
 
-    public function change(): void
+    public function isEquals(MedicalServiceIsActive $name): bool
     {
-        $this->value = !$this->value;
+        return $this->value === $name->value();
     }
 
     public function value(): bool
