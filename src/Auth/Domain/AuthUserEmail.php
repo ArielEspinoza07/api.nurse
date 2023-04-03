@@ -14,7 +14,7 @@ class AuthUserEmail extends StringValueObject
     use AssertIsValidEmailAddress;
     use AssertNotNullable;
 
-    protected function __construct(protected string $value, private AuthUserEmailVerify $emailVerify)
+    protected function __construct(protected readonly string $value, private AuthUserEmailVerify $emailVerify)
     {
         parent::__construct($this->value);
 
