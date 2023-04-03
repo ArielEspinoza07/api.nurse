@@ -13,7 +13,7 @@ class MailFromAddress extends StringValueObject
     use AssertIsValidEmailAddress;
     use AssertNotNullable;
 
-    protected function __construct(protected readonly string $value)
+    protected function __construct(protected string $value)
     {
         parent::__construct($this->value);
         $this->assertNotNull($this->value);
