@@ -19,7 +19,7 @@ class FilterOperator extends StringValueObject
     public const NOT_EQUAL = '<>';
     public const SMALLER_THAN = '<';
 
-    protected function __construct(protected readonly string $value)
+    protected function __construct(protected string $value)
     {
         parent::__construct($this->value);
         $this->assertIsBetweenAcceptedValues(
