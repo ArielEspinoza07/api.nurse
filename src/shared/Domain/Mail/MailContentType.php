@@ -16,7 +16,7 @@ class MailContentType extends StringValueObject
     public const TEXT_HTML = 'text/html';
     public const TEXT_PLAIN = 'text/plain';
 
-    protected function __construct(protected string $value)
+    protected function __construct(protected readonly string $value)
     {
         parent::__construct($this->value);
         $this->assertNotNull($this->value);

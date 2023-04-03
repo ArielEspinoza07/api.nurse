@@ -9,7 +9,7 @@ class MailFromName extends StringValueObject
 {
     use AssertNotNullable;
 
-    protected function __construct(protected string $value)
+    protected function __construct(protected readonly string $value)
     {
         parent::__construct($this->value);
         $this->assertNotNull($this->value);
