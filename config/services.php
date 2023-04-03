@@ -31,4 +31,21 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'mailtrap' => [
+        'local' => [
+            'api_url' => env('MAILTRAP_API_URL_DEV'),
+            'api_token' => env('MAILTRAP_API_TOKEN_DEV'),
+            'inbox_id' => env('MAILTRAP_INBOX_ID_DEV'),
+        ],
+        'testing' => [
+            'api_url' => env('MAILTRAP_API_URL_DEV'),
+            'api_token' => env('MAILTRAP_API_TOKEN_DEV'),
+            'inbox_id' => env('MAILTRAP_INBOX_ID_DEV'),
+        ],
+        'prod' => [
+            'api_url' => env('MAILTRAP_API_URL'),
+            'api_token' => env('MAILTRAP_API_TOKEN'),
+        ],
+    ]
+
 ];
