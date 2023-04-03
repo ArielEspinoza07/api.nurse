@@ -42,7 +42,7 @@ class ChangeMedicalServiceIsActiveTest extends MedicalServiceApplicationTestBase
             ->andReturn($medicalServiceUpdated);
 
         $updated = (new ChangeMedicalServiceIsActive($repository))
-            ->handle($medicalService);
+            ->handle($medicalService, $medicalServiceUpdated->active());
 
         $this->assertInstanceOf(MedicalService::class, $updated);
 
