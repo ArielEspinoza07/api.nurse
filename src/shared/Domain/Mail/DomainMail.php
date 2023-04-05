@@ -43,4 +43,9 @@ class DomainMail
     {
         $this->content[$content->contentType()->value()] = $content;
     }
+
+    public function getContentByType(string $type): MailContent
+    {
+        return $this->content()[$type];
+    }
 }

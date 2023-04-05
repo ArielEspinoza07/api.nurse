@@ -11,7 +11,8 @@ use Src\shared\Domain\HttpClient\HttpClientResponseBody;
 use Src\shared\Domain\HttpClient\HttpClientResponseStatus;
 use Src\shared\Domain\Mail\Exception\MailCanNotBeSendException;
 use Src\shared\Domain\Mail\MailContentType;
-use Src\shared\Infrastructure\Mail\MailtrapMailer;
+use Src\shared\Infrastructure\Mail\MailTrap\Mailtrap;
+use Src\shared\Infrastructure\Mail\MailTrap\MailtrapMailer;
 
 class MailtrapMailerTest extends MailTestBase
 {
@@ -96,12 +97,14 @@ class MailtrapMailerTest extends MailTestBase
                 )
             );
 
-        (new MailtrapMailer($app, $config, $client))->send($domainMail);
+        (new MailtrapMailer(
+            $client,
+            new Mailtrap($app, $config)
+        ))->send($domainMail);
     }
 
     public function test_mailtrap_mailer_throws_exception(): void
     {
-
         $this->expectException(MailCanNotBeSendException::class);
 
         $environment = app()->environment();
@@ -165,7 +168,7 @@ class MailtrapMailerTest extends MailTestBase
             ->andReturnSelf();
 
         $client->shouldReceive('post')
-            ->once()
+            ->never()
             ->with(
                 Mockery::on(function (string $url) use ($apiUrl) {
                     return $url === $apiUrl;
@@ -176,6 +179,9 @@ class MailtrapMailerTest extends MailTestBase
             )
             ->andThrow(MailCanNotBeSendException::class);
 
-        (new MailtrapMailer($app, $config, $client))->send($domainMail);
+        (new MailtrapMailer(
+            $client,
+            new Mailtrap($app, $config)
+        ))->send($domainMail);
     }
 }
