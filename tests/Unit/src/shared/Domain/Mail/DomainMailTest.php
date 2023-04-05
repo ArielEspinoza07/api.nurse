@@ -3,11 +3,11 @@
 namespace Tests\Unit\src\shared\Domain\Mail;
 
 use Illuminate\Foundation\Testing\WithFaker;
+use Src\shared\Domain\EmailAddress;
 use Src\shared\Domain\Mail\DomainMail;
 use Src\shared\Domain\Mail\MailContent;
 use Src\shared\Domain\Mail\MailContentType;
 use Src\shared\Domain\Mail\MailFrom;
-use Src\shared\Domain\Mail\MailFromAddress;
 use Src\shared\Domain\Mail\MailFromName;
 use Src\shared\Domain\Mail\MailSubject;
 use Src\shared\Domain\Mail\MailTo;
@@ -21,11 +21,11 @@ class DomainMailTest extends TestCase
     {
         $domainMail = DomainMail::create(
             MailFrom::create(
-                MailFromAddress::create($this->faker->email),
+                EmailAddress::create($this->faker->email),
                 MailFromName::create($this->faker->name)
             ),
             MailSubject::create('Welcome email'),
-            MailTo::create(MailFromAddress::create($this->faker->email))
+            MailTo::create(EmailAddress::create($this->faker->email))
         );
 
         $this->assertNotNull($domainMail);
@@ -34,14 +34,14 @@ class DomainMailTest extends TestCase
         $this->assertNotNull($domainMail->from());
         $this->assertInstanceOf(MailFrom::class, $domainMail->from());
         $this->assertNotNull($domainMail->from()->address());
-        $this->assertInstanceOf(MailFromAddress::class, $domainMail->from()->address());
+        $this->assertInstanceOf(EmailAddress::class, $domainMail->from()->address());
         $this->assertNotNull($domainMail->from()->name());
         $this->assertInstanceOf(MailFromName::class, $domainMail->from()->name());
 
         $this->assertNotNull($domainMail->to());
         $this->assertInstanceOf(MailFrom::class, $domainMail->from());
         $this->assertNotNull($domainMail->to()->address());
-        $this->assertInstanceOf(MailFromAddress::class, $domainMail->to()->address());
+        $this->assertInstanceOf(EmailAddress::class, $domainMail->to()->address());
         $this->assertNull($domainMail->to()->name());
 
         $this->assertIsArray($domainMail->content());

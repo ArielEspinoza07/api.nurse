@@ -4,23 +4,22 @@ declare(strict_types=1);
 
 namespace Src\shared\Domain\Mail;
 
-use Src\shared\Domain\Validation\AssertNotNullable;
-use Src\shared\Domain\ValueObject\StringValueObject;
+use Src\shared\Domain\EmailAddress;
 
 class MailFrom
 {
     private function __construct(
-        private readonly MailFromAddress $address,
+        private readonly EmailAddress $address,
         private readonly MailFromName|null $name = null
     ) {
     }
 
-    public static function create(MailFromAddress $address, MailFromName|null $name = null): MailFrom
+    public static function create(EmailAddress $address, MailFromName|null $name = null): MailFrom
     {
         return new static($address, $name);
     }
 
-    public function address(): MailFromAddress
+    public function address(): EmailAddress
     {
         return $this->address;
     }
