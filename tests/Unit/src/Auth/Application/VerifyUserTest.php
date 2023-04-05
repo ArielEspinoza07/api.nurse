@@ -39,7 +39,7 @@ class VerifyUserTest extends AuthApplicationTestBase
                 Mockery::on(function (AuthUser $user) use ($authUser) {
                     return $authUser->id()->value() === $user->id()->value()
                         && $authUser->name()->value() === $user->name()->value()
-                        && $authUser->email()->value() === $user->email()->value();
+                        && $authUser->email()->emailAddress()->value() === $user->email()->emailAddress()->value();
                 })
             )
             ->andReturn();

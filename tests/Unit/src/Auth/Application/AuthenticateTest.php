@@ -15,6 +15,7 @@ use Src\Auth\Domain\AuthToken;
 use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
+use Src\shared\Domain\EmailAddress;
 use Src\shared\Domain\Token\TokenContract;
 use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
@@ -44,7 +45,7 @@ class AuthenticateTest extends AuthApplicationTestBase
             ->once()
             ->with(
                 Mockery::on(function (AuthUserEmail $email) use ($authUser) {
-                    return $authUser->email()->value() === $email->value();
+                    return $authUser->email()->emailAddress()->value() === $email->emailAddress()->value();
                 })
             )
             ->andReturn($authUser);
@@ -57,7 +58,7 @@ class AuthenticateTest extends AuthApplicationTestBase
             ->with(
                 Mockery::on(function (AuthUser $user) use ($authUser) {
                     return $authUser->id()->value() === $user->id()->value()
-                        && $authUser->email()->value() === $user->email()->value();
+                        && $authUser->email()->emailAddress()->value() === $user->email()->emailAddress()->value();
                 }),
                 Mockery::on(function (AuthUserPassword $password) use ($payload) {
                     return $payload['password'] === $password->value();
@@ -85,14 +86,14 @@ class AuthenticateTest extends AuthApplicationTestBase
                 Mockery::on(function (AuthUser $user) use ($authUser) {
                     return $authUser->id()->value() === $user->id()->value()
                         && $authUser->name()->value() === $user->name()->value()
-                        && $authUser->email()->value() === $user->email()->value();
+                        && $authUser->email()->emailAddress()->value() === $user->email()->emailAddress()->value();
                 }),
             )
             ->andReturn($authToken);
 
         $response = (new AuthenticateUser($authTokenRepository, $userRepository, $passwordHasher, $tokenService))
             ->handle(
-                AuthUserEmail::createNotVerified($payload['email']),
+                AuthUserEmail::createNotVerified(EmailAddress::create($payload['email'])),
                 AuthUserPassword::create($payload['password']),
             );
 

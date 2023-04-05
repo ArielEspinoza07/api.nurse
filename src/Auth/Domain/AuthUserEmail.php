@@ -4,41 +4,33 @@ declare(strict_types=1);
 
 namespace Src\Auth\Domain;
 
-use InvalidArgumentException;
-use Src\shared\Domain\Validation\AssertIsValidEmailAddress;
-use Src\shared\Domain\Validation\AssertNotNullable;
-use Src\shared\Domain\ValueObject\StringValueObject;
+use Src\shared\Domain\EmailAddress;
 
-class AuthUserEmail extends StringValueObject
+class AuthUserEmail
 {
-    use AssertIsValidEmailAddress;
-    use AssertNotNullable;
-
-    protected function __construct(protected string $value, private AuthUserEmailVerify $emailVerify)
-    {
-        parent::__construct($this->value);
-
-        $this->assertNotNull($this->value);
-        $this->assertIsValidEmailAddress($this->value);
+    private function __construct(
+        protected readonly EmailAddress $emailAddress,
+        private readonly EmailVerify $emailVerify
+    ) {
     }
 
-    public static function create(string $value, AuthUserEmailVerify $emailVerify): self
+    public static function create(EmailAddress $emailAddress, EmailVerify $emailVerify): self
     {
-        return new static($value, $emailVerify);
+        return new static($emailAddress, $emailVerify);
     }
 
-    public static function createNotVerified(string $value): self
+    public static function createNotVerified(EmailAddress $emailAddress): self
     {
-        return new static($value, AuthUserEmailVerify::createNotVerified());
+        return new static($emailAddress, EmailVerify::createNotVerified());
     }
 
-    public function emailVerify(): AuthUserEmailVerify
+    public function emailAddress(): EmailAddress
+    {
+        return $this->emailAddress;
+    }
+
+    public function emailVerify(): EmailVerify
     {
         return $this->emailVerify;
-    }
-
-    public function setEmailVerify(AuthUserEmailVerify $emailVerify): void
-    {
-        $this->emailVerify = $emailVerify;
     }
 }

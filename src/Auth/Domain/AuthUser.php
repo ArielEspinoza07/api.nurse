@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Src\Auth\Domain;
 
+use Src\shared\Domain\EmailAddress;
+
 class AuthUser
 {
     private function __construct(
@@ -41,7 +43,10 @@ class AuthUser
         return new static(
             AuthUserId::create($id),
             AuthUserName::create($name),
-            AuthUserEmail::create($email, AuthUserEmailVerify::create($emailVerified)),
+            AuthUserEmail::create(
+                EmailAddress::create($email),
+                EmailVerify::create($emailVerified)
+            ),
             AuthUserPassword::create($password)
         );
     }

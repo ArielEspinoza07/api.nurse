@@ -20,6 +20,7 @@ use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Domain\Hash\PasswordHasherContract;
 use Src\Auth\Domain\Repository\AuthUserRepository;
 use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
+use Src\shared\Domain\EmailAddress;
 use Src\shared\Domain\Token\TokenContract;
 use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
@@ -32,7 +33,7 @@ class RegisterTest extends AuthApplicationTestBase
     public function test_register_user(): void
     {
         $name = AuthUserName::create($this->faker->name());
-        $email = AuthUserEmail::createNotVerified($this->faker->email());
+        $email = AuthUserEmail::createNotVerified(EmailAddress::create($this->faker->email()));
         $notEncryptedPassword = AuthUserPassword::create('Password!1');
         $encryptedPassword = AuthUserPassword::create((new LaravelPasswordHasher())->hash($notEncryptedPassword));
 
@@ -70,7 +71,7 @@ class RegisterTest extends AuthApplicationTestBase
                     return $name->value() === $encryptedAuthUser->name()->value();
                 }),
                 Mockery::on(function (AuthUserEmail $email) use ($encryptedAuthUser) {
-                    return $email->value() === $encryptedAuthUser->email()->value();
+                    return $email->emailAddress()->value() === $encryptedAuthUser->email()->emailAddress()->value();
                 }),
                 Mockery::on(function (AuthUserPassword $password) use ($encryptedAuthUser) {
                     return $password->value() === $encryptedAuthUser->password()->value();
@@ -98,7 +99,8 @@ class RegisterTest extends AuthApplicationTestBase
                 Mockery::on(function (AuthUser $user) use ($encryptedAuthUser) {
                     return $encryptedAuthUser->id()->value() === $user->id()->value()
                         && $encryptedAuthUser->name()->value() === $user->name()->value()
-                        && $encryptedAuthUser->email()->value() === $user->email()->value();
+                        && $encryptedAuthUser->email()->emailAddress()->value() === $user->email()
+                            ->emailAddress()->value();
                 }),
             )
             ->andReturn($authToken);

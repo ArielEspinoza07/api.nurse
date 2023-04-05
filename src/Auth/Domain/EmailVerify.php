@@ -6,7 +6,7 @@ namespace Src\Auth\Domain;
 
 use Src\shared\Domain\Validation\AssertNotNullable;
 
-class AuthUserEmailVerify
+class EmailVerify
 {
     use AssertNotNullable;
 

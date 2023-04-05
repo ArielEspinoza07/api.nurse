@@ -19,7 +19,7 @@ interface AuthUserRepository
     );
 
 
-    public function findByEmail(AuthUserEmail $email): AuthUser;
+    public function findByEmail(AuthUserEmail $authUserEmail): AuthUser;
 
 
     public function findById(AuthUserId $id): AuthUser;

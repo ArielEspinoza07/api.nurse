@@ -15,6 +15,7 @@ use Src\Auth\Infrastructure\Hash\LaravelPasswordHasher;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthTokenRepository;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserModel;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
+use Src\shared\Domain\EmailAddress;
 use Src\shared\Infrastructure\Token\PlainTextToken;
 use Tests\TestCase;
 
@@ -38,7 +39,7 @@ class AuthApplicationTestBase extends TestCase
         return AuthUser::create(
             AuthUserId::create($model->id),
             AuthUserName::create($model->name),
-            AuthUserEmail::createNotVerified($model->email),
+            AuthUserEmail::createNotVerified(EmailAddress::create($model->email)),
             AuthUserPassword::create($model->password),
         );
     }
@@ -52,7 +53,7 @@ class AuthApplicationTestBase extends TestCase
             new PlainTextToken()
         ))->handle(
             AuthUserName::create($name),
-            AuthUserEmail::createNotVerified($email),
+            AuthUserEmail::createNotVerified(EmailAddress::create($email)),
             AuthUserPassword::create($password)
         );
     }

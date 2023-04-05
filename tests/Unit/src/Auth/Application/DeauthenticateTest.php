@@ -12,6 +12,7 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserId;
 use Src\Auth\Domain\Repository\AuthTokenRepository;
 use Src\Auth\Infrastructure\Persistence\Eloquent\EloquentAuthUserRepository;
+use Src\shared\Domain\EmailAddress;
 use Tests\Unit\src\Auth\AuthApplicationTestBase;
 
 class DeauthenticateTest extends AuthApplicationTestBase
@@ -27,7 +28,8 @@ class DeauthenticateTest extends AuthApplicationTestBase
         $authToken = AuthToken::create(
             AuthTokenId::create($authUserResponse->id()),
             AuthPlainTextToken::create($authUserResponse->token()),
-            (new EloquentAuthUserRepository())->findByEmail(AuthUserEmail::createNotVerified($email))
+            (new EloquentAuthUserRepository())
+                ->findByEmail(AuthUserEmail::createNotVerified(EmailAddress::create($email)))
         );
 
         $authTokenRepository = Mockery::mock(AuthTokenRepository::class);

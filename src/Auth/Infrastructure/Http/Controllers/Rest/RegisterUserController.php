@@ -10,6 +10,7 @@ use Src\Auth\Domain\AuthUserEmail;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
 use Src\Auth\Infrastructure\Http\Request\RegisterUserRequest;
+use Src\shared\Domain\EmailAddress;
 use Src\shared\Domain\Response\Contract\RestResponseContract;
 
 class RegisterUserController
@@ -24,7 +25,7 @@ class RegisterUserController
     {
         $response = $this->service->handle(
             AuthUserName::create($request->validated('name')),
-            AuthUserEmail::createNotVerified($request->validated('email')),
+            AuthUserEmail::createNotVerified(EmailAddress::create($request->validated('email'))),
             AuthUserPassword::create($request->validated('password'))
         );
 

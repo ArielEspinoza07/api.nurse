@@ -29,7 +29,7 @@ class AuthenticateUser
         $authUser = $this->authUserRepository->findByEmail($email);
 
         if (!$this->passwordHasher->check($authUser, $password)) {
-            throw new InvalidAuthUserPasswordException($email);
+            throw new InvalidAuthUserPasswordException($email->emailAddress());
         }
 
         $authToken = $this->authTokenRepository->create(

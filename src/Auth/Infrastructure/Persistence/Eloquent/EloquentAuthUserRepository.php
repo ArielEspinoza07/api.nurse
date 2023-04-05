@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Src\Auth\Infrastructure\Persistence\Eloquent;
 
 use Src\Auth\Domain\AuthUserEmail;
-use Src\Auth\Domain\AuthUserEmailVerify;
 use Src\Auth\Domain\AuthUserId;
 use Src\Auth\Domain\AuthUserName;
 use Src\Auth\Domain\AuthUserPassword;
@@ -19,13 +18,13 @@ class EloquentAuthUserRepository implements AuthUserRepository
 {
     public function create(AuthUserName $name, AuthUserEmail $email, AuthUserPassword $password): AuthUser
     {
-        if (EloquentAuthUserModel::query()->where('email', $email->value())->exists()) {
+        if (EloquentAuthUserModel::query()->where('email', $email->emailAddress()->value())->exists()) {
             throw new UniqueAuthUserEmailException();
         }
         $model = EloquentAuthUserModel::query()
             ->create([
                 'name' => $name->value(),
-                'email' => $email->value(),
+                'email' => $email->emailAddress()->value(),
                 'password' => $password->value(),
             ]);
 
@@ -55,20 +54,19 @@ class EloquentAuthUserRepository implements AuthUserRepository
         );
     }
 
-    public function findByEmail(AuthUserEmail $email): AuthUser
+    public function findByEmail(AuthUserEmail $authUserEmail): AuthUser
     {
         $model = EloquentAuthUserModel::query()
-            ->where('email', $email->value())
+            ->where('email', $authUserEmail->emailAddress()->value())
             ->first();
         if (!$model) {
             throw new InvalidAuthUserEmailException();
         }
-        $email->setEmailVerify(AuthUserEmailVerify::create($model->hasVerifiedEmail()));
 
         return AuthUser::createFromPrimitives(
             $model->id,
             $model->name,
-            $email->value(),
+            $authUserEmail->emailAddress()->value(),
             $model->hasVerifiedEmail(),
             $model->password
         );
@@ -78,7 +76,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
     {
         EloquentAuthUserModel::query()->where([
             'id' => $user->id()->value(),
-            'email' => $user->email()->value(),
+            'email' => $user->email()->emailAddress()->value(),
         ])->update(['email_verified_at' => now()]);
     }
 }
