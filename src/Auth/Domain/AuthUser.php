@@ -76,7 +76,7 @@ class AuthUser
         return [
             'id' => $this->id->value(),
             'name' => $this->name->value(),
-            'email' => $this->email->value(),
+            'email' => $this->email->emailAddress()->value(),
             'email_verified' => $this->email->emailVerify()->value(),
         ];
     }
