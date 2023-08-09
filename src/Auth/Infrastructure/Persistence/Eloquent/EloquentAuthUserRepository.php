@@ -45,7 +45,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
             throw new AuthUserNotFoundException();
         }
 
-        return AuthUser::createFromPrimitives(
+        return AuthUser::fromPrimitives(
             $id->value(),
             $model->name,
             $model->email,
@@ -63,7 +63,7 @@ class EloquentAuthUserRepository implements AuthUserRepository
             throw new InvalidAuthUserEmailException();
         }
 
-        return AuthUser::createFromPrimitives(
+        return AuthUser::fromPrimitives(
             $model->id,
             $model->name,
             $authUserEmail->emailAddress()->value(),

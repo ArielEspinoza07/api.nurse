@@ -25,7 +25,7 @@ class AuthUser
         return new static($id, $name, $email, $password);
     }
 
-    public static function createFromNameEmailAndPassword(
+    public static function fromNameEmailAndPassword(
         AuthUserName $name,
         AuthUserEmail $email,
         AuthUserPassword $password
@@ -33,7 +33,7 @@ class AuthUser
         return new static(AuthUserId::createEmpty(), $name, $email, $password);
     }
 
-    public static function createFromPrimitives(
+    public static function fromPrimitives(
         int $id,
         string $name,
         string $email,

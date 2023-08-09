@@ -37,7 +37,7 @@ class RegisterTest extends AuthApplicationTestBase
         $notEncryptedPassword = AuthUserPassword::create('Password!1');
         $encryptedPassword = AuthUserPassword::create((new LaravelPasswordHasher())->hash($notEncryptedPassword));
 
-        $encryptedAuthUser = AuthUser::createFromNameEmailAndPassword(
+        $encryptedAuthUser = AuthUser::fromNameEmailAndPassword(
             $name,
             $email,
             $encryptedPassword

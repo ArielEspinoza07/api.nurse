@@ -61,7 +61,7 @@ class EloquentAuthTokenRepository implements AuthTokenRepository
         return AuthToken::create(
             AuthTokenId::create($authToken->id),
             AuthPlainTextToken::create($authToken->token),
-            AuthUser::createFromPrimitives(
+            AuthUser::fromPrimitives(
                 $authToken->tokenable->id,
                 $authToken->tokenable->name,
                 $authToken->tokenable->email,
