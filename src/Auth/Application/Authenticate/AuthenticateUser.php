@@ -37,6 +37,6 @@ class AuthenticateUser
             $authUser
         );
 
-        return new AuthUserResponse($authToken->id()->value(), $authToken->plainTextToken()->value());
+        return new AuthUserResponse($authToken->id()->value(), $authToken->plainText()->value());
     }
 }

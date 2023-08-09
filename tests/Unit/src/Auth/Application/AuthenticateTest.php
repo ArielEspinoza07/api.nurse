@@ -72,7 +72,7 @@ class AuthenticateTest extends AuthApplicationTestBase
         $tokenService->shouldReceive('generate')
             ->once()
             ->withNoArgs()
-            ->andReturn($authToken->plainTextToken()->value());
+            ->andReturn($authToken->plainText()->value());
 
         $authTokenRepository = Mockery::mock(AuthTokenRepository::class);
         $this->app->instance(AuthenticateUser::class, $authTokenRepository);
@@ -81,7 +81,7 @@ class AuthenticateTest extends AuthApplicationTestBase
             ->once()
             ->with(
                 Mockery::on(function (AuthPlainTextToken $plainTextToken) use ($authToken) {
-                    return $authToken->plainTextToken()->value() === $plainTextToken->value();
+                    return $authToken->plainText()->value() === $plainTextToken->value();
                 }),
                 Mockery::on(function (AuthUser $user) use ($authUser) {
                     return $authUser->id()->value() === $user->id()->value()

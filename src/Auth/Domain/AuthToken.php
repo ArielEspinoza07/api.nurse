@@ -23,7 +23,7 @@ class AuthToken
         return $this->id;
     }
 
-    public function plainTextToken(): AuthPlainTextToken
+    public function plainText(): AuthPlainTextToken
     {
         return $this->plainTextToken;
     }

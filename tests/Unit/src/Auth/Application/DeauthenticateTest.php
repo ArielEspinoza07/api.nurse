@@ -49,7 +49,7 @@ class DeauthenticateTest extends AuthApplicationTestBase
             ->with(
                 Mockery::on(function (AuthToken $token) use ($authToken) {
                     return $authToken->id()->value() === $token->id()->value()
-                        && $authToken->plainTextToken()->value() === $token->plainTextToken()->value()
+                        && $authToken->plainText()->value() === $token->plainText()->value()
                         && $authToken->user()->id()->value() === $token->user()->id()->value();
                 }),
             )
